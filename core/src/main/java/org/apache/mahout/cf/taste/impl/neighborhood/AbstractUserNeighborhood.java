@@ -34,7 +34,7 @@ import com.google.common.base.Preconditions;
  */
 abstract class AbstractUserNeighborhood implements UserNeighborhood {
   
-  private final UserSimilarity userSimilarity;
+  protected final UserSimilarity userSimilarity;
   private final DataModel dataModel;
   private final double samplingRate;
   private final RefreshHelper refreshHelper;

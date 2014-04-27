@@ -97,4 +97,18 @@ public interface Recommender extends Refreshable {
    */
   DataModel getDataModel();
 
+  /**
+   * Estimates preference and takes into account only neighbors that have rated the given item.
+   * @param userID
+   *          user ID whose preference is to be estimated
+   * @param itemID
+   *          item ID to estimate preference for
+   * @return an estimated preference if the user has not expressed a preference for the item, or else the
+   *         user's actual preference for the item. If a preference cannot be estimated, returns
+   *         {@link Double#NaN}
+   * @throws TasteException
+   *           if an error occurs while accessing the {@link DataModel}
+   */
+  float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException;
+
 }

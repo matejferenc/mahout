@@ -19,6 +19,7 @@ package org.apache.mahout.cf.taste.impl.recommender;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.mahout.cf.taste.common.Refreshable;
+import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.TasteTestCase;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.IDRescorer;
@@ -77,5 +78,11 @@ final class MockRecommender implements Recommender {
   public void refresh(Collection<Refreshable> alreadyRefreshed) {
     // do nothing
   }
+
+@Override
+public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
+	// TODO Auto-generated method stub
+	return 0;
+}
 
 }

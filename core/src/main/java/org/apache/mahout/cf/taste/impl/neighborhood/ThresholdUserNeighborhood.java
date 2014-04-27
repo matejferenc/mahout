@@ -100,5 +100,10 @@ public final class ThresholdUserNeighborhood extends AbstractUserNeighborhood {
   public String toString() {
     return "ThresholdUserNeighborhood";
   }
+
+@Override
+public long[] getUserNeighborhood(long userID, long itemID) throws TasteException {
+	throw new UnsupportedOperationException("not supported yet");
+}
   
 }

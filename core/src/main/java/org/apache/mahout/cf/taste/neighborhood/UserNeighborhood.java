@@ -36,5 +36,18 @@ public interface UserNeighborhood extends Refreshable {
    *           if an error occurs while accessing data
    */
   long[] getUserNeighborhood(long userID) throws TasteException;
+
+  /**
+   * @param userID
+   *          ID of user for which a neighborhood will be computed
+   * @param itemID
+   *          ID of item that has to be rated by neighbors
+   * @return IDs of users in the neighborhood
+   * @throws TasteException
+   *           if an error occurs while accessing data
+   */
+  long[] getUserNeighborhood(long userID, long itemID) throws TasteException;
+  
+  String getName();
   
 }

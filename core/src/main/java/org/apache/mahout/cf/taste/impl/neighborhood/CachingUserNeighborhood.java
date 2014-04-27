@@ -66,4 +66,9 @@ public final class CachingUserNeighborhood implements UserNeighborhood {
       return neighborhood.getUserNeighborhood(key);
     }
   }
+
+@Override
+public long[] getUserNeighborhood(long userID, long itemID) throws TasteException {
+	throw new UnsupportedOperationException("not supported yet");
+}
 }

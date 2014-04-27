@@ -194,5 +194,11 @@ public final class ItemAverageRecommender extends AbstractRecommender {
       return doEstimatePreference(itemID);
     }
   }
+
+@Override
+public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
+	// TODO Auto-generated method stub
+	return 0;
+}
   
 }

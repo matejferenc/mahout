@@ -53,8 +53,9 @@ public final class LoadEvaluator {
       callables.add(new LoadCallable(recommender, userSampler.next()));
     }
     AtomicInteger noEstimateCounter = new AtomicInteger();
+    AtomicInteger estimateCounter = new AtomicInteger();
     RunningAverageAndStdDev timing = new FullRunningAverageAndStdDev();
-    AbstractDifferenceRecommenderEvaluator.execute(callables, noEstimateCounter, timing);
+    AbstractDifferenceRecommenderEvaluator.execute(callables, noEstimateCounter, estimateCounter, timing);
     return new LoadStatistics(timing);
   }
 

@@ -61,4 +61,6 @@ public interface ItemSimilarity extends Refreshable {
    * @return all IDs of similar items, in no particular order
    */
   long[] allSimilarItemIDs(long itemID) throws TasteException;
+  
+  String getName();
 }

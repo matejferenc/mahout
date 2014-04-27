@@ -113,6 +113,18 @@ public class GenericUserBasedRecommender extends AbstractRecommender implements 
   }
   
   @Override
+  public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
+    DataModel model = getDataModel();
+    Float actualPref = model.getPreferenceValue(userID, itemID);
+    if (actualPref != null) {
+      return actualPref;
+    }
+    //vyberieme len tych susedov, ktori hodnotili dany film. inak nema zmysel ich zahrnat do vypoctu
+    long[] theNeighborhood = neighborhood.getUserNeighborhood(userID, itemID);
+    return doEstimatePreference(userID, theNeighborhood, itemID);
+  }
+  
+  @Override
   public long[] mostSimilarUserIDs(long userID, int howMany) throws TasteException {
     return mostSimilarUserIDs(userID, howMany, null);
   }

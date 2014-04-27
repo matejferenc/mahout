@@ -227,5 +227,11 @@ public final class CachingRecommender implements Recommender {
       this.noMoreRecommendableItems = noMoreRecommendableItems;
     }
   }
+
+@Override
+public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
+	// TODO Auto-generated method stub
+	return 0;
+}
   
 }

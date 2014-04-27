@@ -119,7 +119,9 @@ import com.google.common.io.Closeables;
  */
 public class FileDataModel extends AbstractDataModel {
 
-  private static final Logger log = LoggerFactory.getLogger(FileDataModel.class);
+	private static final long serialVersionUID = 1L;
+
+private static final Logger log = LoggerFactory.getLogger(FileDataModel.class);
 
   public static final long DEFAULT_MIN_RELOAD_INTERVAL_MS = 60 * 1000L; // 1 minute?
   private static final char COMMENT_CHAR = '#';

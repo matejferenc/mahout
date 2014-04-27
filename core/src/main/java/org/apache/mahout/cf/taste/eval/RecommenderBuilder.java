@@ -42,4 +42,6 @@ public interface RecommenderBuilder {
    */
   Recommender buildRecommender(DataModel dataModel) throws TasteException;
   
+  String getName();
+  
 }

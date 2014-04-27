@@ -32,15 +32,18 @@ final class StatsCallable implements Callable<Void> {
   private final boolean logStats;
   private final RunningAverageAndStdDev timing;
   private final AtomicInteger noEstimateCounter;
+  private final AtomicInteger estimateCounter;
   
   StatsCallable(Callable<Void> delegate,
                 boolean logStats,
                 RunningAverageAndStdDev timing,
-                AtomicInteger noEstimateCounter) {
+                AtomicInteger noEstimateCounter,
+                AtomicInteger estimateCounter) {
     this.delegate = delegate;
     this.logStats = logStats;
     this.timing = timing;
     this.noEstimateCounter = noEstimateCounter;
+    this.estimateCounter = estimateCounter;
   }
   
   @Override
@@ -56,6 +59,7 @@ final class StatsCallable implements Callable<Void> {
       long totalMemory = runtime.totalMemory();
       long memory = totalMemory - runtime.freeMemory();
       log.info("Approximate memory used: {}MB / {}MB", memory / 1000000L, totalMemory / 1000000L);
+      log.info("Recommended in {} cases", estimateCounter.get());
       log.info("Unable to recommend in {} cases", noEstimateCounter.get());
     }
     return null;

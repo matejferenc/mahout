@@ -18,10 +18,13 @@
 package org.apache.mahout.cf.taste.impl.neighborhood;
 
 import org.apache.mahout.cf.taste.common.TasteException;
+import org.apache.mahout.cf.taste.impl.common.LongPrimitiveArrayIterator;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.SamplingLongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.recommender.TopItems;
 import org.apache.mahout.cf.taste.model.DataModel;
+import org.apache.mahout.cf.taste.model.Preference;
+import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
 import com.google.common.base.Preconditions;
@@ -88,11 +91,36 @@ public final class NearestNUserNeighborhood extends AbstractUserNeighborhood {
     
     TopItems.Estimator<Long> estimator = new Estimator(userSimilarityImpl, userID, minSimilarity);
     
+    // potential neighbors are all users 
     LongPrimitiveIterator userIDs = SamplingLongPrimitiveIterator.maybeWrapIterator(dataModel.getUserIDs(),
       getSamplingRate());
     
     return TopItems.getTopUsers(n, userIDs, null, estimator);
   }
+  
+  @Override
+  public long[] getUserNeighborhood(long userID, long itemID) throws TasteException {
+	    
+	    DataModel dataModel = getDataModel();
+	    UserSimilarity userSimilarityImpl = getUserSimilarity();
+	    
+	    TopItems.Estimator<Long> estimator = new Estimator(userSimilarityImpl, userID, minSimilarity);
+	    
+	    // potential neighbors are only those users, who rated the given item
+	    PreferenceArray preferencesForItem = dataModel.getPreferencesForItem(itemID);
+	    long[] potentialNeighbors = new long[preferencesForItem.length()];
+	    int i = 0;
+	    for (Preference preference : preferencesForItem) {
+			long preferenceUserID = preference.getUserID();
+			potentialNeighbors[i] = preferenceUserID;
+			i++;
+		}
+	    LongPrimitiveIterator delegate = new LongPrimitiveArrayIterator(potentialNeighbors);
+		LongPrimitiveIterator userIDs = SamplingLongPrimitiveIterator.maybeWrapIterator(delegate,
+	      getSamplingRate());
+	    
+	    return TopItems.getTopUsers(n, userIDs, null, estimator);
+	  }
   
   @Override
   public String toString() {
@@ -119,4 +147,9 @@ public final class NearestNUserNeighborhood extends AbstractUserNeighborhood {
       return sim >= minSim ? sim : Double.NaN;
     }
   }
+
+@Override
+public String getName() {
+	return "Nearest N User Neighborhood " + "for N=" + n + " with user similarity: " + userSimilarity.getName();
+}
 }
