@@ -228,10 +228,4 @@ public final class CachingRecommender implements Recommender {
     }
   }
 
-@Override
-public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
-	// TODO Auto-generated method stub
-	return 0;
-}
-  
 }

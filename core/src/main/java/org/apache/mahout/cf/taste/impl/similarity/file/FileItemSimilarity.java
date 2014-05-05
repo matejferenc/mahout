@@ -134,4 +134,9 @@ public class FileItemSimilarity implements ItemSimilarity {
     return "FileItemSimilarity[dataFile:" + dataFile + ']';
   }
 
+@Override
+public String getName() {
+	return "File Item Similarity";
+}
+
 }

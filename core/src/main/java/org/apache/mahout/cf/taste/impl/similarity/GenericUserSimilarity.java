@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import com.google.common.collect.AbstractIterator;
+
 import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
@@ -234,5 +235,10 @@ public final class GenericUserSimilarity implements UserSimilarity {
     }
     
   }
+
+@Override
+public String getName() {
+	return "Generic User Similarity";
+}
   
 }

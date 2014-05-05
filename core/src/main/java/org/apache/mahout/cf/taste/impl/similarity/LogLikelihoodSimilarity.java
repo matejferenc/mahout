@@ -117,5 +117,10 @@ public final class LogLikelihoodSimilarity extends AbstractItemSimilarity implem
   public String toString() {
     return "LogLikelihoodSimilarity[dataModel:" + getDataModel() + ']';
   }
+
+@Override
+public String getName() {
+	return "Log Likelihood Similarity";
+}
   
 }

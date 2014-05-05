@@ -31,44 +31,49 @@ import com.google.common.base.Preconditions;
 
 /** A caching wrapper around an underlying {@link UserNeighborhood} implementation. */
 public final class CachingUserNeighborhood implements UserNeighborhood {
-  
-  private final UserNeighborhood neighborhood;
-  private final Cache<Long,long[]> neighborhoodCache;
-  
-  public CachingUserNeighborhood(UserNeighborhood neighborhood, DataModel dataModel) throws TasteException {
-    Preconditions.checkArgument(neighborhood != null, "neighborhood is null");
-    this.neighborhood = neighborhood;
-    int maxCacheSize = dataModel.getNumUsers(); // just a dumb heuristic for sizing
-    this.neighborhoodCache = new Cache<Long,long[]>(new NeighborhoodRetriever(neighborhood), maxCacheSize);
-  }
-  
-  @Override
-  public long[] getUserNeighborhood(long userID) throws TasteException {
-    return neighborhoodCache.get(userID);
-  }
-  
-  @Override
-  public void refresh(Collection<Refreshable> alreadyRefreshed) {
-    neighborhoodCache.clear();
-    Collection<Refreshable> refreshed = RefreshHelper.buildRefreshed(alreadyRefreshed);
-    RefreshHelper.maybeRefresh(refreshed, neighborhood);
-  }
-  
-  private static final class NeighborhoodRetriever implements Retriever<Long,long[]> {
-    private final UserNeighborhood neighborhood;
-    
-    private NeighborhoodRetriever(UserNeighborhood neighborhood) {
-      this.neighborhood = neighborhood;
-    }
-    
-    @Override
-    public long[] get(Long key) throws TasteException {
-      return neighborhood.getUserNeighborhood(key);
-    }
-  }
 
-@Override
-public long[] getUserNeighborhood(long userID, long itemID) throws TasteException {
-	throw new UnsupportedOperationException("not supported yet");
-}
+	private final UserNeighborhood neighborhood;
+	private final Cache<Long, long[]> neighborhoodCache;
+
+	public CachingUserNeighborhood(UserNeighborhood neighborhood, DataModel dataModel) throws TasteException {
+		Preconditions.checkArgument(neighborhood != null, "neighborhood is null");
+		this.neighborhood = neighborhood;
+		int maxCacheSize = dataModel.getNumUsers(); // just a dumb heuristic for sizing
+		this.neighborhoodCache = new Cache<Long, long[]>(new NeighborhoodRetriever(neighborhood), maxCacheSize);
+	}
+
+	@Override
+	public long[] getUserNeighborhood(long userID) throws TasteException {
+		return neighborhoodCache.get(userID);
+	}
+
+	@Override
+	public void refresh(Collection<Refreshable> alreadyRefreshed) {
+		neighborhoodCache.clear();
+		Collection<Refreshable> refreshed = RefreshHelper.buildRefreshed(alreadyRefreshed);
+		RefreshHelper.maybeRefresh(refreshed, neighborhood);
+	}
+
+	private static final class NeighborhoodRetriever implements Retriever<Long, long[]> {
+		private final UserNeighborhood neighborhood;
+
+		private NeighborhoodRetriever(UserNeighborhood neighborhood) {
+			this.neighborhood = neighborhood;
+		}
+
+		@Override
+		public long[] get(Long key) throws TasteException {
+			return neighborhood.getUserNeighborhood(key);
+		}
+	}
+
+	@Override
+	public long[] getUserNeighborhood(long userID, long itemID) throws TasteException {
+		throw new UnsupportedOperationException("not supported yet");
+	}
+
+	@Override
+	public String getName() {
+		return "Caching User Neighborhood";
+	}
 }

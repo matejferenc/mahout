@@ -26,5 +26,7 @@ import org.apache.mahout.cf.taste.common.TasteException;
 public interface Factorizer extends Refreshable {
 
   Factorization factorize() throws TasteException;
+  
+  String getName();
 
 }

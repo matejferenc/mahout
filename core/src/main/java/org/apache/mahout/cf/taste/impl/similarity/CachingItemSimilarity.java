@@ -28,6 +28,7 @@ import org.apache.mahout.cf.taste.impl.common.Retriever;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 import org.apache.mahout.common.LongPair;
+
 import com.google.common.base.Preconditions;
 
 /**
@@ -107,5 +108,10 @@ public final class CachingItemSimilarity implements ItemSimilarity {
       return similarity.itemSimilarity(key.getFirst(), key.getSecond());
     }
   }
+
+@Override
+public String getName() {
+	return "Caching Item Similarity";
+}
 
 }

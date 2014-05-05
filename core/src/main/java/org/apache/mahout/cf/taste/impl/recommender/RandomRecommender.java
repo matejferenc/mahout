@@ -93,10 +93,4 @@ public final class RandomRecommender extends AbstractRecommender {
     getDataModel().refresh(alreadyRefreshed);
   }
 
-@Override
-public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
-	// TODO Auto-generated method stub
-	return 0;
-}
-  
 }

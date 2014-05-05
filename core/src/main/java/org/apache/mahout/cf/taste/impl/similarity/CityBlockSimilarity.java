@@ -95,4 +95,9 @@ public final class CityBlockSimilarity extends AbstractItemSimilarity implements
     return 1.0 / (1.0 + distance);
   }
 
+@Override
+public String getName() {
+	return "City Block Similarity";
+}
+
 }

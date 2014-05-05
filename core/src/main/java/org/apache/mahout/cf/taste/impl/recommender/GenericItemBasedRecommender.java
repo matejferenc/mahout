@@ -374,10 +374,4 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
     }
   }
 
-@Override
-public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
-	//opravit ak sa da
-	return estimatePreference(userID, itemID);
-}
-  
 }

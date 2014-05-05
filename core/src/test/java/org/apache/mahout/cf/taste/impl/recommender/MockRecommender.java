@@ -79,10 +79,4 @@ final class MockRecommender implements Recommender {
     // do nothing
   }
 
-@Override
-public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
-	// TODO Auto-generated method stub
-	return 0;
-}
-
 }

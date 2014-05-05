@@ -241,7 +241,7 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 				try {
 					// estimatedPreference = recommender.estimatePreference(testUserID, realPref.getItemID());
 					// only takes relevant neighbors into account:
-					estimatedPreference = recommender.estimatePreferenceUsingOnlyRelevantNeighbors(testUserID, realPref.getItemID());
+					estimatedPreference = recommender.estimatePreference(testUserID, realPref.getItemID());
 				} catch (NoSuchUserException nsue) {
 					// It's possible that an item exists in the test data but not training data in which case
 					// NSEE will be thrown. Just ignore it and move on.

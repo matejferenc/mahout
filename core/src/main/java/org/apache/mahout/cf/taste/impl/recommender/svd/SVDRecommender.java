@@ -180,10 +180,4 @@ public final class SVDRecommender extends AbstractRecommender {
     refreshHelper.refresh(alreadyRefreshed);
   }
 
-@Override
-public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
-	// TODO Auto-generated method stub
-	return 0;
-}
-
 }

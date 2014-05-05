@@ -64,5 +64,10 @@ final class DummySimilarity extends AbstractItemSimilarity implements UserSimila
   public void refresh(Collection<Refreshable> alreadyRefreshed) {
   // do nothing
   }
+
+@Override
+public String getName() {
+	return "Dummy Similarity";
+}
   
 }

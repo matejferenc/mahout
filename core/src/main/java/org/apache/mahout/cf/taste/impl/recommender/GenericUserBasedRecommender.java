@@ -103,16 +103,16 @@ public class GenericUserBasedRecommender extends AbstractRecommender implements 
   
   @Override
   public float estimatePreference(long userID, long itemID) throws TasteException {
-    DataModel model = getDataModel();
-    Float actualPref = model.getPreferenceValue(userID, itemID);
-    if (actualPref != null) {
-      return actualPref;
-    }
-    long[] theNeighborhood = neighborhood.getUserNeighborhood(userID);
-    return doEstimatePreference(userID, theNeighborhood, itemID);
+//    DataModel model = getDataModel();
+//    Float actualPref = model.getPreferenceValue(userID, itemID);
+//    if (actualPref != null) {
+//      return actualPref;
+//    }
+//    long[] theNeighborhood = neighborhood.getUserNeighborhood(userID);
+//    return doEstimatePreference(userID, theNeighborhood, itemID);
+	  return estimatePreferenceUsingOnlyRelevantNeighbors(userID, itemID);
   }
   
-  @Override
   public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
     DataModel model = getDataModel();
     Float actualPref = model.getPreferenceValue(userID, itemID);

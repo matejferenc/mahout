@@ -18,6 +18,7 @@
 package org.apache.mahout.cf.taste.impl.recommender.svd;
 
 import com.google.common.collect.Lists;
+
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverage;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
@@ -33,7 +34,6 @@ import org.apache.mahout.math.als.AlternatingLeastSquaresSolver;
 import org.apache.mahout.math.als.ImplicitFeedbackAlternatingLeastSquaresSolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.apache.mahout.math.map.OpenIntObjectHashMap;
 
 import java.util.List;
@@ -306,4 +306,9 @@ public class ALSWRFactorizer extends AbstractFactorizer {
     }
     return ratings;
   }
+
+@Override
+public String getName() {
+	return "ALSWR Factorizer with lambda: " + lambda + " with iterations: " + numIterations + " with features: " + numFeatures;
+}
 }

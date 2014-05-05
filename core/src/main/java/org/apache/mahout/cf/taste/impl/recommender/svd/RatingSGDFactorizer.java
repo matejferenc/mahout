@@ -218,4 +218,9 @@ public class RatingSGDFactorizer extends AbstractFactorizer {
     }
     return sum;
   }
+
+@Override
+public String getName() {
+	return "Rating SGD Factorizer with iterations: " + numIterations + " with features: " + numFeatures;
+}
 }

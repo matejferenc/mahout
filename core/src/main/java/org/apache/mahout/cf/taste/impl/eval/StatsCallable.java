@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-final class StatsCallable implements Callable<Void> {
+public final class StatsCallable implements Callable<Void> {
   
   private static final Logger log = LoggerFactory.getLogger(StatsCallable.class);
   
@@ -34,7 +34,7 @@ final class StatsCallable implements Callable<Void> {
   private final AtomicInteger noEstimateCounter;
   private final AtomicInteger estimateCounter;
   
-  StatsCallable(Callable<Void> delegate,
+  public StatsCallable(Callable<Void> delegate,
                 boolean logStats,
                 RunningAverageAndStdDev timing,
                 AtomicInteger noEstimateCounter,

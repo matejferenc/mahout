@@ -25,45 +25,50 @@ import com.google.common.base.Preconditions;
 
 /**
  * <p>
- * An implementation of the cosine similarity. The result is the cosine of the angle formed between
- * the two preference vectors.
+ * An implementation of the cosine similarity. The result is the cosine of the angle formed between the two preference vectors.
  * </p>
- *
+ * 
  * <p>
- * Note that this similarity does not "center" its data, shifts the user's preference values so that each of their
- * means is 0. For this behavior, use {@link PearsonCorrelationSimilarity}, which actually is mathematically
+ * Note that this similarity does not "center" its data, shifts the user's preference values so that each of their means is 0. For this behavior, use {@link PearsonCorrelationSimilarity}, which actually is mathematically
  * equivalent for centered data.
  * </p>
  */
 public final class UncenteredCosineSimilarity extends AbstractSimilarity {
 
-  /**
-   * @throws IllegalArgumentException if {@link DataModel} does not have preference values
-   */
-  public UncenteredCosineSimilarity(DataModel dataModel) throws TasteException {
-    this(dataModel, Weighting.UNWEIGHTED);
-  }
+	/**
+	 * @throws IllegalArgumentException
+	 *             if {@link DataModel} does not have preference values
+	 */
+	public UncenteredCosineSimilarity(DataModel dataModel) throws TasteException {
+		this(dataModel, Weighting.UNWEIGHTED);
+	}
 
-  /**
-   * @throws IllegalArgumentException if {@link DataModel} does not have preference values
-   */
-  public UncenteredCosineSimilarity(DataModel dataModel, Weighting weighting) throws TasteException {
-    super(dataModel, weighting, false);
-    Preconditions.checkArgument(dataModel.hasPreferenceValues(), "DataModel doesn't have preference values");
-  }
+	/**
+	 * @throws IllegalArgumentException
+	 *             if {@link DataModel} does not have preference values
+	 */
+	public UncenteredCosineSimilarity(DataModel dataModel, Weighting weighting) throws TasteException {
+		super(dataModel, weighting, false);
+		Preconditions.checkArgument(dataModel.hasPreferenceValues(), "DataModel doesn't have preference values");
+	}
 
-  @Override
-  double computeResult(int n, double sumXY, double sumX2, double sumY2, double sumXYdiff2) {
-    if (n == 0) {
-      return Double.NaN;
-    }
-    double denominator = Math.sqrt(sumX2) * Math.sqrt(sumY2);
-    if (denominator == 0.0) {
-      // One or both parties has -all- the same ratings;
-      // can't really say much similarity under this measure
-      return Double.NaN;
-    }
-    return sumXY / denominator;
-  }
+	@Override
+	double computeResult(int n, double sumXY, double sumX2, double sumY2, double sumXYdiff2) {
+		if (n == 0) {
+			return Double.NaN;
+		}
+		double denominator = Math.sqrt(sumX2) * Math.sqrt(sumY2);
+		if (denominator == 0.0) {
+			// One or both parties has -all- the same ratings;
+			// can't really say much similarity under this measure
+			return Double.NaN;
+		}
+		return sumXY / denominator;
+	}
+
+	@Override
+	public String getName() {
+		return "Uncentered Cosine Similarity";
+	}
 
 }

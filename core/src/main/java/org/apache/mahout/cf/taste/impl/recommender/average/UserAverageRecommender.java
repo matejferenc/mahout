@@ -41,9 +41,4 @@ public class UserAverageRecommender extends AbstractRecommender {
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
-		return estimatePreference(userID, itemID);
-	}
-
 }

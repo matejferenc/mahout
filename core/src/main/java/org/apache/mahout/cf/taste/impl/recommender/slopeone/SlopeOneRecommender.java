@@ -240,10 +240,5 @@ public final class SlopeOneRecommender extends AbstractRecommender {
 	SlopeOneRecommender r = new SlopeOneRecommender(model);
   }
 
-@Override
-public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
-	// TODO Auto-generated method stub
-	return 0;
-}
   
 }
