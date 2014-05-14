@@ -44,4 +44,6 @@ public interface RecommenderBuilder {
   
   String getName();
   
+  void freeReferences();
+  
 }

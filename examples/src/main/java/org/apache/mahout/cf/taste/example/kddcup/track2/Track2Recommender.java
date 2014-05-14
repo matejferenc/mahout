@@ -86,10 +86,4 @@ public final class Track2Recommender implements Recommender {
     return "Track1Recommender[recommender:" + recommender + ']';
   }
 
-@Override
-public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
-	// TODO Auto-generated method stub
-	return 0;
-}
-  
 }

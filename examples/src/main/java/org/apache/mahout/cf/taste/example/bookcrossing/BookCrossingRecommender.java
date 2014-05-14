@@ -86,11 +86,5 @@ public final class BookCrossingRecommender implements Recommender {
   public String toString() {
     return "BookCrossingRecommender[recommender:" + recommender + ']';
   }
-
-@Override
-public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
-	// TODO Auto-generated method stub
-	return 0;
-}
-  
+ 
 }

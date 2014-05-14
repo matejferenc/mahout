@@ -28,5 +28,15 @@ final class BookCrossingBooleanRecommenderBuilder implements RecommenderBuilder 
   public Recommender buildRecommender(DataModel dataModel) throws TasteException {
     return new BookCrossingBooleanRecommender(dataModel);
   }
+  
+  public String getName(){
+  return "Book Crossing Boolean Recommender Builder";
+  }
+
+@Override
+public void freeReferences() {
+	// TODO Auto-generated method stub
+	
+}
 
 }

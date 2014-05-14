@@ -29,4 +29,14 @@ final class Track1RecommenderBuilder implements RecommenderBuilder {
     return new Track1Recommender(dataModel);
   }
   
+  public String getName(){
+  return "Track 1 Recommender Builder";
+  }
+
+@Override
+public void freeReferences() {
+	// TODO Auto-generated method stub
+	
+}
+  
 }

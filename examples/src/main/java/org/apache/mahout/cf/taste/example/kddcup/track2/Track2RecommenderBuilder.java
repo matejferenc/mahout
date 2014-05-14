@@ -30,4 +30,14 @@ final class Track2RecommenderBuilder implements RecommenderBuilder {
     return new Track2Recommender(dataModel, ((KDDCupDataModel) dataModel).getDataFileDirectory());
   }
   
+  public String getName(){
+  return "Track 2 Recommender Builder";
+  }
+
+@Override
+public void freeReferences() {
+	// TODO Auto-generated method stub
+	
+}
+  
 }

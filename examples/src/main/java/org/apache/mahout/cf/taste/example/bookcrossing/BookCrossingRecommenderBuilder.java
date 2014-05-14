@@ -29,4 +29,14 @@ final class BookCrossingRecommenderBuilder implements RecommenderBuilder {
     return new BookCrossingRecommender(dataModel);
   }
   
+  public String getName(){
+  return "Book Crossing Recommender Builder";
+  }
+
+@Override
+public void freeReferences() {
+	// TODO Auto-generated method stub
+	
+}
+  
 }
