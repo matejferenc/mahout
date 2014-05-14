@@ -95,11 +95,14 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 	}
 
 	@Override
-	public double evaluate(RecommenderBuilder recommenderBuilder, DataModelBuilder dataModelBuilder, DataModel dataModel, double trainingPercentage, double evaluationPercentage) throws TasteException {
+	public double evaluate(RecommenderBuilder recommenderBuilder, DataModelBuilder dataModelBuilder, DataModel dataModel, double trainingPercentage,
+			double evaluationPercentage) throws TasteException {
 		Preconditions.checkNotNull(recommenderBuilder);
 		Preconditions.checkNotNull(dataModel);
-		Preconditions.checkArgument(trainingPercentage >= 0.0 && trainingPercentage <= 1.0, "Invalid trainingPercentage: " + trainingPercentage + ". Must be: 0.0 <= trainingPercentage <= 1.0");
-		Preconditions.checkArgument(evaluationPercentage >= 0.0 && evaluationPercentage <= 1.0, "Invalid evaluationPercentage: " + evaluationPercentage + ". Must be: 0.0 <= evaluationPercentage <= 1.0");
+		Preconditions.checkArgument(trainingPercentage >= 0.0 && trainingPercentage <= 1.0, "Invalid trainingPercentage: " + trainingPercentage
+				+ ". Must be: 0.0 <= trainingPercentage <= 1.0");
+		Preconditions.checkArgument(evaluationPercentage >= 0.0 && evaluationPercentage <= 1.0, "Invalid evaluationPercentage: " + evaluationPercentage
+				+ ". Must be: 0.0 <= evaluationPercentage <= 1.0");
 
 		log.info("Beginning evaluation using {} of {}", trainingPercentage, dataModel);
 
@@ -124,7 +127,8 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		return result;
 	}
 
-	private void splitOneUsersPrefs(double trainingPercentage, FastByIDMap<PreferenceArray> trainingPrefs, FastByIDMap<PreferenceArray> testPrefs, long userID, DataModel dataModel) throws TasteException {
+	private void splitOneUsersPrefs(double trainingPercentage, FastByIDMap<PreferenceArray> trainingPrefs, FastByIDMap<PreferenceArray> testPrefs, long userID,
+			DataModel dataModel) throws TasteException {
 		List<Preference> oneUserTrainingPrefs = null;
 		List<Preference> oneUserTestPrefs = null;
 		PreferenceArray prefs = dataModel.getPreferencesFromUser(userID);
@@ -175,7 +179,8 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		return computeFinalEvaluation();
 	}
 
-	protected static void execute(Collection<Callable<Void>> callables, AtomicInteger noEstimateCounter, AtomicInteger estimateCounter, RunningAverageAndStdDev timing) throws TasteException {
+	protected static void execute(Collection<Callable<Void>> callables, AtomicInteger noEstimateCounter, AtomicInteger estimateCounter,
+			RunningAverageAndStdDev timing) throws TasteException {
 
 		Collection<Callable<Void>> wrappedCallables = wrapWithStatsCallables(callables, noEstimateCounter, estimateCounter, timing);
 		int numProcessors = Runtime.getRuntime().availableProcessors();
@@ -202,11 +207,12 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		}
 	}
 
-	private static Collection<Callable<Void>> wrapWithStatsCallables(Iterable<Callable<Void>> callables, AtomicInteger noEstimateCounter, AtomicInteger estimateCounter, RunningAverageAndStdDev timing) {
+	private static Collection<Callable<Void>> wrapWithStatsCallables(Iterable<Callable<Void>> callables, AtomicInteger noEstimateCounter,
+			AtomicInteger estimateCounter, RunningAverageAndStdDev timing) {
 		Collection<Callable<Void>> wrapped = Lists.newArrayList();
 		int count = 0;
 		for (Callable<Void> callable : callables) {
-			boolean logStats = count++ % 1000 == 0; // log every 1000 or so iterations
+			boolean logStats = count++ % 100 == 0; // log every 1000 or so iterations
 			wrapped.add(new StatsCallable(callable, logStats, timing, noEstimateCounter, estimateCounter));
 		}
 		return wrapped;
@@ -226,7 +232,8 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		private final AtomicInteger noEstimateCounter;
 		private AtomicInteger estimateCounter;
 
-		public PreferenceEstimateCallable(Recommender recommender, long testUserID, PreferenceArray prefs, AtomicInteger noEstimateCounter, AtomicInteger estimateCounter) {
+		public PreferenceEstimateCallable(Recommender recommender, long testUserID, PreferenceArray prefs, AtomicInteger noEstimateCounter,
+				AtomicInteger estimateCounter) {
 			this.recommender = recommender;
 			this.testUserID = testUserID;
 			this.prefs = prefs;
@@ -255,6 +262,9 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 					estimateCounter.incrementAndGet();
 					estimatedPreference = capEstimatedPreference(estimatedPreference);
 					processOneEstimate(estimatedPreference, realPref);
+				}
+				if (estimateCounter.get() % 1000 == 0) {
+					log.info("Recommended {} preferences", estimateCounter.get());
 				}
 			}
 			return null;
