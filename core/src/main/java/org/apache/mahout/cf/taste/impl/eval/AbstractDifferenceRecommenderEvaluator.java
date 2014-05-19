@@ -206,7 +206,7 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		Collection<Callable<Void>> wrapped = Lists.newArrayList();
 		int count = 0;
 		for (Callable<Void> callable : callables) {
-			boolean logStats = count++ % 1000 == 0; // log every 1000 or so iterations
+			boolean logStats = count++ % 100 == 0; // log every 1000 or so iterations
 			wrapped.add(new StatsCallable(callable, logStats, timing, noEstimateCounter, estimateCounter));
 		}
 		return wrapped;
@@ -252,7 +252,10 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 				if (Float.isNaN(estimatedPreference)) {
 					noEstimateCounter.incrementAndGet();
 				} else {
-					estimateCounter.incrementAndGet();
+					int counter = estimateCounter.incrementAndGet();
+					if(counter % 1000 == 0){
+						log.info("Successfully estimated: {} preferences", counter);
+					}
 					estimatedPreference = capEstimatedPreference(estimatedPreference);
 					processOneEstimate(estimatedPreference, realPref);
 				}

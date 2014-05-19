@@ -25,44 +25,48 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class StatsCallable implements Callable<Void> {
-  
-  private static final Logger log = LoggerFactory.getLogger(StatsCallable.class);
-  
-  private final Callable<Void> delegate;
-  private final boolean logStats;
-  private final RunningAverageAndStdDev timing;
-  private final AtomicInteger noEstimateCounter;
-  private final AtomicInteger estimateCounter;
-  
-  public StatsCallable(Callable<Void> delegate,
-                boolean logStats,
-                RunningAverageAndStdDev timing,
-                AtomicInteger noEstimateCounter,
-                AtomicInteger estimateCounter) {
-    this.delegate = delegate;
-    this.logStats = logStats;
-    this.timing = timing;
-    this.noEstimateCounter = noEstimateCounter;
-    this.estimateCounter = estimateCounter;
-  }
-  
-  @Override
-  public Void call() throws Exception {
-    long start = System.currentTimeMillis();
-    delegate.call();
-    long end = System.currentTimeMillis();
-    timing.addDatum(end - start);
-    if (logStats) {
-      Runtime runtime = Runtime.getRuntime();
-      int average = (int) timing.getAverage();
-      log.info("Average time per recommendation: {}ms", average);
-      long totalMemory = runtime.totalMemory();
-      long memory = totalMemory - runtime.freeMemory();
-      log.info("Approximate memory used: {}MB / {}MB", memory / 1000000L, totalMemory / 1000000L);
-      log.info("Recommended in {} cases", estimateCounter.get());
-      log.info("Unable to recommend in {} cases", noEstimateCounter.get());
-    }
-    return null;
-  }
+
+	private static final Logger log = LoggerFactory.getLogger(StatsCallable.class);
+
+	private Callable<Void> delegate;
+	private final boolean logStats;
+	private RunningAverageAndStdDev timing;
+	private AtomicInteger noEstimateCounter;
+	private AtomicInteger estimateCounter;
+
+	public StatsCallable(Callable<Void> delegate, boolean logStats, RunningAverageAndStdDev timing, AtomicInteger noEstimateCounter, AtomicInteger estimateCounter) {
+		this.delegate = delegate;
+		this.logStats = logStats;
+		this.timing = timing;
+		this.noEstimateCounter = noEstimateCounter;
+		this.estimateCounter = estimateCounter;
+	}
+
+	@Override
+	public Void call() throws Exception {
+		long start = System.currentTimeMillis();
+		delegate.call();
+		long end = System.currentTimeMillis();
+		timing.addDatum(end - start);
+		if (logStats) {
+			Runtime runtime = Runtime.getRuntime();
+			int average = (int) timing.getAverage();
+			log.info("Average time per recommendation: {}ms", average);
+			long totalMemory = runtime.totalMemory();
+			long memory = totalMemory - runtime.freeMemory();
+			log.info("Approximate memory used: {}MB / {}MB", memory / 1000000L, totalMemory / 1000000L);
+			log.info("Recommended in {} cases", estimateCounter.get());
+			log.info("Unable to recommend in {} cases", noEstimateCounter.get());
+		}
+		release();
+		return null;
+	}
+
+	private void release() {
+		delegate = null;
+		timing = null;
+		noEstimateCounter = null;
+		estimateCounter = null;
+	}
 
 }
