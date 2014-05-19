@@ -58,5 +58,9 @@ final class HybridSimilarity extends AbstractItemSimilarity {
   public void refresh(Collection<Refreshable> alreadyRefreshed) {
     cfSimilarity.refresh(alreadyRefreshed);
   }
+  
+  public String getName(){
+  return "Hybrid Similarity";
+  }
 
 }

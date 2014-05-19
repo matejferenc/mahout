@@ -28,21 +28,21 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
  */
 public interface RecommenderBuilder {
 
-	/**
-	 * <p>
-	 * Builds a {@link Recommender} implementation to be evaluated, using the given {@link DataModel}.
-	 * </p>
-	 * 
-	 * @param dataModel
-	 *            {@link DataModel} to build the {@link Recommender} on
-	 * @return {@link Recommender} based upon the given {@link DataModel}
-	 * @throws TasteException
-	 *             if an error occurs while accessing the {@link DataModel}
-	 */
-	Recommender buildRecommender(DataModel dataModel) throws TasteException;
-
-	String getName();
-
-	void freeReferences();
-
+  /**
+   * <p>
+   * Builds a {@link Recommender} implementation to be evaluated, using the given {@link DataModel}.
+   * </p>
+   * 
+   * @param dataModel
+   *          {@link DataModel} to build the {@link Recommender} on
+   * @return {@link Recommender} based upon the given {@link DataModel}
+   * @throws TasteException
+   *           if an error occurs while accessing the {@link DataModel}
+   */
+  Recommender buildRecommender(DataModel dataModel) throws TasteException;
+  
+  String getName();
+  
+  void freeReferences();
+  
 }

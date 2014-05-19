@@ -183,7 +183,7 @@ private float nullPreferenceValue;
     }
 
     Iterator<String> tokens = delimiterPattern.split(line).iterator();
-    int itemID = 1;
+    int itemID = 0;
     while(tokens.hasNext()){
     	String next = tokens.next();
     	float preferenceValue = Float.parseFloat(next);

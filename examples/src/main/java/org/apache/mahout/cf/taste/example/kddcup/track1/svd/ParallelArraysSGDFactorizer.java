@@ -261,5 +261,9 @@ public class ParallelArraysSGDFactorizer implements Factorizer {
   public void refresh(Collection<Refreshable> alreadyRefreshed) {
     // do nothing
   }
+  
+  public String getName(){
+  return "Parallel Arrays SGD Factorizer";
+  }
 
 }

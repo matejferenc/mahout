@@ -102,5 +102,9 @@ final class TrackItemSimilarity implements ItemSimilarity {
   public void refresh(Collection<Refreshable> alreadyRefreshed) {
     // do nothing
   }
+  
+  public String getName(){
+  return "Track Item Similarity";
+  }
 
 }

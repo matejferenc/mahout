@@ -54,4 +54,7 @@ public class SQL92JDBCItemSimilarity extends AbstractJDBCItemSimilarity {
               + itemAIDColumn + "=? OR " + itemBIDColumn + "=?");
   }
 
+  public String getName(){
+  return "SQL 92 JDBC Item Similarity";
+  }
 }

@@ -48,4 +48,7 @@ public class SQL92JDBCInMemoryItemSimilarity extends AbstractJDBCInMemoryItemSim
     super(dataSource, getAllItemSimilaritiesSQL);
   }
 
+  public String getName(){
+  return "SQL 92 JDBC In Memory Item Similarity";
+  }
 }
