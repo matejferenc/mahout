@@ -32,7 +32,7 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import com.google.common.base.Preconditions;
 
 /** Abstract superclass encapsulating functionality that is common to most implementations in this package. */
-abstract class AbstractSimilarity extends AbstractItemSimilarity implements UserSimilarity {
+public abstract class AbstractSimilarity extends AbstractItemSimilarity implements UserSimilarity {
 
   private PreferenceInferrer inferrer;
   private final boolean weighted;
@@ -46,7 +46,7 @@ abstract class AbstractSimilarity extends AbstractItemSimilarity implements User
    * Creates a possibly weighted {@link AbstractSimilarity}.
    * </p>
    */
-  AbstractSimilarity(final DataModel dataModel, Weighting weighting, boolean centerData) throws TasteException {
+  public AbstractSimilarity(final DataModel dataModel, Weighting weighting, boolean centerData) throws TasteException {
     super(dataModel);
     this.weighted = weighting == Weighting.WEIGHTED;
     this.centerData = centerData;
@@ -104,7 +104,7 @@ abstract class AbstractSimilarity extends AbstractItemSimilarity implements User
    * @return similarity value between -1.0 and 1.0, inclusive, or {@link Double#NaN} if no similarity can be
    *         computed (e.g. when no items have been rated by both users
    */
-  abstract double computeResult(int n, double sumXY, double sumX2, double sumY2, double sumXYdiff2);
+  public abstract double computeResult(int n, double sumXY, double sumX2, double sumY2, double sumXYdiff2);
   
   @Override
   public double userSimilarity(long userID1, long userID2) throws TasteException {
