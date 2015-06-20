@@ -29,4 +29,6 @@ public interface Factorizer extends Refreshable {
   
   String getName();
 
+  String getShortName();
+
 }

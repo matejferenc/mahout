@@ -49,5 +49,7 @@ public interface UserNeighborhood extends Refreshable {
   long[] getUserNeighborhood(long userID, long itemID) throws TasteException;
   
   String getName();
+
+  String getShortName();
   
 }

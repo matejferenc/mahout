@@ -56,5 +56,7 @@ public interface UserSimilarity extends Refreshable {
   void setPreferenceInferrer(PreferenceInferrer inferrer);
   
   String getName();
+
+  String getShortName();
   
 }

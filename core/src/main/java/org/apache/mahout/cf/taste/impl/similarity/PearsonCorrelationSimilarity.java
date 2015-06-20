@@ -93,5 +93,10 @@ public final class PearsonCorrelationSimilarity extends AbstractSimilarity {
 	public String getName() {
 		return "Pearson correlation similarity";
 	}
+	
+	@Override
+	public String getShortName() {
+		return "PC";
+	}
 
 }

@@ -73,4 +73,9 @@ public final class EuclideanDistanceSimilarity extends AbstractSimilarity {
 		return "Euclidian Distance Similarity";
 	}
 
+	@Override
+	public String getShortName() {
+		return "ED";
+	}
+
 }

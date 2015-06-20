@@ -89,7 +89,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
         Runtime.getRuntime().availableProcessors());
   }
 
-  public ALSWRFactorizer(DataModel dataModel, int numFeatures, double lambda, int numIterations) throws TasteException {
+	public ALSWRFactorizer(DataModel dataModel, int numFeatures, double lambda, int numIterations) throws TasteException {
     this(dataModel, numFeatures, lambda, numIterations, false, DEFAULT_ALPHA);
   }
 
@@ -307,8 +307,13 @@ public class ALSWRFactorizer extends AbstractFactorizer {
     return ratings;
   }
 
-@Override
-public String getName() {
-	return "ALSWR Factorizer with lambda: " + lambda + " with iterations: " + numIterations + " with features: " + numFeatures;
-}
+	@Override
+	public String getName() {
+		return "ALSWR Factorizer with lambda: " + lambda + " with iterations: " + numIterations + " with features: " + numFeatures;
+	}
+	
+	@Override
+	public String getShortName() {
+		return "ALSWR" + numIterations + "I" + numFeatures + "F";
+	}
 }

@@ -148,8 +148,13 @@ public final class NearestNUserNeighborhood extends AbstractUserNeighborhood {
     }
   }
 
-@Override
-public String getName() {
-	return "Nearest N User Neighborhood " + "for N=" + n + " with user similarity: " + userSimilarity.getName();
-}
+	@Override
+	public String getName() {
+		return "Nearest N User Neighborhood " + "for N=" + n + " with user similarity: " + userSimilarity.getName();
+	}
+	
+	@Override
+	public String getShortName() {
+		return "N" + n;
+	}
 }
