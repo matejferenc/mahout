@@ -136,4 +136,9 @@ public final class SpearmanCorrelationSimilarity implements UserSimilarity {
 		return "Spearman Correlation Similarity";
 	}
 
+	@Override
+	public String getShortName() {
+		return null;
+	}
+
 }

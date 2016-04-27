@@ -104,4 +104,9 @@ public final class CachingUserSimilarity implements UserSimilarity {
 		return "Caching User Similarity";
 	}
 
+	@Override
+	public String getShortName() {
+		return null;
+	}
+
 }

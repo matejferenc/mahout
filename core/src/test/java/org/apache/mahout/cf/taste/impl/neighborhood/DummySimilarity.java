@@ -28,46 +28,50 @@ import java.util.Collection;
 
 final class DummySimilarity extends AbstractItemSimilarity implements UserSimilarity {
 
-  DummySimilarity(DataModel dataModel) {
-    super(dataModel);
-  }
-  
-  @Override
-  public double userSimilarity(long userID1, long userID2) throws TasteException {
-    DataModel dataModel = getDataModel();
-    return 1.0 / (1.0 + Math.abs(dataModel.getPreferencesFromUser(userID1).get(0).getValue()
-                                 - dataModel.getPreferencesFromUser(userID2).get(0).getValue()));
-  }
-  
-  @Override
-  public double itemSimilarity(long itemID1, long itemID2) {
-    // Make up something wacky
-    return 1.0 / (1.0 + Math.abs(itemID1 - itemID2));
-  }
+	DummySimilarity(DataModel dataModel) {
+		super(dataModel);
+	}
 
-  @Override
-  public double[] itemSimilarities(long itemID1, long[] itemID2s) {
-    int length = itemID2s.length;
-    double[] result = new double[length];
-    for (int i = 0; i < length; i++) {
-      result[i] = itemSimilarity(itemID1, itemID2s[i]);
-    }
-    return result;
-  }
-  
-  @Override
-  public void setPreferenceInferrer(PreferenceInferrer inferrer) {
-    throw new UnsupportedOperationException();
-  }
+	@Override
+	public double userSimilarity(long userID1, long userID2) throws TasteException {
+		DataModel dataModel = getDataModel();
+		return 1.0 / (1.0 + Math.abs(dataModel.getPreferencesFromUser(userID1).get(0).getValue() - dataModel.getPreferencesFromUser(userID2).get(0).getValue()));
+	}
 
-  @Override
-  public void refresh(Collection<Refreshable> alreadyRefreshed) {
-  // do nothing
-  }
+	@Override
+	public double itemSimilarity(long itemID1, long itemID2) {
+		// Make up something wacky
+		return 1.0 / (1.0 + Math.abs(itemID1 - itemID2));
+	}
 
-@Override
-public String getName() {
-	return "Dummy Similarity";
-}
-  
+	@Override
+	public double[] itemSimilarities(long itemID1, long[] itemID2s) {
+		int length = itemID2s.length;
+		double[] result = new double[length];
+		for (int i = 0; i < length; i++) {
+			result[i] = itemSimilarity(itemID1, itemID2s[i]);
+		}
+		return result;
+	}
+
+	@Override
+	public void setPreferenceInferrer(PreferenceInferrer inferrer) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void refresh(Collection<Refreshable> alreadyRefreshed) {
+		// do nothing
+	}
+
+	@Override
+	public String getName() {
+		return "Dummy Similarity";
+	}
+
+	@Override
+	public String getShortName() {
+		return null;
+	}
+
 }

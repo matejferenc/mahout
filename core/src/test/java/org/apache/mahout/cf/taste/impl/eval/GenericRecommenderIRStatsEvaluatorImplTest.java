@@ -49,8 +49,11 @@ public final class GenericRecommenderIRStatsEvaluatorImplTest extends TasteTestC
 
 			@Override
 			public void freeReferences() {
-				// TODO Auto-generated method stub
-				
+			}
+
+			@Override
+			public String getShortName() {
+				return null;
 			}
 		};
 		DataModelBuilder dataModelBuilder = new DataModelBuilder() {

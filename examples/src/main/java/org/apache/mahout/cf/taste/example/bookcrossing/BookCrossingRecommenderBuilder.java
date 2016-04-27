@@ -23,20 +23,25 @@ import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
 final class BookCrossingRecommenderBuilder implements RecommenderBuilder {
-  
-  @Override
-  public Recommender buildRecommender(DataModel dataModel) throws TasteException {
-    return new BookCrossingRecommender(dataModel);
-  }
-  
-  public String getName(){
-  return "Book Crossing Recommender Builder";
-  }
 
-@Override
-public void freeReferences() {
-	// TODO Auto-generated method stub
-	
-}
-  
+	@Override
+	public Recommender buildRecommender(DataModel dataModel) throws TasteException {
+		return new BookCrossingRecommender(dataModel);
+	}
+
+	public String getName() {
+		return "Book Crossing Recommender Builder";
+	}
+
+	@Override
+	public void freeReferences() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String getShortName() {
+		return null;
+	}
+
 }

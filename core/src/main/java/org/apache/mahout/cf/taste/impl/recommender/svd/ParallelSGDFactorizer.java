@@ -330,4 +330,9 @@ public class ParallelSGDFactorizer extends AbstractFactorizer {
 	public String getName() {
 		return "Parallel SGD Factorizer";
 	}
+
+	@Override
+	public String getShortName() {
+		return null;
+	}
 }

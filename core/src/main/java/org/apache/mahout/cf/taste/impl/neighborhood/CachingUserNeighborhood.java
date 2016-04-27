@@ -76,4 +76,9 @@ public final class CachingUserNeighborhood implements UserNeighborhood {
 	public String getName() {
 		return "Caching User Neighborhood";
 	}
+
+	@Override
+	public String getShortName() {
+		return null;
+	}
 }

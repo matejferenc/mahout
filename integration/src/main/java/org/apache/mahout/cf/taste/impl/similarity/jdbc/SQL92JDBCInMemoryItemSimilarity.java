@@ -24,31 +24,31 @@ import javax.sql.DataSource;
 
 public class SQL92JDBCInMemoryItemSimilarity extends AbstractJDBCInMemoryItemSimilarity {
 
-  static final String DEFAULT_GET_ALL_ITEMSIMILARITIES_SQL =
-      "SELECT " + AbstractJDBCItemSimilarity.DEFAULT_ITEM_A_ID_COLUMN + ", "
-      + AbstractJDBCItemSimilarity.DEFAULT_ITEM_B_ID_COLUMN + ", "
-      + AbstractJDBCItemSimilarity.DEFAULT_SIMILARITY_COLUMN + " FROM "
-      + AbstractJDBCItemSimilarity.DEFAULT_SIMILARITY_TABLE;
+	static final String DEFAULT_GET_ALL_ITEMSIMILARITIES_SQL = "SELECT " + AbstractJDBCItemSimilarity.DEFAULT_ITEM_A_ID_COLUMN + ", " + AbstractJDBCItemSimilarity.DEFAULT_ITEM_B_ID_COLUMN + ", "
+			+ AbstractJDBCItemSimilarity.DEFAULT_SIMILARITY_COLUMN + " FROM " + AbstractJDBCItemSimilarity.DEFAULT_SIMILARITY_TABLE;
 
+	public SQL92JDBCInMemoryItemSimilarity() throws TasteException {
+		this(AbstractJDBCComponent.lookupDataSource(AbstractJDBCComponent.DEFAULT_DATASOURCE_NAME), DEFAULT_GET_ALL_ITEMSIMILARITIES_SQL);
+	}
 
-  public SQL92JDBCInMemoryItemSimilarity() throws TasteException {
-    this(AbstractJDBCComponent.lookupDataSource(AbstractJDBCComponent.DEFAULT_DATASOURCE_NAME),
-         DEFAULT_GET_ALL_ITEMSIMILARITIES_SQL);
-  }
+	public SQL92JDBCInMemoryItemSimilarity(String dataSourceName) throws TasteException {
+		this(AbstractJDBCComponent.lookupDataSource(dataSourceName), DEFAULT_GET_ALL_ITEMSIMILARITIES_SQL);
+	}
 
-  public SQL92JDBCInMemoryItemSimilarity(String dataSourceName) throws TasteException {
-    this(AbstractJDBCComponent.lookupDataSource(dataSourceName), DEFAULT_GET_ALL_ITEMSIMILARITIES_SQL);
-  }
+	public SQL92JDBCInMemoryItemSimilarity(DataSource dataSource) {
+		this(dataSource, DEFAULT_GET_ALL_ITEMSIMILARITIES_SQL);
+	}
 
-  public SQL92JDBCInMemoryItemSimilarity(DataSource dataSource) {
-    this(dataSource, DEFAULT_GET_ALL_ITEMSIMILARITIES_SQL);
-  }
+	public SQL92JDBCInMemoryItemSimilarity(DataSource dataSource, String getAllItemSimilaritiesSQL) {
+		super(dataSource, getAllItemSimilaritiesSQL);
+	}
 
-  public SQL92JDBCInMemoryItemSimilarity(DataSource dataSource, String getAllItemSimilaritiesSQL) {
-    super(dataSource, getAllItemSimilaritiesSQL);
-  }
+	public String getName() {
+		return "SQL 92 JDBC In Memory Item Similarity";
+	}
 
-  public String getName(){
-  return "SQL 92 JDBC In Memory Item Similarity";
-  }
+	@Override
+	public String getShortName() {
+		return null;
+	}
 }

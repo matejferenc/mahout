@@ -24,20 +24,23 @@ import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
 final class Track2RecommenderBuilder implements RecommenderBuilder {
-  
-  @Override
-  public Recommender buildRecommender(DataModel dataModel) throws TasteException {
-    return new Track2Recommender(dataModel, ((KDDCupDataModel) dataModel).getDataFileDirectory());
-  }
-  
-  public String getName(){
-  return "Track 2 Recommender Builder";
-  }
 
-@Override
-public void freeReferences() {
-	// TODO Auto-generated method stub
-	
-}
-  
+	@Override
+	public Recommender buildRecommender(DataModel dataModel) throws TasteException {
+		return new Track2Recommender(dataModel, ((KDDCupDataModel) dataModel).getDataFileDirectory());
+	}
+
+	public String getName() {
+		return "Track 2 Recommender Builder";
+	}
+
+	@Override
+	public void freeReferences() {
+	}
+
+	@Override
+	public String getShortName() {
+		return null;
+	}
+
 }

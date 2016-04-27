@@ -103,4 +103,9 @@ public final class ThresholdUserNeighborhood extends AbstractUserNeighborhood {
 		return "Threshold User Neighborhood";
 	}
 
+	@Override
+	public String getShortName() {
+		return null;
+	}
+
 }

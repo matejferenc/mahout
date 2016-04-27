@@ -71,4 +71,9 @@ public final class UncenteredCosineSimilarity extends AbstractSimilarity {
 		return "Uncentered Cosine Similarity";
 	}
 
+	@Override
+	public String getShortName() {
+		return null;
+	}
+
 }

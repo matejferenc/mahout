@@ -124,4 +124,9 @@ public final class TanimotoCoefficientSimilarity extends AbstractItemSimilarity 
 		return "Tanimoto Coefficient Similarity";
 	}
 
+	@Override
+	public String getShortName() {
+		return null;
+	}
+
 }

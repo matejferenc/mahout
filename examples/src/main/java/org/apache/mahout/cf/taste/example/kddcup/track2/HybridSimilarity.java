@@ -30,37 +30,42 @@ import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 
 final class HybridSimilarity extends AbstractItemSimilarity {
 
-  private final ItemSimilarity cfSimilarity;
-  private final ItemSimilarity contentSimilarity;
+	private final ItemSimilarity cfSimilarity;
+	private final ItemSimilarity contentSimilarity;
 
-  HybridSimilarity(DataModel dataModel, File dataFileDirectory) throws IOException {
-    super(dataModel);
-    cfSimilarity = new LogLikelihoodSimilarity(dataModel);
-    contentSimilarity = new TrackItemSimilarity(dataFileDirectory);
-  }
+	HybridSimilarity(DataModel dataModel, File dataFileDirectory) throws IOException {
+		super(dataModel);
+		cfSimilarity = new LogLikelihoodSimilarity(dataModel);
+		contentSimilarity = new TrackItemSimilarity(dataFileDirectory);
+	}
 
-  @Override
-  public double itemSimilarity(long itemID1, long itemID2) throws TasteException {
-    return contentSimilarity.itemSimilarity(itemID1, itemID2) * cfSimilarity.itemSimilarity(itemID1, itemID2);
-  }
+	@Override
+	public double itemSimilarity(long itemID1, long itemID2) throws TasteException {
+		return contentSimilarity.itemSimilarity(itemID1, itemID2) * cfSimilarity.itemSimilarity(itemID1, itemID2);
+	}
 
-  @Override
-  public double[] itemSimilarities(long itemID1, long[] itemID2s) throws TasteException {
-    double[] result = contentSimilarity.itemSimilarities(itemID1, itemID2s);
-    double[] multipliers = cfSimilarity.itemSimilarities(itemID1, itemID2s);
-    for (int i = 0; i < result.length; i++) {
-      result[i] *= multipliers[i];
-    }
-    return result;
-  }
+	@Override
+	public double[] itemSimilarities(long itemID1, long[] itemID2s) throws TasteException {
+		double[] result = contentSimilarity.itemSimilarities(itemID1, itemID2s);
+		double[] multipliers = cfSimilarity.itemSimilarities(itemID1, itemID2s);
+		for (int i = 0; i < result.length; i++) {
+			result[i] *= multipliers[i];
+		}
+		return result;
+	}
 
-  @Override
-  public void refresh(Collection<Refreshable> alreadyRefreshed) {
-    cfSimilarity.refresh(alreadyRefreshed);
-  }
-  
-  public String getName(){
-  return "Hybrid Similarity";
-  }
+	@Override
+	public void refresh(Collection<Refreshable> alreadyRefreshed) {
+		cfSimilarity.refresh(alreadyRefreshed);
+	}
+
+	public String getName() {
+		return "Hybrid Similarity";
+	}
+
+	@Override
+	public String getShortName() {
+		return null;
+	}
 
 }

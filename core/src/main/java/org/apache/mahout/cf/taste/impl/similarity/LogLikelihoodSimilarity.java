@@ -29,98 +29,92 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import org.apache.mahout.math.stats.LogLikelihood;
 
 /**
- * See <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.14.5962">
- * http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.14.5962</a> and
- * <a href="http://tdunning.blogspot.com/2008/03/surprise-and-coincidence.html">
- * http://tdunning.blogspot.com/2008/03/surprise-and-coincidence.html</a>.
+ * See <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.14.5962"> http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.14.5962</a> and <a
+ * href="http://tdunning.blogspot.com/2008/03/surprise-and-coincidence.html"> http://tdunning.blogspot.com/2008/03/surprise-and-coincidence.html</a>.
  */
 public final class LogLikelihoodSimilarity extends AbstractItemSimilarity implements UserSimilarity {
 
-  public LogLikelihoodSimilarity(DataModel dataModel) {
-    super(dataModel);
-  }
-  
-  /**
-   * @throws UnsupportedOperationException
-   */
-  @Override
-  public void setPreferenceInferrer(PreferenceInferrer inferrer) {
-    throw new UnsupportedOperationException();
-  }
-  
-  @Override
-  public double userSimilarity(long userID1, long userID2) throws TasteException {
+	public LogLikelihoodSimilarity(DataModel dataModel) {
+		super(dataModel);
+	}
 
-    DataModel dataModel = getDataModel();
-    FastIDSet prefs1 = dataModel.getItemIDsFromUser(userID1);
-    FastIDSet prefs2 = dataModel.getItemIDsFromUser(userID2);
-    
-    long prefs1Size = prefs1.size();
-    long prefs2Size = prefs2.size();
-    long intersectionSize =
-        prefs1Size < prefs2Size ? prefs2.intersectionSize(prefs1) : prefs1.intersectionSize(prefs2);
-    if (intersectionSize == 0) {
-      return Double.NaN;
-    }
-    long numItems = dataModel.getNumItems();
-    double logLikelihood =
-        LogLikelihood.logLikelihoodRatio(intersectionSize,
-                                         prefs2Size - intersectionSize,
-                                         prefs1Size - intersectionSize,
-                                         numItems - prefs1Size - prefs2Size + intersectionSize);
-    return 1.0 - 1.0 / (1.0 + logLikelihood);
-  }
-  
-  @Override
-  public double itemSimilarity(long itemID1, long itemID2) throws TasteException {
-    DataModel dataModel = getDataModel();
-    long preferring1 = dataModel.getNumUsersWithPreferenceFor(itemID1);
-    long numUsers = dataModel.getNumUsers();
-    return doItemSimilarity(itemID1, itemID2, preferring1, numUsers);
-  }
+	/**
+	 * @throws UnsupportedOperationException
+	 */
+	@Override
+	public void setPreferenceInferrer(PreferenceInferrer inferrer) {
+		throw new UnsupportedOperationException();
+	}
 
-  @Override
-  public double[] itemSimilarities(long itemID1, long[] itemID2s) throws TasteException {
-    DataModel dataModel = getDataModel();
-    long preferring1 = dataModel.getNumUsersWithPreferenceFor(itemID1);
-    long numUsers = dataModel.getNumUsers();
-    int length = itemID2s.length;
-    double[] result = new double[length];
-    for (int i = 0; i < length; i++) {
-      result[i] = doItemSimilarity(itemID1, itemID2s[i], preferring1, numUsers);
-    }
-    return result;
-  }
+	@Override
+	public double userSimilarity(long userID1, long userID2) throws TasteException {
 
-  private double doItemSimilarity(long itemID1, long itemID2, long preferring1, long numUsers) throws TasteException {
-    DataModel dataModel = getDataModel();
-    long preferring1and2 = dataModel.getNumUsersWithPreferenceFor(itemID1, itemID2);
-    if (preferring1and2 == 0) {
-      return Double.NaN;
-    }
-    long preferring2 = dataModel.getNumUsersWithPreferenceFor(itemID2);
-    double logLikelihood =
-        LogLikelihood.logLikelihoodRatio(preferring1and2,
-                                         preferring2 - preferring1and2,
-                                         preferring1 - preferring1and2,
-                                         numUsers - preferring1 - preferring2 + preferring1and2);
-    return 1.0 - 1.0 / (1.0 + logLikelihood);
-  }
+		DataModel dataModel = getDataModel();
+		FastIDSet prefs1 = dataModel.getItemIDsFromUser(userID1);
+		FastIDSet prefs2 = dataModel.getItemIDsFromUser(userID2);
 
-  @Override
-  public void refresh(Collection<Refreshable> alreadyRefreshed) {
-    alreadyRefreshed = RefreshHelper.buildRefreshed(alreadyRefreshed);
-    RefreshHelper.maybeRefresh(alreadyRefreshed, getDataModel());
-  }
-  
-  @Override
-  public String toString() {
-    return "LogLikelihoodSimilarity[dataModel:" + getDataModel() + ']';
-  }
+		long prefs1Size = prefs1.size();
+		long prefs2Size = prefs2.size();
+		long intersectionSize = prefs1Size < prefs2Size ? prefs2.intersectionSize(prefs1) : prefs1.intersectionSize(prefs2);
+		if (intersectionSize == 0) {
+			return Double.NaN;
+		}
+		long numItems = dataModel.getNumItems();
+		double logLikelihood = LogLikelihood.logLikelihoodRatio(intersectionSize, prefs2Size - intersectionSize, prefs1Size - intersectionSize, numItems - prefs1Size - prefs2Size + intersectionSize);
+		return 1.0 - 1.0 / (1.0 + logLikelihood);
+	}
 
-@Override
-public String getName() {
-	return "Log Likelihood Similarity";
-}
-  
+	@Override
+	public double itemSimilarity(long itemID1, long itemID2) throws TasteException {
+		DataModel dataModel = getDataModel();
+		long preferring1 = dataModel.getNumUsersWithPreferenceFor(itemID1);
+		long numUsers = dataModel.getNumUsers();
+		return doItemSimilarity(itemID1, itemID2, preferring1, numUsers);
+	}
+
+	@Override
+	public double[] itemSimilarities(long itemID1, long[] itemID2s) throws TasteException {
+		DataModel dataModel = getDataModel();
+		long preferring1 = dataModel.getNumUsersWithPreferenceFor(itemID1);
+		long numUsers = dataModel.getNumUsers();
+		int length = itemID2s.length;
+		double[] result = new double[length];
+		for (int i = 0; i < length; i++) {
+			result[i] = doItemSimilarity(itemID1, itemID2s[i], preferring1, numUsers);
+		}
+		return result;
+	}
+
+	private double doItemSimilarity(long itemID1, long itemID2, long preferring1, long numUsers) throws TasteException {
+		DataModel dataModel = getDataModel();
+		long preferring1and2 = dataModel.getNumUsersWithPreferenceFor(itemID1, itemID2);
+		if (preferring1and2 == 0) {
+			return Double.NaN;
+		}
+		long preferring2 = dataModel.getNumUsersWithPreferenceFor(itemID2);
+		double logLikelihood = LogLikelihood.logLikelihoodRatio(preferring1and2, preferring2 - preferring1and2, preferring1 - preferring1and2, numUsers - preferring1 - preferring2 + preferring1and2);
+		return 1.0 - 1.0 / (1.0 + logLikelihood);
+	}
+
+	@Override
+	public void refresh(Collection<Refreshable> alreadyRefreshed) {
+		alreadyRefreshed = RefreshHelper.buildRefreshed(alreadyRefreshed);
+		RefreshHelper.maybeRefresh(alreadyRefreshed, getDataModel());
+	}
+
+	@Override
+	public String toString() {
+		return "LogLikelihoodSimilarity[dataModel:" + getDataModel() + ']';
+	}
+
+	@Override
+	public String getName() {
+		return "Log Likelihood Similarity";
+	}
+
+	@Override
+	public String getShortName() {
+		return null;
+	}
+
 }

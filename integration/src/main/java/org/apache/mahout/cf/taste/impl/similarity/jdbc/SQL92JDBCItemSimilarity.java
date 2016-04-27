@@ -23,38 +23,29 @@ import javax.sql.DataSource;
 
 public class SQL92JDBCItemSimilarity extends AbstractJDBCItemSimilarity {
 
-  public SQL92JDBCItemSimilarity() throws TasteException {
-    this(DEFAULT_DATASOURCE_NAME);
-  }
+	public SQL92JDBCItemSimilarity() throws TasteException {
+		this(DEFAULT_DATASOURCE_NAME);
+	}
 
-  public SQL92JDBCItemSimilarity(String dataSourceName) throws TasteException {
-    this(lookupDataSource(dataSourceName));
-  }
+	public SQL92JDBCItemSimilarity(String dataSourceName) throws TasteException {
+		this(lookupDataSource(dataSourceName));
+	}
 
-  public SQL92JDBCItemSimilarity(DataSource dataSource) {
-    this(dataSource,
-         DEFAULT_SIMILARITY_TABLE,
-         DEFAULT_ITEM_A_ID_COLUMN,
-         DEFAULT_ITEM_B_ID_COLUMN,
-         DEFAULT_SIMILARITY_COLUMN);
-  }
+	public SQL92JDBCItemSimilarity(DataSource dataSource) {
+		this(dataSource, DEFAULT_SIMILARITY_TABLE, DEFAULT_ITEM_A_ID_COLUMN, DEFAULT_ITEM_B_ID_COLUMN, DEFAULT_SIMILARITY_COLUMN);
+	}
 
-  public SQL92JDBCItemSimilarity(DataSource dataSource,
-                                 String similarityTable,
-                                 String itemAIDColumn,
-                                 String itemBIDColumn,
-                                 String similarityColumn) {
-    super(dataSource,
-          similarityTable,
-          itemAIDColumn,
-          itemBIDColumn, similarityColumn,
-          "SELECT " + similarityColumn + " FROM " + similarityTable + " WHERE "
-              + itemAIDColumn + "=? AND " + itemBIDColumn + "=?",
-          "SELECT " + itemAIDColumn + ", " + itemBIDColumn + " FROM " + similarityTable + " WHERE "
-              + itemAIDColumn + "=? OR " + itemBIDColumn + "=?");
-  }
+	public SQL92JDBCItemSimilarity(DataSource dataSource, String similarityTable, String itemAIDColumn, String itemBIDColumn, String similarityColumn) {
+		super(dataSource, similarityTable, itemAIDColumn, itemBIDColumn, similarityColumn, "SELECT " + similarityColumn + " FROM " + similarityTable + " WHERE " + itemAIDColumn + "=? AND " + itemBIDColumn + "=?",
+				"SELECT " + itemAIDColumn + ", " + itemBIDColumn + " FROM " + similarityTable + " WHERE " + itemAIDColumn + "=? OR " + itemBIDColumn + "=?");
+	}
 
-  public String getName(){
-  return "SQL 92 JDBC Item Similarity";
-  }
+	public String getName() {
+		return "SQL 92 JDBC Item Similarity";
+	}
+
+	@Override
+	public String getShortName() {
+		return null;
+	}
 }
