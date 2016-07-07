@@ -52,7 +52,7 @@ public class DataModelFactorizablePreferences implements FactorizablePreferences
 
       LongPrimitiveIterator userIDsIterator = dataModel.getUserIDs();
       while (userIDsIterator.hasNext()) {
-        long userID = userIDsIterator.nextLong();
+        long userID = userIDsIterator.nextInt();
         userIDs.add(userID);
         for (Preference preference : dataModel.getPreferencesFromUser(userID)) {
           itemIDs.add(preference.getItemID());

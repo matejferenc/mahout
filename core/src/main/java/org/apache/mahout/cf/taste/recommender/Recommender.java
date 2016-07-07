@@ -25,76 +25,71 @@ import org.apache.mahout.cf.taste.model.DataModel;
 
 /**
  * <p>
- * Implementations of this interface can recommend items for a user. Implementations will likely take
- * advantage of several classes in other packages here to compute this.
+ * Implementations of this interface can recommend items for a user. Implementations will likely take advantage of several classes in other packages here to compute this.
  * </p>
  */
 public interface Recommender extends Refreshable {
-  
-  /**
-   * @param userID
-   *          user for which recommendations are to be computed
-   * @param howMany
-   *          desired number of recommendations
-   * @return {@link List} of recommended {@link RecommendedItem}s, ordered from most strongly recommend to
-   *         least
-   * @throws TasteException
-   *           if an error occurs while accessing the {@link DataModel}
-   */
-  List<RecommendedItem> recommend(long userID, int howMany) throws TasteException;
-  
-  /**
-   * @param userID
-   *          user for which recommendations are to be computed
-   * @param howMany
-   *          desired number of recommendations
-   * @param rescorer
-   *          rescoring function to apply before final list of recommendations is determined
-   * @return {@link List} of recommended {@link RecommendedItem}s, ordered from most strongly recommend to
-   *         least
-   * @throws TasteException
-   *           if an error occurs while accessing the {@link DataModel}
-   */
-  List<RecommendedItem> recommend(long userID, int howMany, IDRescorer rescorer) throws TasteException;
-  
-  /**
-   * @param userID
-   *          user ID whose preference is to be estimated
-   * @param itemID
-   *          item ID to estimate preference for
-   * @return an estimated preference if the user has not expressed a preference for the item, or else the
-   *         user's actual preference for the item. If a preference cannot be estimated, returns
-   *         {@link Double#NaN}
-   * @throws TasteException
-   *           if an error occurs while accessing the {@link DataModel}
-   */
-  float estimatePreference(long userID, long itemID) throws TasteException;
-  
-  /**
-   * @param userID
-   *          user to set preference for
-   * @param itemID
-   *          item to set preference for
-   * @param value
-   *          preference value
-   * @throws TasteException
-   *           if an error occurs while accessing the {@link DataModel}
-   */
-  void setPreference(long userID, long itemID, float value) throws TasteException;
-  
-  /**
-   * @param userID
-   *          user from which to remove preference
-   * @param itemID
-   *          item for which to remove preference
-   * @throws TasteException
-   *           if an error occurs while accessing the {@link DataModel}
-   */
-  void removePreference(long userID, long itemID) throws TasteException;
 
-  /**
-   * @return underlying {@link DataModel} used by this {@link Recommender} implementation
-   */
-  DataModel getDataModel();
+	/**
+	 * @param userID
+	 *            user for which recommendations are to be computed
+	 * @param howMany
+	 *            desired number of recommendations
+	 * @return {@link List} of recommended {@link RecommendedItem}s, ordered from most strongly recommend to least
+	 * @throws TasteException
+	 *             if an error occurs while accessing the {@link DataModel}
+	 */
+	List<RecommendedItem> recommend(int userID, int howMany) throws TasteException;
+
+	/**
+	 * @param userID
+	 *            user for which recommendations are to be computed
+	 * @param howMany
+	 *            desired number of recommendations
+	 * @param rescorer
+	 *            rescoring function to apply before final list of recommendations is determined
+	 * @return {@link List} of recommended {@link RecommendedItem}s, ordered from most strongly recommend to least
+	 * @throws TasteException
+	 *             if an error occurs while accessing the {@link DataModel}
+	 */
+	List<RecommendedItem> recommend(int userID, int howMany, IDRescorer rescorer) throws TasteException;
+
+	/**
+	 * @param userID
+	 *            user ID whose preference is to be estimated
+	 * @param itemID
+	 *            item ID to estimate preference for
+	 * @return an estimated preference if the user has not expressed a preference for the item, or else the user's actual preference for the item. If a preference cannot be estimated, returns {@link Double#NaN}
+	 * @throws TasteException
+	 *             if an error occurs while accessing the {@link DataModel}
+	 */
+	float estimatePreference(int userID, int itemID) throws TasteException;
+
+	/**
+	 * @param userID
+	 *            user to set preference for
+	 * @param itemID
+	 *            item to set preference for
+	 * @param value
+	 *            preference value
+	 * @throws TasteException
+	 *             if an error occurs while accessing the {@link DataModel}
+	 */
+	void setPreference(int userID, int itemID, float value) throws TasteException;
+
+	/**
+	 * @param userID
+	 *            user from which to remove preference
+	 * @param itemID
+	 *            item for which to remove preference
+	 * @throws TasteException
+	 *             if an error occurs while accessing the {@link DataModel}
+	 */
+	void removePreference(int userID, int itemID) throws TasteException;
+
+	/**
+	 * @return underlying {@link DataModel} used by this {@link Recommender} implementation
+	 */
+	DataModel getDataModel();
 
 }

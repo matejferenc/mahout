@@ -107,7 +107,7 @@ public final class GenericRecommenderIRStatsEvaluator implements RecommenderIRSt
     LongPrimitiveIterator it = dataModel.getUserIDs();
     while (it.hasNext()) {
 
-      long userID = it.nextLong();
+      long userID = it.nextInt();
 
       if (random.nextDouble() >= evaluationPercentage) {
         // Skipped
@@ -130,7 +130,7 @@ public final class GenericRecommenderIRStatsEvaluator implements RecommenderIRSt
       FastByIDMap<PreferenceArray> trainingUsers = new FastByIDMap<PreferenceArray>(dataModel.getNumUsers());
       LongPrimitiveIterator it2 = dataModel.getUserIDs();
       while (it2.hasNext()) {
-        dataSplitter.processOtherUser(userID, relevantItemIDs, trainingUsers, it2.nextLong(), dataModel);
+        dataSplitter.processOtherUser(userID, relevantItemIDs, trainingUsers, it2.nextInt(), dataModel);
       }
 
       DataModel trainingModel = dataModelBuilder == null ? new GenericDataModel(trainingUsers)

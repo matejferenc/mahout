@@ -19,7 +19,7 @@ package org.apache.mahout.cf.taste.impl.recommender;
 
 import com.google.common.collect.Lists;
 import org.apache.mahout.cf.taste.impl.TasteTestCase;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveArrayIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveArrayIterator;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.similarity.GenericItemSimilarity;
 import org.apache.mahout.cf.taste.impl.similarity.GenericUserSimilarity;
@@ -41,7 +41,7 @@ public final class TopItemsTest extends TasteTestCase {
     for (int i = 0; i < 100; i++) {
       ids[i] = i;
     }
-    LongPrimitiveIterator possibleItemIds = new LongPrimitiveArrayIterator(ids);
+    LongPrimitiveIterator possibleItemIds = new IntPrimitiveArrayIterator(ids);
     TopItems.Estimator<Long> estimator = new TopItems.Estimator<Long>() {
       @Override
       public double estimate(Long thing) {
@@ -62,7 +62,7 @@ public final class TopItemsTest extends TasteTestCase {
     for (int i = 0; i < 100; i++) {
       ids[i] = i;
     }
-    LongPrimitiveIterator possibleItemIds = new LongPrimitiveArrayIterator(ids);
+    LongPrimitiveIterator possibleItemIds = new IntPrimitiveArrayIterator(ids);
     final Random random = RandomUtils.getRandom();
     TopItems.Estimator<Long> estimator = new TopItems.Estimator<Long>() {
       @Override
@@ -85,7 +85,7 @@ public final class TopItemsTest extends TasteTestCase {
     for (int i = 0; i < 100; i++) {
       ids[i] = i;
     }
-    LongPrimitiveIterator possibleItemIds = new LongPrimitiveArrayIterator(ids);
+    LongPrimitiveIterator possibleItemIds = new IntPrimitiveArrayIterator(ids);
     TopItems.Estimator<Long> estimator = new TopItems.Estimator<Long>() {
       @Override
       public double estimate(Long thing) {

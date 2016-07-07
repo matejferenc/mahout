@@ -17,11 +17,22 @@
 
 package org.apache.mahout.cf.taste.impl.common;
 
-public abstract class AbstractLongPrimitiveIterator implements LongPrimitiveIterator {
-  
-  @Override
-  public Long next() {
-    return nextLong();
-  }
-  
+/**
+ * Adds notion of iterating over {@code long} primitives in the style of an {@link java.util.Iterator} -- as opposed to iterating over {@link Long}. Implementations of this interface however also implement
+ * {@link java.util.Iterator} and {@link Iterable} over {@link Long} for convenience.
+ */
+public interface IntPrimitiveIterator extends SkippingIterator<Integer> {
+
+	/**
+	 * @return next {@code long} in iteration
+	 * @throws java.util.NoSuchElementException
+	 *             if no more elements exist in the iteration
+	 */
+	int nextInt();
+
+	/**
+	 * @return next {@code long} in iteration without advancing iteration
+	 */
+	int peek();
+
 }

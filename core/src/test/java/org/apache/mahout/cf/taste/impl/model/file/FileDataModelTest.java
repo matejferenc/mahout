@@ -122,17 +122,17 @@ public final class FileDataModelTest extends TasteTestCase {
     LongPrimitiveIterator it = model.getItemIDs();
     assertNotNull(it);
     assertTrue(it.hasNext());
-    assertEquals(123, it.nextLong());
+    assertEquals(123, it.nextInt());
     assertTrue(it.hasNext());
-    assertEquals(234, it.nextLong());
+    assertEquals(234, it.nextInt());
     assertTrue(it.hasNext());
-    assertEquals(456, it.nextLong());
+    assertEquals(456, it.nextInt());
     assertTrue(it.hasNext());
-    assertEquals(654, it.nextLong());
+    assertEquals(654, it.nextInt());
     assertTrue(it.hasNext());
-    assertEquals(789, it.nextLong());
+    assertEquals(789, it.nextInt());
     assertTrue(it.hasNext());
-    assertEquals(999, it.nextLong());
+    assertEquals(999, it.nextInt());
     assertFalse(it.hasNext());
     it.next();
   }

@@ -29,42 +29,42 @@ import com.google.common.base.Preconditions;
  * </p>
  */
 public class GenericPreference implements Preference, Serializable {
-  
-  private final long userID;
-  private final long itemID;
-  private float value;
-  
-  public GenericPreference(long userID, long itemID, float value) {
-    Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
-    this.userID = userID;
-    this.itemID = itemID;
-    this.value = value;
-  }
-  
-  @Override
-  public long getUserID() {
-    return userID;
-  }
-  
-  @Override
-  public long getItemID() {
-    return itemID;
-  }
-  
-  @Override
-  public float getValue() {
-    return value;
-  }
-  
-  @Override
-  public void setValue(float value) {
-    Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
-    this.value = value;
-  }
-  
-  @Override
-  public String toString() {
-    return "GenericPreference[userID: " + userID + ", itemID:" + itemID + ", value:" + value + ']';
-  }
-  
+
+	private final int userID;
+	private final int itemID;
+	private float value;
+
+	public GenericPreference(int userID, int itemID, float value) {
+		Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
+		this.userID = userID;
+		this.itemID = itemID;
+		this.value = value;
+	}
+
+	@Override
+	public int getUserID() {
+		return userID;
+	}
+
+	@Override
+	public int getItemID() {
+		return itemID;
+	}
+
+	@Override
+	public float getValue() {
+		return value;
+	}
+
+	@Override
+	public void setValue(float value) {
+		Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
+		this.value = value;
+	}
+
+	@Override
+	public String toString() {
+		return "GenericPreference[userID: " + userID + ", itemID:" + itemID + ", value:" + value + ']';
+	}
+
 }

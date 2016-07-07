@@ -17,10 +17,10 @@
 
 package org.apache.mahout.cf.taste.impl.model;
 
-import org.apache.mahout.cf.taste.impl.common.AbstractLongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.AbstractIntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 
-final class PlusAnonymousUserLongPrimitiveIterator extends AbstractLongPrimitiveIterator {
+final class PlusAnonymousUserLongPrimitiveIterator extends AbstractIntPrimitiveIterator {
   
   private final LongPrimitiveIterator delegate;
   private final long extraDatum;
@@ -35,7 +35,7 @@ final class PlusAnonymousUserLongPrimitiveIterator extends AbstractLongPrimitive
   @Override
   public long nextLong() {
     if (datumConsumed) {
-      return delegate.nextLong();
+      return delegate.nextInt();
     } else {
       if (delegate.hasNext()) {
         long delegateNext = delegate.peek();

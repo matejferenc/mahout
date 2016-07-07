@@ -80,12 +80,12 @@ public final class SamplingLongPrimitiveIteratorTest extends TasteTestCase {
     }
   }
 
-  private static LongPrimitiveArrayIterator countingIterator(int to) {
+  private static IntPrimitiveArrayIterator countingIterator(int to) {
     long[] data = new long[to];
     for (int i = 0; i < to; i++) {
       data[i] = i;
     }
-    return new LongPrimitiveArrayIterator(data);
+    return new IntPrimitiveArrayIterator(data);
   }
 
 }

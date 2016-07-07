@@ -51,7 +51,7 @@ public final class OrderBasedRecommenderEvaluator {
     LongPrimitiveIterator users = recommender1.getDataModel().getUserIDs();
 
     while (users.hasNext()) {
-      long userID = users.nextLong();
+      long userID = users.nextInt();
       List<RecommendedItem> recs1 = recommender1.recommend(userID, samples);
       List<RecommendedItem> recs2 = recommender2.recommend(userID, samples);
       FastIDSet commonSet = new FastIDSet();
@@ -78,7 +78,7 @@ public final class OrderBasedRecommenderEvaluator {
     printHeader();
     LongPrimitiveIterator users = recommender.getDataModel().getUserIDs();
     while (users.hasNext()) {
-      long userID = users.nextLong();
+      long userID = users.nextInt();
       List<RecommendedItem> recs1 = recommender.recommend(userID, model.getNumItems());
       PreferenceArray prefs2 = model.getPreferencesFromUser(userID);
       prefs2.sortByValueReversed();
@@ -106,7 +106,7 @@ public final class OrderBasedRecommenderEvaluator {
     printHeader();
     LongPrimitiveIterator users = model1.getUserIDs();
     while (users.hasNext()) {
-      long userID = users.nextLong();
+      long userID = users.nextInt();
       PreferenceArray prefs1 = model1.getPreferencesFromUser(userID);
       PreferenceArray prefs2 = model2.getPreferencesFromUser(userID);
       prefs1.sortByValueReversed();

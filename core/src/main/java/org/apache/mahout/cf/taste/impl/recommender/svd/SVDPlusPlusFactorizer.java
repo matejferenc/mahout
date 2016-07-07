@@ -83,7 +83,7 @@ public final class SVDPlusPlusFactorizer extends RatingSGDFactorizer {
     itemsByUser = Maps.newHashMap();
     LongPrimitiveIterator userIDs = dataModel.getUserIDs();
     while (userIDs.hasNext()) {
-      long userId = userIDs.nextLong();
+      long userId = userIDs.nextInt();
       int userIndex = userIndex(userId);
       FastIDSet itemIDsFromUser = dataModel.getItemIDsFromUser(userId);
       List<Integer> itemIndexes = Lists.newArrayListWithCapacity(itemIDsFromUser.size());

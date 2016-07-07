@@ -21,7 +21,7 @@ import com.google.common.base.Preconditions;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveArrayIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveArrayIterator;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.SamplingLongPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -119,7 +119,7 @@ public class SamplingCandidateItemsStrategy extends AbstractCandidateItemsStrate
 
   @Override
   protected FastIDSet doGetCandidateItems(long[] preferredItemIDs, DataModel dataModel) throws TasteException {
-    LongPrimitiveIterator preferredItemIDsIterator = new LongPrimitiveArrayIterator(preferredItemIDs);
+    LongPrimitiveIterator preferredItemIDsIterator = new IntPrimitiveArrayIterator(preferredItemIDs);
     if (preferredItemIDs.length > maxItems) {
       double samplingRate = (double) maxItems / preferredItemIDs.length;
 //      log.info("preferredItemIDs.length {}, samplingRate {}", preferredItemIDs.length, samplingRate);
@@ -128,7 +128,7 @@ public class SamplingCandidateItemsStrategy extends AbstractCandidateItemsStrate
     }
     FastIDSet possibleItemsIDs = new FastIDSet();
     while (preferredItemIDsIterator.hasNext()) {
-      long itemID = preferredItemIDsIterator.nextLong();
+      long itemID = preferredItemIDsIterator.nextInt();
       PreferenceArray prefs = dataModel.getPreferencesForItem(itemID);
       int prefsLength = prefs.length();
       if (prefsLength > maxUsersPerItem) {
@@ -152,7 +152,7 @@ public class SamplingCandidateItemsStrategy extends AbstractCandidateItemsStrate
       LongPrimitiveIterator it =
           new SamplingLongPrimitiveIterator(itemIDs.iterator(), (double) maxItemsPerUser / itemIDs.size());
       while (it.hasNext()) {
-        possibleItemIDs.add(it.nextLong());
+        possibleItemIDs.add(it.nextInt());
       }
     } else {
       possibleItemIDs.addAll(itemIDs);

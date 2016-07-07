@@ -49,7 +49,7 @@ public abstract class AbstractItemSimilarity implements ItemSimilarity {
     FastIDSet allSimilarItemIDs = new FastIDSet();
     LongPrimitiveIterator allItemIDs = dataModel.getItemIDs();
     while (allItemIDs.hasNext()) {
-      long possiblySimilarItemID = allItemIDs.nextLong();
+      long possiblySimilarItemID = allItemIDs.nextInt();
       if (!Double.isNaN(itemSimilarity(itemID, possiblySimilarItemID))) {
         allSimilarItemIDs.add(possiblySimilarItemID);
       }

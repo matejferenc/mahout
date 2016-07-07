@@ -99,7 +99,7 @@ public class ParallelSGDFactorizer extends AbstractFactorizer {
 			int numPreferences = 0;
 			LongPrimitiveIterator userIDs = dataModel.getUserIDs();
 			while (userIDs.hasNext()) {
-				PreferenceArray preferencesFromUser = dataModel.getPreferencesFromUser(userIDs.nextLong());
+				PreferenceArray preferencesFromUser = dataModel.getPreferencesFromUser(userIDs.nextInt());
 				numPreferences += preferencesFromUser.length();
 			}
 			return numPreferences;
@@ -112,7 +112,7 @@ public class ParallelSGDFactorizer extends AbstractFactorizer {
 			LongPrimitiveIterator userIDs = dataModel.getUserIDs();
 			int index = 0;
 			while (userIDs.hasNext()) {
-				long userID = userIDs.nextLong();
+				long userID = userIDs.nextInt();
 				PreferenceArray preferencesFromUser = dataModel.getPreferencesFromUser(userID);
 				for (Preference preference : preferencesFromUser) {
 					preferences[index++] = preference;
@@ -276,7 +276,7 @@ public class ParallelSGDFactorizer extends AbstractFactorizer {
 		RunningAverage average = new FullRunningAverage();
 		LongPrimitiveIterator it = dataModel.getUserIDs();
 		while (it.hasNext()) {
-			for (Preference pref : dataModel.getPreferencesFromUser(it.nextLong())) {
+			for (Preference pref : dataModel.getPreferencesFromUser(it.nextInt())) {
 				average.addDatum(pref.getValue());
 			}
 		}

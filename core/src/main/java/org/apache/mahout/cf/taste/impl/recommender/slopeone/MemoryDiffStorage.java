@@ -301,7 +301,7 @@ public final class MemoryDiffStorage implements DiffStorage {
       long averageCount = 0L;
       LongPrimitiveIterator it = dataModel.getUserIDs();
       while (it.hasNext()) {
-        averageCount = processOneUser(averageCount, it.nextLong());
+        averageCount = processOneUser(averageCount, it.nextInt());
       }
       
       pruneInconsequentialDiffs();

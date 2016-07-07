@@ -32,7 +32,7 @@ public final class AllUnknownItemsCandidateItemsStrategy extends AbstractCandida
     FastIDSet possibleItemIDs = new FastIDSet(dataModel.getNumItems());
     LongPrimitiveIterator allItemIDs = dataModel.getItemIDs();
     while (allItemIDs.hasNext()) {
-      possibleItemIDs.add(allItemIDs.nextLong());
+      possibleItemIDs.add(allItemIDs.nextInt());
     }
     possibleItemIDs.removeAll(preferredItemIDs);
     return possibleItemIDs;

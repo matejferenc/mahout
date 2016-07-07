@@ -175,7 +175,7 @@ public class ParallelSGDFactorizerTest extends TasteTestCase {
     LongPrimitiveIterator userIDs = dataModel.getUserIDs();
     int index=0;
     while (userIDs.hasNext()) {
-      long userID = userIDs.nextLong();
+      long userID = userIDs.nextInt();
       PreferenceArray preferencesFromUser = dataModel.getPreferencesFromUser(userID);
       for (Preference preference : preferencesFromUser) {
         assertTrue(checked.get(preference.getUserID()).get(preference.getItemID()));
@@ -206,7 +206,7 @@ public class ParallelSGDFactorizerTest extends TasteTestCase {
     LongPrimitiveIterator itemIDs;
 
     while (userIDs.hasNext()) {
-      long userID = userIDs.nextLong();
+      long userID = userIDs.nextInt();
       for (Preference pref : dataModel.getPreferencesFromUser(userID)) {
         double rating = pref.getValue();
         Vector userVector = new DenseVector(factorization.getUserFeatures(userID));
@@ -222,7 +222,7 @@ public class ParallelSGDFactorizerTest extends TasteTestCase {
 
     userIDs = dataModel.getUserIDs();
     while (userIDs.hasNext()) {
-      long userID = userIDs.nextLong();
+      long userID = userIDs.nextInt();
       Vector userVector = new DenseVector(factorization.getUserFeatures(userID));
       double regularization = userVector.dot(userVector);
       sum += regularization;
@@ -230,7 +230,7 @@ public class ParallelSGDFactorizerTest extends TasteTestCase {
 
     itemIDs = dataModel.getItemIDs();
     while (itemIDs.hasNext()) {
-      long itemID = itemIDs.nextLong();
+      long itemID = itemIDs.nextInt();
       Vector itemVector = new DenseVector(factorization.getUserFeatures(itemID));
       double regularization = itemVector.dot(itemVector);
       sum += regularization;
@@ -256,7 +256,7 @@ public class ParallelSGDFactorizerTest extends TasteTestCase {
     RunningAverage avg = new FullRunningAverage();
     LongPrimitiveIterator userIDs = dataModel.getUserIDs();
     while (userIDs.hasNext()) {
-      long userID = userIDs.nextLong();
+      long userID = userIDs.nextInt();
       for (Preference pref : dataModel.getPreferencesFromUser(userID)) {
         double rating = pref.getValue();
         double estimate = svdRecommender.estimatePreference(userID, pref.getItemID());
@@ -290,7 +290,7 @@ public class ParallelSGDFactorizerTest extends TasteTestCase {
     LongPrimitiveIterator itemIDs;
 
     while (userIDs.hasNext()) {
-      long userID = userIDs.nextLong();
+      long userID = userIDs.nextInt();
       for (Preference pref : dataModel.getPreferencesFromUser(userID)) {
         double rating = pref.getValue();
         Vector userVector = new DenseVector(factorization.getUserFeatures(userID));
@@ -306,7 +306,7 @@ public class ParallelSGDFactorizerTest extends TasteTestCase {
 
     userIDs = dataModel.getUserIDs();
     while (userIDs.hasNext()) {
-      long userID = userIDs.nextLong();
+      long userID = userIDs.nextInt();
       Vector userVector = new DenseVector(factorization.getUserFeatures(userID));
       double regularization=userVector.dot(userVector);
       sum += regularization;
@@ -314,7 +314,7 @@ public class ParallelSGDFactorizerTest extends TasteTestCase {
 
     itemIDs = dataModel.getItemIDs();
     while (itemIDs.hasNext()) {
-      long itemID = itemIDs.nextLong();
+      long itemID = itemIDs.nextInt();
       Vector itemVector = new DenseVector(factorization.getUserFeatures(itemID));
       double regularization = itemVector.dot(itemVector);
       sum += regularization;
@@ -339,7 +339,7 @@ public class ParallelSGDFactorizerTest extends TasteTestCase {
     RunningAverage avg = new FullRunningAverage();
     LongPrimitiveIterator userIDs = dataModel.getUserIDs();
     while (userIDs.hasNext()) {
-      long userID = userIDs.nextLong();
+      long userID = userIDs.nextInt();
       for (Preference pref : dataModel.getPreferencesFromUser(userID)) {
         double rating = pref.getValue();
         double estimate = svdRecommender.estimatePreference(userID, pref.getItemID());

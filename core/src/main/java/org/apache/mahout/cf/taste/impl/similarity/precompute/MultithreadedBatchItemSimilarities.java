@@ -126,7 +126,7 @@ public class MultithreadedBatchItemSimilarities extends BatchItemSimilarities {
         itemIDBatches.add(batch.clone());
         pos = 0;
       }
-      batch[pos] = itemIDs.nextLong();
+      batch[pos] = itemIDs.nextInt();
       pos++;
     }
     int nonQueuedItemIDs = batchSize - pos;

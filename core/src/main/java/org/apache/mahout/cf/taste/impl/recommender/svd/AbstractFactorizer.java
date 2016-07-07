@@ -81,7 +81,7 @@ public abstract class AbstractFactorizer implements Factorizer {
     FastByIDMap<Integer> mapping = new FastByIDMap<Integer>(size);
     int index = 0;
     while (idIterator.hasNext()) {
-      mapping.put(idIterator.nextLong(), index++);
+      mapping.put(idIterator.nextInt(), index++);
     }
     return mapping;
   }

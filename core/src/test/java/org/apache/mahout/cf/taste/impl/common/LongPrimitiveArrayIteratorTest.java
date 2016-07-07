@@ -26,30 +26,30 @@ public final class LongPrimitiveArrayIteratorTest extends TasteTestCase {
 
   @Test(expected = NoSuchElementException.class)
   public void testEmpty() {
-    LongPrimitiveIterator it = new LongPrimitiveArrayIterator(new long[0]);
+    LongPrimitiveIterator it = new IntPrimitiveArrayIterator(new long[0]);
     assertFalse(it.hasNext());
     it.next();
   }
 
   @Test(expected = NoSuchElementException.class)
   public void testNext() {
-    LongPrimitiveIterator it = new LongPrimitiveArrayIterator(new long[] {3,2,1});
+    LongPrimitiveIterator it = new IntPrimitiveArrayIterator(new long[] {3,2,1});
     assertTrue(it.hasNext());
     assertEquals(3, (long) it.next());
     assertTrue(it.hasNext());
-    assertEquals(2, it.nextLong());
+    assertEquals(2, it.nextInt());
     assertTrue(it.hasNext());
     assertEquals(1, (long) it.next());    
     assertFalse(it.hasNext());
-    it.nextLong();
+    it.nextInt();
   }
 
   @Test
   public void testPeekSkip() {
-    LongPrimitiveIterator it = new LongPrimitiveArrayIterator(new long[] {3,2,1});
+    LongPrimitiveIterator it = new IntPrimitiveArrayIterator(new long[] {3,2,1});
     assertEquals(3, it.peek());
     it.skip(2);
-    assertEquals(1, it.nextLong());
+    assertEquals(1, it.nextInt());
     assertFalse(it.hasNext());
   }
 

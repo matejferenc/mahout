@@ -145,7 +145,7 @@ public class ALSWRFactorizerTest extends TasteTestCase {
     RunningAverage avg = new FullRunningAverage();
     LongPrimitiveIterator userIDs = dataModel.getUserIDs();
     while (userIDs.hasNext()) {
-      long userID = userIDs.nextLong();
+      long userID = userIDs.nextInt();
       for (Preference pref : dataModel.getPreferencesFromUser(userID)) {
         double rating = pref.getValue();
         double estimate = svdRecommender.estimatePreference(userID, pref.getItemID());

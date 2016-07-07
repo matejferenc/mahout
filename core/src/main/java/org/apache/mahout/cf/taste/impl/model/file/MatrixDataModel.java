@@ -28,7 +28,7 @@ import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.model.AbstractDataModel;
 import org.apache.mahout.cf.taste.impl.model.GenericDataModel;
 import org.apache.mahout.cf.taste.impl.model.GenericPreference;
@@ -235,37 +235,37 @@ private float nullPreferenceValue;
 
 
   @Override
-  public LongPrimitiveIterator getUserIDs() throws TasteException {
+  public IntPrimitiveIterator getUserIDs() throws TasteException {
     return delegate.getUserIDs();
   }
 
   @Override
-  public PreferenceArray getPreferencesFromUser(long userID) throws TasteException {
+  public PreferenceArray getPreferencesFromUser(int userID) throws TasteException {
     return delegate.getPreferencesFromUser(userID);
   }
 
   @Override
-  public FastIDSet getItemIDsFromUser(long userID) throws TasteException {
+  public FastIDSet getItemIDsFromUser(int userID) throws TasteException {
     return delegate.getItemIDsFromUser(userID);
   }
 
   @Override
-  public LongPrimitiveIterator getItemIDs() throws TasteException {
+  public IntPrimitiveIterator getItemIDs() throws TasteException {
     return delegate.getItemIDs();
   }
 
   @Override
-  public PreferenceArray getPreferencesForItem(long itemID) throws TasteException {
+  public PreferenceArray getPreferencesForItem(int itemID) throws TasteException {
     return delegate.getPreferencesForItem(itemID);
   }
 
   @Override
-  public Float getPreferenceValue(long userID, long itemID) throws TasteException {
+  public Float getPreferenceValue(int userID, int itemID) throws TasteException {
     return delegate.getPreferenceValue(userID, itemID);
   }
 
   @Override
-  public Long getPreferenceTime(long userID, long itemID) throws TasteException {
+  public Long getPreferenceTime(int userID, int itemID) throws TasteException {
     return delegate.getPreferenceTime(userID, itemID);
   }
 
@@ -280,12 +280,12 @@ private float nullPreferenceValue;
   }
 
   @Override
-  public int getNumUsersWithPreferenceFor(long itemID) throws TasteException {
+  public int getNumUsersWithPreferenceFor(int itemID) throws TasteException {
     return delegate.getNumUsersWithPreferenceFor(itemID);
   }
 
   @Override
-  public int getNumUsersWithPreferenceFor(long itemID1, long itemID2) throws TasteException {
+  public int getNumUsersWithPreferenceFor(int itemID1, int itemID2) throws TasteException {
     return delegate.getNumUsersWithPreferenceFor(itemID1, itemID2);
   }
 
@@ -296,13 +296,13 @@ private float nullPreferenceValue;
    * slow.
    */
   @Override
-  public void setPreference(long userID, long itemID, float value) throws TasteException {
+  public void setPreference(int userID, int itemID, float value) throws TasteException {
     delegate.setPreference(userID, itemID, value);
   }
 
   /** See the warning at {@link #setPreference(long, long, float)}. */
   @Override
-  public void removePreference(long userID, long itemID) throws TasteException {
+  public void removePreference(int userID, int itemID) throws TasteException {
     delegate.removePreference(userID, itemID);
   }
 

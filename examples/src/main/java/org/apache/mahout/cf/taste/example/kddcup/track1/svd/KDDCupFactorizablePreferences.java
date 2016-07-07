@@ -20,7 +20,7 @@ package org.apache.mahout.cf.taste.example.kddcup.track1.svd;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import org.apache.mahout.cf.taste.example.kddcup.DataFileIterable;
-import org.apache.mahout.cf.taste.impl.common.AbstractLongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.AbstractIntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.Preference;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
@@ -84,7 +84,7 @@ public class KDDCupFactorizablePreferences implements FactorizablePreferences {
     return 252800275;
   }
 
-  static class FixedSizeLongIterator extends AbstractLongPrimitiveIterator {
+  static class FixedSizeLongIterator extends AbstractIntPrimitiveIterator {
 
     private long currentValue;
     private final long maximum;

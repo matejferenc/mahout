@@ -108,7 +108,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
       M = new double[dataModel.getNumItems()][numFeatures];
       LongPrimitiveIterator itemIDsIterator = dataModel.getItemIDs();
       while (itemIDsIterator.hasNext()) {
-        long itemID = itemIDsIterator.nextLong();
+        long itemID = itemIDsIterator.nextInt();
         int itemIDIndex = factorizer.itemIndex(itemID);
         M[itemIDIndex][0] = averateRating(itemID);
         for (int feature = 1; feature < numFeatures; feature++) {
@@ -184,7 +184,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
             ? new ImplicitFeedbackAlternatingLeastSquaresSolver(numFeatures, lambda, alpha, itemY) : null;
 
         while (userIDsIterator.hasNext()) {
-          final long userID = userIDsIterator.nextLong();
+          final long userID = userIDsIterator.nextInt();
           final LongPrimitiveIterator itemIDsFromUser = dataModel.getItemIDsFromUser(userID).iterator();
           final PreferenceArray userPrefs = dataModel.getPreferencesFromUser(userID);
           queue.execute(new Runnable() {
@@ -192,7 +192,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
             public void run() {
               List<Vector> featureVectors = Lists.newArrayList();
               while (itemIDsFromUser.hasNext()) {
-                long itemID = itemIDsFromUser.nextLong();
+                long itemID = itemIDsFromUser.nextInt();
                 featureVectors.add(features.getItemFeatureColumn(itemIndex(itemID)));
               }
 
@@ -222,7 +222,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
             ? new ImplicitFeedbackAlternatingLeastSquaresSolver(numFeatures, lambda, alpha, userY) : null;
 
         while (itemIDsIterator.hasNext()) {
-          final long itemID = itemIDsIterator.nextLong();
+          final long itemID = itemIDsIterator.nextInt();
           final PreferenceArray itemPrefs = dataModel.getPreferencesForItem(itemID);
           queue.execute(new Runnable() {
             @Override

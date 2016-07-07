@@ -38,7 +38,6 @@ public class UserAverageRecommender extends AbstractRecommender {
 
 	@Override
 	public void refresh(Collection<Refreshable> alreadyRefreshed) {
-		// TODO Auto-generated method stub
 	}
 
 }
