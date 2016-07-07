@@ -154,8 +154,8 @@ public final class FastIDSet implements Serializable, Cloneable, Iterable<Intege
 		return new KeyIterator();
 	}
 
-	public int[] toArray() {
-		int[] result = new int[numEntries];
+	public Integer[] toArray() {
+		Integer[] result = new Integer[numEntries];
 		for (int i = 0, position = 0; i < result.length; i++) {
 			while (keys[position] == NULL || keys[position] == REMOVED) {
 				position++;
@@ -374,7 +374,7 @@ public final class FastIDSet implements Serializable, Cloneable, Iterable<Intege
 		}
 
 		@Override
-		public int nextInt() {
+		public Integer nextInt() {
 			goToNext();
 			lastNext = position;
 			if (position >= keys.length) {

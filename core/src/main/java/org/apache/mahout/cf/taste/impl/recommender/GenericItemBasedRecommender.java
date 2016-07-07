@@ -37,7 +37,7 @@ import org.apache.mahout.cf.taste.recommender.MostSimilarItemsCandidateItemsStra
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Rescorer;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
-import org.apache.mahout.common.LongPair;
+import org.apache.mahout.common.IntPair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,7 +103,7 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 	}
 
 	@Override
-	public List<RecommendedItem> recommend(long userID, int howMany, IDRescorer rescorer) throws TasteException {
+	public List<RecommendedItem> recommend(Integer userID, int howMany, IDRescorer rescorer) throws TasteException {
 		Preconditions.checkArgument(howMany >= 1, "howMany must be at least 1");
 		log.debug("Recommending items for user ID '{}'", userID);
 
@@ -114,7 +114,7 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 
 		FastIDSet possibleItemIDs = getAllOtherItems(userID, preferencesFromUser);
 
-		TopItems.Estimator<Long> estimator = new Estimator(userID, preferencesFromUser);
+		TopItems.Estimator<Integer> estimator = new Estimator(userID, preferencesFromUser);
 
 		List<RecommendedItem> topItems = TopItems.getTopItems(howMany, possibleItemIDs.iterator(), rescorer, estimator);
 
@@ -123,7 +123,7 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 	}
 
 	@Override
-	public float estimatePreference(long userID, long itemID) throws TasteException {
+	public float estimatePreference(Integer userID, Integer itemID) throws TasteException {
 		PreferenceArray preferencesFromUser = getDataModel().getPreferencesFromUser(userID);
 		Float actualPref = getPreferenceForItem(preferencesFromUser, itemID);
 		if (actualPref != null) {
@@ -132,10 +132,10 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 		return doEstimatePreference(userID, preferencesFromUser, itemID);
 	}
 
-	private static Float getPreferenceForItem(PreferenceArray preferencesFromUser, long itemID) {
+	private static Float getPreferenceForItem(PreferenceArray preferencesFromUser, Integer itemID) {
 		int size = preferencesFromUser.length();
 		for (int i = 0; i < size; i++) {
-			if (preferencesFromUser.getItemID(i) == itemID) {
+			if (preferencesFromUser.getItemID(i).equals(itemID)) {
 				return preferencesFromUser.getValue(i);
 			}
 		}
@@ -143,46 +143,46 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 	}
 
 	@Override
-	public List<RecommendedItem> mostSimilarItems(long itemID, int howMany) throws TasteException {
+	public List<RecommendedItem> mostSimilarItems(Integer itemID, int howMany) throws TasteException {
 		return mostSimilarItems(itemID, howMany, null);
 	}
 
 	@Override
-	public List<RecommendedItem> mostSimilarItems(long itemID, int howMany, Rescorer<LongPair> rescorer) throws TasteException {
-		TopItems.Estimator<Long> estimator = new MostSimilarEstimator(itemID, similarity, rescorer);
-		return doMostSimilarItems(new long[] { itemID }, howMany, estimator);
+	public List<RecommendedItem> mostSimilarItems(Integer itemID, int howMany, Rescorer<IntPair> rescorer) throws TasteException {
+		TopItems.Estimator<Integer> estimator = new MostSimilarEstimator(itemID, similarity, rescorer);
+		return doMostSimilarItems(new Integer[] { itemID }, howMany, estimator);
 	}
 
 	@Override
-	public List<RecommendedItem> mostSimilarItems(long[] itemIDs, int howMany) throws TasteException {
-		TopItems.Estimator<Long> estimator = new MultiMostSimilarEstimator(itemIDs, similarity, null, EXCLUDE_ITEM_IF_NOT_SIMILAR_TO_ALL_BY_DEFAULT);
+	public List<RecommendedItem> mostSimilarItems(Integer[] itemIDs, int howMany) throws TasteException {
+		TopItems.Estimator<Integer> estimator = new MultiMostSimilarEstimator(itemIDs, similarity, null, EXCLUDE_ITEM_IF_NOT_SIMILAR_TO_ALL_BY_DEFAULT);
 		return doMostSimilarItems(itemIDs, howMany, estimator);
 	}
 
 	@Override
-	public List<RecommendedItem> mostSimilarItems(long[] itemIDs, int howMany, Rescorer<LongPair> rescorer) throws TasteException {
-		TopItems.Estimator<Long> estimator = new MultiMostSimilarEstimator(itemIDs, similarity, rescorer, EXCLUDE_ITEM_IF_NOT_SIMILAR_TO_ALL_BY_DEFAULT);
+	public List<RecommendedItem> mostSimilarItems(Integer[] itemIDs, int howMany, Rescorer<IntPair> rescorer) throws TasteException {
+		TopItems.Estimator<Integer> estimator = new MultiMostSimilarEstimator(itemIDs, similarity, rescorer, EXCLUDE_ITEM_IF_NOT_SIMILAR_TO_ALL_BY_DEFAULT);
 		return doMostSimilarItems(itemIDs, howMany, estimator);
 	}
 
 	@Override
-	public List<RecommendedItem> mostSimilarItems(long[] itemIDs, int howMany, boolean excludeItemIfNotSimilarToAll) throws TasteException {
-		TopItems.Estimator<Long> estimator = new MultiMostSimilarEstimator(itemIDs, similarity, null, excludeItemIfNotSimilarToAll);
+	public List<RecommendedItem> mostSimilarItems(Integer[] itemIDs, int howMany, boolean excludeItemIfNotSimilarToAll) throws TasteException {
+		TopItems.Estimator<Integer> estimator = new MultiMostSimilarEstimator(itemIDs, similarity, null, excludeItemIfNotSimilarToAll);
 		return doMostSimilarItems(itemIDs, howMany, estimator);
 	}
 
 	@Override
-	public List<RecommendedItem> mostSimilarItems(long[] itemIDs, int howMany, Rescorer<LongPair> rescorer, boolean excludeItemIfNotSimilarToAll) throws TasteException {
-		TopItems.Estimator<Long> estimator = new MultiMostSimilarEstimator(itemIDs, similarity, rescorer, excludeItemIfNotSimilarToAll);
+	public List<RecommendedItem> mostSimilarItems(Integer[] itemIDs, int howMany, Rescorer<IntPair> rescorer, boolean excludeItemIfNotSimilarToAll) throws TasteException {
+		TopItems.Estimator<Integer> estimator = new MultiMostSimilarEstimator(itemIDs, similarity, rescorer, excludeItemIfNotSimilarToAll);
 		return doMostSimilarItems(itemIDs, howMany, estimator);
 	}
 
 	@Override
-	public List<RecommendedItem> recommendedBecause(long userID, long itemID, int howMany) throws TasteException {
+	public List<RecommendedItem> recommendedBecause(Integer userID, Integer itemID, int howMany) throws TasteException {
 		Preconditions.checkArgument(howMany >= 1, "howMany must be at least 1");
 
 		DataModel model = getDataModel();
-		TopItems.Estimator<Long> estimator = new RecommendedBecauseEstimator(userID, itemID);
+		TopItems.Estimator<Integer> estimator = new RecommendedBecauseEstimator(userID, itemID);
 
 		PreferenceArray prefs = model.getPreferencesFromUser(userID);
 		int size = prefs.length();
@@ -195,12 +195,12 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 		return TopItems.getTopItems(howMany, allUserItems.iterator(), null, estimator);
 	}
 
-	private List<RecommendedItem> doMostSimilarItems(long[] itemIDs, int howMany, TopItems.Estimator<Long> estimator) throws TasteException {
+	private List<RecommendedItem> doMostSimilarItems(Integer[] itemIDs, int howMany, TopItems.Estimator<Integer> estimator) throws TasteException {
 		FastIDSet possibleItemIDs = mostSimilarItemsCandidateItemsStrategy.getCandidateItems(itemIDs, getDataModel());
 		return TopItems.getTopItems(howMany, possibleItemIDs.iterator(), null, estimator);
 	}
 
-	protected float doEstimatePreference(long userID, PreferenceArray preferencesFromUser, long itemID) throws TasteException {
+	protected float doEstimatePreference(Integer userID, PreferenceArray preferencesFromUser, Integer itemID) throws TasteException {
 		double preference = 0.0;
 		double totalSimilarity = 0.0;
 		int count = 0;
@@ -248,21 +248,21 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 		}
 	}
 
-	public static class MostSimilarEstimator implements TopItems.Estimator<Long> {
+	public static class MostSimilarEstimator implements TopItems.Estimator<Integer> {
 
-		private final long toItemID;
+		private final Integer toItemID;
 		private final ItemSimilarity similarity;
-		private final Rescorer<LongPair> rescorer;
+		private final Rescorer<IntPair> rescorer;
 
-		public MostSimilarEstimator(long toItemID, ItemSimilarity similarity, Rescorer<LongPair> rescorer) {
+		public MostSimilarEstimator(Integer toItemID, ItemSimilarity similarity, Rescorer<IntPair> rescorer) {
 			this.toItemID = toItemID;
 			this.similarity = similarity;
 			this.rescorer = rescorer;
 		}
 
 		@Override
-		public double estimate(Long itemID) throws TasteException {
-			LongPair pair = new LongPair(toItemID, itemID);
+		public double estimate(Integer itemID) throws TasteException {
+			IntPair pair = new IntPair(toItemID, itemID);
 			if (rescorer != null && rescorer.isFiltered(pair)) {
 				return Double.NaN;
 			}
@@ -271,30 +271,30 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 		}
 	}
 
-	private final class Estimator implements TopItems.Estimator<Long> {
+	private final class Estimator implements TopItems.Estimator<Integer> {
 
-		private final long userID;
+		private final Integer userID;
 		private final PreferenceArray preferencesFromUser;
 
-		private Estimator(long userID, PreferenceArray preferencesFromUser) {
+		private Estimator(Integer userID, PreferenceArray preferencesFromUser) {
 			this.userID = userID;
 			this.preferencesFromUser = preferencesFromUser;
 		}
 
 		@Override
-		public double estimate(Long itemID) throws TasteException {
+		public double estimate(Integer itemID) throws TasteException {
 			return doEstimatePreference(userID, preferencesFromUser, itemID);
 		}
 	}
 
-	private static final class MultiMostSimilarEstimator implements TopItems.Estimator<Long> {
+	private static final class MultiMostSimilarEstimator implements TopItems.Estimator<Integer> {
 
-		private final long[] toItemIDs;
+		private final Integer[] toItemIDs;
 		private final ItemSimilarity similarity;
-		private final Rescorer<LongPair> rescorer;
+		private final Rescorer<IntPair> rescorer;
 		private final boolean excludeItemIfNotSimilarToAll;
 
-		private MultiMostSimilarEstimator(long[] toItemIDs, ItemSimilarity similarity, Rescorer<LongPair> rescorer, boolean excludeItemIfNotSimilarToAll) {
+		private MultiMostSimilarEstimator(Integer[] toItemIDs, ItemSimilarity similarity, Rescorer<IntPair> rescorer, boolean excludeItemIfNotSimilarToAll) {
 			this.toItemIDs = toItemIDs;
 			this.similarity = similarity;
 			this.rescorer = rescorer;
@@ -302,12 +302,12 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 		}
 
 		@Override
-		public double estimate(Long itemID) throws TasteException {
+		public double estimate(Integer itemID) throws TasteException {
 			RunningAverage average = new FullRunningAverage();
 			double[] similarities = similarity.itemSimilarities(itemID, toItemIDs);
 			for (int i = 0; i < toItemIDs.length; i++) {
-				long toItemID = toItemIDs[i];
-				LongPair pair = new LongPair(toItemID, itemID);
+				Integer toItemID = toItemIDs[i];
+				IntPair pair = new IntPair(toItemID, itemID);
 				if (rescorer != null && rescorer.isFiltered(pair)) {
 					continue;
 				}
@@ -324,18 +324,18 @@ public class GenericItemBasedRecommender extends AbstractRecommender implements 
 		}
 	}
 
-	private final class RecommendedBecauseEstimator implements TopItems.Estimator<Long> {
+	private final class RecommendedBecauseEstimator implements TopItems.Estimator<Integer> {
 
-		private final long userID;
-		private final long recommendedItemID;
+		private final Integer userID;
+		private final Integer recommendedItemID;
 
-		private RecommendedBecauseEstimator(long userID, long recommendedItemID) {
+		private RecommendedBecauseEstimator(Integer userID, Integer recommendedItemID) {
 			this.userID = userID;
 			this.recommendedItemID = recommendedItemID;
 		}
 
 		@Override
-		public double estimate(Long itemID) throws TasteException {
+		public double estimate(Integer itemID) throws TasteException {
 			Float pref = getDataModel().getPreferenceValue(userID, itemID);
 			if (pref == null) {
 				return Float.NaN;

@@ -46,7 +46,7 @@ import com.google.common.base.Preconditions;
  */
 public final class GenericItemSimilarity implements ItemSimilarity {
 
-	private static final long[] NO_IDS = new long[0];
+	private static final Integer[] NO_IDS = new Integer[0];
 
 	private final FastByIDMap<FastByIDMap<Double>> similarityMaps = new FastByIDMap<FastByIDMap<Double>>();
 	private final FastByIDMap<FastIDSet> similarItemIDsIndex = new FastByIDMap<FastIDSet>();
@@ -106,7 +106,7 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 	 *             if an error occurs while accessing the {@link DataModel} items
 	 */
 	public GenericItemSimilarity(ItemSimilarity otherSimilarity, DataModel dataModel) throws TasteException {
-		long[] itemIDs = GenericUserSimilarity.longIteratorToList(dataModel.getItemIDs());
+		Integer[] itemIDs = GenericUserSimilarity.intIteratorToList(dataModel.getItemIDs());
 		initSimilarityMaps(new DataModelSimilaritiesIterator(otherSimilarity, itemIDs));
 	}
 
@@ -130,7 +130,7 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 	 *             if an error occurs while accessing the {@link DataModel} items
 	 */
 	public GenericItemSimilarity(ItemSimilarity otherSimilarity, DataModel dataModel, int maxToKeep) throws TasteException {
-		long[] itemIDs = GenericUserSimilarity.longIteratorToList(dataModel.getItemIDs());
+		Integer[] itemIDs = GenericUserSimilarity.intIteratorToList(dataModel.getItemIDs());
 		Iterator<ItemItemSimilarity> it = new DataModelSimilaritiesIterator(otherSimilarity, itemIDs);
 		Iterable<ItemItemSimilarity> keptSimilarities = TopItems.getTopItemItemSimilarities(maxToKeep, it);
 		initSimilarityMaps(keptSimilarities.iterator());
@@ -139,12 +139,12 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 	private void initSimilarityMaps(Iterator<ItemItemSimilarity> similarities) {
 		while (similarities.hasNext()) {
 			ItemItemSimilarity iic = similarities.next();
-			long similarityItemID1 = iic.getItemID1();
-			long similarityItemID2 = iic.getItemID2();
+			Integer similarityItemID1 = iic.getItemID1();
+			Integer similarityItemID2 = iic.getItemID2();
 			if (similarityItemID1 != similarityItemID2) {
 				// Order them -- first key should be the "smaller" one
-				long itemID1;
-				long itemID2;
+				Integer itemID1;
+				Integer itemID2;
 				if (similarityItemID1 < similarityItemID2) {
 					itemID1 = similarityItemID1;
 					itemID2 = similarityItemID2;
@@ -166,7 +166,7 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 		}
 	}
 
-	private void doIndex(long fromItemID, long toItemID) {
+	private void doIndex(Integer fromItemID, Integer toItemID) {
 		FastIDSet similarItemIDs = similarItemIDsIndex.get(fromItemID);
 		if (similarItemIDs == null) {
 			similarItemIDs = new FastIDSet();
@@ -188,8 +188,8 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 	 * @return similarity between the two
 	 */
 	@Override
-	public double itemSimilarity(long itemID1, long itemID2) {
-		if (itemID1 == itemID2) {
+	public double itemSimilarity(Integer itemID1, Integer itemID2) {
+		if (itemID1.equals(itemID2)) {
 			return 1.0;
 		}
 		long firstID;
@@ -210,7 +210,7 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 	}
 
 	@Override
-	public double[] itemSimilarities(long itemID1, long[] itemID2s) {
+	public double[] itemSimilarities(Integer itemID1, Integer[] itemID2s) {
 		int length = itemID2s.length;
 		double[] result = new double[length];
 		for (int i = 0; i < length; i++) {
@@ -220,7 +220,7 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 	}
 
 	@Override
-	public long[] allSimilarItemIDs(long itemID) {
+	public Integer[] allSimilarItemIDs(Integer itemID) {
 		FastIDSet similarItemIDs = similarItemIDsIndex.get(itemID);
 		return similarItemIDs != null ? similarItemIDs.toArray() : NO_IDS;
 	}
@@ -233,8 +233,8 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 	/** Encapsulates a similarity between two items. Similarity must be in the range [-1.0,1.0]. */
 	public static final class ItemItemSimilarity implements Comparable<ItemItemSimilarity> {
 
-		private final long itemID1;
-		private final long itemID2;
+		private final Integer itemID1;
+		private final Integer itemID2;
 		private final double value;
 
 		/**
@@ -247,18 +247,18 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 		 * @throws IllegalArgumentException
 		 *             if value is NaN, less than -1.0 or greater than 1.0
 		 */
-		public ItemItemSimilarity(long itemID1, long itemID2, double value) {
+		public ItemItemSimilarity(Integer itemID1, Integer itemID2, double value) {
 			Preconditions.checkArgument(value >= -1.0 && value <= 1.0, "Illegal value: " + value + ". Must be: -1.0 <= value <= 1.0");
 			this.itemID1 = itemID1;
 			this.itemID2 = itemID2;
 			this.value = value;
 		}
 
-		public long getItemID1() {
+		public Integer getItemID1() {
 			return itemID1;
 		}
 
-		public long getItemID2() {
+		public Integer getItemID2() {
 			return itemID2;
 		}
 
@@ -284,7 +284,7 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 				return false;
 			}
 			ItemItemSimilarity otherSimilarity = (ItemItemSimilarity) other;
-			return otherSimilarity.getItemID1() == itemID1 && otherSimilarity.getItemID2() == itemID2 && otherSimilarity.getValue() == value;
+			return otherSimilarity.getItemID1().equals(itemID1) && otherSimilarity.getItemID2().equals(itemID2) && otherSimilarity.getValue() == value;
 		}
 
 		@Override
@@ -297,12 +297,12 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 	private static final class DataModelSimilaritiesIterator extends AbstractIterator<ItemItemSimilarity> {
 
 		private final ItemSimilarity otherSimilarity;
-		private final long[] itemIDs;
+		private final Integer[] itemIDs;
 		private int i;
-		private long itemID1;
+		private Integer itemID1;
 		private int j;
 
-		private DataModelSimilaritiesIterator(ItemSimilarity otherSimilarity, long[] itemIDs) {
+		private DataModelSimilaritiesIterator(ItemSimilarity otherSimilarity, Integer[] itemIDs) {
 			this.otherSimilarity = otherSimilarity;
 			this.itemIDs = itemIDs;
 			i = 0;
@@ -315,7 +315,7 @@ public final class GenericItemSimilarity implements ItemSimilarity {
 			int size = itemIDs.length;
 			ItemItemSimilarity result = null;
 			while (result == null && i < size - 1) {
-				long itemID2 = itemIDs[j];
+				Integer itemID2 = itemIDs[j];
 				double similarity;
 				try {
 					similarity = otherSimilarity.itemSimilarity(itemID1, itemID2);

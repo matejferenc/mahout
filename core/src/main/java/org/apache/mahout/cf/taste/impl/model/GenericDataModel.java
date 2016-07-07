@@ -49,9 +49,9 @@ public final class GenericDataModel extends AbstractDataModel {
 
 	private static final Logger log = LoggerFactory.getLogger(GenericDataModel.class);
 
-	private final int[] userIDs;
+	private final Integer[] userIDs;
 	private final FastByIDMap<PreferenceArray> preferenceFromUsers;
-	private final int[] itemIDs;
+	private final Integer[] itemIDs;
 	private final FastByIDMap<PreferenceArray> preferenceForItems;
 	private final FastByIDMap<FastByIDMap<Long>> timestamps;
 
@@ -125,7 +125,7 @@ public final class GenericDataModel extends AbstractDataModel {
 			entry.getValue().sortByUser();
 		}
 
-		this.userIDs = new int[userData.size()];
+		this.userIDs = new Integer[userData.size()];
 		int i = 0;
 		IntPrimitiveIterator it = userData.keySetIterator();
 		while (it.hasNext()) {
@@ -204,7 +204,7 @@ public final class GenericDataModel extends AbstractDataModel {
 	 *             if there is no such user
 	 */
 	@Override
-	public PreferenceArray getPreferencesFromUser(int userID) throws NoSuchUserException {
+	public PreferenceArray getPreferencesFromUser(Integer userID) throws NoSuchUserException {
 		PreferenceArray prefs = preferenceFromUsers.get(userID);
 		if (prefs == null) {
 			throw new NoSuchUserException(userID);
@@ -213,7 +213,7 @@ public final class GenericDataModel extends AbstractDataModel {
 	}
 
 	@Override
-	public FastIDSet getItemIDsFromUser(int userID) throws TasteException {
+	public FastIDSet getItemIDsFromUser(Integer userID) throws TasteException {
 		PreferenceArray prefs = getPreferencesFromUser(userID);
 		int size = prefs.length();
 		FastIDSet result = new FastIDSet(size);
@@ -229,7 +229,7 @@ public final class GenericDataModel extends AbstractDataModel {
 	}
 
 	@Override
-	public PreferenceArray getPreferencesForItem(int itemID) throws NoSuchItemException {
+	public PreferenceArray getPreferencesForItem(Integer itemID) throws NoSuchItemException {
 		PreferenceArray prefs = preferenceForItems.get(itemID);
 		if (prefs == null) {
 			throw new NoSuchItemException(itemID);
@@ -238,11 +238,11 @@ public final class GenericDataModel extends AbstractDataModel {
 	}
 
 	@Override
-	public Float getPreferenceValue(int userID, int itemID) throws TasteException {
+	public Float getPreferenceValue(Integer userID, Integer itemID) throws TasteException {
 		PreferenceArray prefs = getPreferencesFromUser(userID);
 		int size = prefs.length();
 		for (int i = 0; i < size; i++) {
-			if (prefs.getItemID(i) == itemID) {
+			if (prefs.getItemID(i).equals(itemID)) {
 				return prefs.getValue(i);
 			}
 		}
@@ -250,7 +250,7 @@ public final class GenericDataModel extends AbstractDataModel {
 	}
 
 	@Override
-	public Long getPreferenceTime(int userID, int itemID) throws TasteException {
+	public Long getPreferenceTime(Integer userID, Integer itemID) throws TasteException {
 		if (timestamps == null) {
 			return null;
 		}
@@ -272,13 +272,13 @@ public final class GenericDataModel extends AbstractDataModel {
 	}
 
 	@Override
-	public int getNumUsersWithPreferenceFor(int itemID) {
+	public int getNumUsersWithPreferenceFor(Integer itemID) {
 		PreferenceArray prefs1 = preferenceForItems.get(itemID);
 		return prefs1 == null ? 0 : prefs1.length();
 	}
 
 	@Override
-	public int getNumUsersWithPreferenceFor(int itemID1, int itemID2) {
+	public int getNumUsersWithPreferenceFor(Integer itemID1, Integer itemID2) {
 		PreferenceArray prefs1 = preferenceForItems.get(itemID1);
 		if (prefs1 == null) {
 			return 0;
@@ -319,12 +319,12 @@ public final class GenericDataModel extends AbstractDataModel {
 	}
 
 	@Override
-	public void removePreference(int userID, int itemID) {
+	public void removePreference(Integer userID, Integer itemID) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setPreference(int userID, int itemID, float value) {
+	public void setPreference(Integer userID, Integer itemID, Float value) {
 		throw new UnsupportedOperationException();
 	}
 

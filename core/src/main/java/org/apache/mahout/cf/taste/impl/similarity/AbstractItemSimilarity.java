@@ -17,48 +17,49 @@
 
 package org.apache.mahout.cf.taste.impl.similarity;
 
-import com.google.common.base.Preconditions;
+import java.util.Collection;
+
 import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RefreshHelper;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 
-import java.util.Collection;
+import com.google.common.base.Preconditions;
 
 public abstract class AbstractItemSimilarity implements ItemSimilarity {
 
-  private final DataModel dataModel;
-  private final RefreshHelper refreshHelper;
+	private final DataModel dataModel;
+	private final RefreshHelper refreshHelper;
 
-  protected AbstractItemSimilarity(DataModel dataModel) {
-    Preconditions.checkArgument(dataModel != null, "dataModel is null");
-    this.dataModel = dataModel;
-    this.refreshHelper = new RefreshHelper(null);
-    refreshHelper.addDependency(this.dataModel);
-  }
+	protected AbstractItemSimilarity(DataModel dataModel) {
+		Preconditions.checkArgument(dataModel != null, "dataModel is null");
+		this.dataModel = dataModel;
+		this.refreshHelper = new RefreshHelper(null);
+		refreshHelper.addDependency(this.dataModel);
+	}
 
-  protected DataModel getDataModel() {
-    return dataModel;
-  }
+	protected DataModel getDataModel() {
+		return dataModel;
+	}
 
-  @Override
-  public long[] allSimilarItemIDs(long itemID) throws TasteException {
-    FastIDSet allSimilarItemIDs = new FastIDSet();
-    LongPrimitiveIterator allItemIDs = dataModel.getItemIDs();
-    while (allItemIDs.hasNext()) {
-      long possiblySimilarItemID = allItemIDs.nextInt();
-      if (!Double.isNaN(itemSimilarity(itemID, possiblySimilarItemID))) {
-        allSimilarItemIDs.add(possiblySimilarItemID);
-      }
-    }
-    return allSimilarItemIDs.toArray();
-  }
+	@Override
+	public Integer[] allSimilarItemIDs(Integer itemID) throws TasteException {
+		FastIDSet allSimilarItemIDs = new FastIDSet();
+		IntPrimitiveIterator allItemIDs = dataModel.getItemIDs();
+		while (allItemIDs.hasNext()) {
+			Integer possiblySimilarItemID = allItemIDs.nextInt();
+			if (!Double.isNaN(itemSimilarity(itemID, possiblySimilarItemID))) {
+				allSimilarItemIDs.add(possiblySimilarItemID);
+			}
+		}
+		return allSimilarItemIDs.toArray();
+	}
 
-  @Override
-  public void refresh(Collection<Refreshable> alreadyRefreshed) {
-    refreshHelper.refresh(alreadyRefreshed);
-  }
+	@Override
+	public void refresh(Collection<Refreshable> alreadyRefreshed) {
+		refreshHelper.refresh(alreadyRefreshed);
+	}
 }

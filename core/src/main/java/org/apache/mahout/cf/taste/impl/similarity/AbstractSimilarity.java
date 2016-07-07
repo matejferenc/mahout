@@ -103,7 +103,7 @@ public abstract class AbstractSimilarity extends AbstractItemSimilarity implemen
 	public abstract double computeResult(int n, double sumXY, double sumX2, double sumY2, double sumXYdiff2);
 
 	@Override
-	public double userSimilarity(long userID1, long userID2) throws TasteException {
+	public double userSimilarity(Integer userID1, Integer userID2) throws TasteException {
 		DataModel dataModel = getDataModel();
 		PreferenceArray xPrefs = dataModel.getPreferencesFromUser(userID1);
 		PreferenceArray yPrefs = dataModel.getPreferencesFromUser(userID2);
@@ -218,7 +218,7 @@ public abstract class AbstractSimilarity extends AbstractItemSimilarity implemen
 	}
 
 	@Override
-	public final double itemSimilarity(long itemID1, long itemID2) throws TasteException {
+	public final double itemSimilarity(Integer itemID1, Integer itemID2) throws TasteException {
 		DataModel dataModel = getDataModel();
 		PreferenceArray xPrefs = dataModel.getPreferencesForItem(itemID1);
 		PreferenceArray yPrefs = dataModel.getPreferencesForItem(itemID2);
@@ -297,7 +297,7 @@ public abstract class AbstractSimilarity extends AbstractItemSimilarity implemen
 	}
 
 	@Override
-	public double[] itemSimilarities(long itemID1, long[] itemID2s) throws TasteException {
+	public double[] itemSimilarities(Integer itemID1, Integer[] itemID2s) throws TasteException {
 		int length = itemID2s.length;
 		double[] result = new double[length];
 		for (int i = 0; i < length; i++) {

@@ -419,7 +419,7 @@ public final class FastByIDMap<V> implements Serializable, Cloneable {
 		}
 
 		@Override
-		public int nextInt() {
+		public Integer nextInt() {
 			goToNext();
 			lastNext = position;
 			if (position >= keys.length) {

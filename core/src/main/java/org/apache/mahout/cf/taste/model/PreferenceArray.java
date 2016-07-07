@@ -49,7 +49,7 @@ public interface PreferenceArray extends Cloneable, Serializable, Iterable<Prefe
 	 *            index
 	 * @return user ID from preference at i
 	 */
-	int getUserID(int i);
+	Integer getUserID(int i);
 
 	/**
 	 * Sets user ID for preference at i.
@@ -59,14 +59,14 @@ public interface PreferenceArray extends Cloneable, Serializable, Iterable<Prefe
 	 * @param userID
 	 *            new user ID
 	 */
-	void setUserID(int i, int userID);
+	void setUserID(int i, Integer userID);
 
 	/**
 	 * @param i
 	 *            index
 	 * @return item ID from preference at i
 	 */
-	int getItemID(int i);
+	Integer getItemID(int i);
 
 	/**
 	 * Sets item ID for preference at i.
@@ -76,19 +76,19 @@ public interface PreferenceArray extends Cloneable, Serializable, Iterable<Prefe
 	 * @param itemID
 	 *            new item ID
 	 */
-	void setItemID(int i, int itemID);
+	void setItemID(int i, Integer itemID);
 
 	/**
 	 * @return all user or item IDs
 	 */
-	int[] getIDs();
+	Integer[] getIDs();
 
 	/**
 	 * @param i
 	 *            index
 	 * @return preference value from preference at i
 	 */
-	float getValue(int i);
+	Float getValue(int i);
 
 	/**
 	 * Sets preference value for preference at i.
@@ -98,7 +98,7 @@ public interface PreferenceArray extends Cloneable, Serializable, Iterable<Prefe
 	 * @param value
 	 *            new preference value
 	 */
-	void setValue(int i, float value);
+	void setValue(int i, Float value);
 
 	/**
 	 * @return independent copy of this object
@@ -130,13 +130,13 @@ public interface PreferenceArray extends Cloneable, Serializable, Iterable<Prefe
 	 *            user ID
 	 * @return true if array contains a preference with given user ID
 	 */
-	boolean hasPrefWithUserID(int userID);
+	boolean hasPrefWithUserID(Integer userID);
 
 	/**
 	 * @param itemID
 	 *            item ID
 	 * @return true if array contains a preference with given item ID
 	 */
-	boolean hasPrefWithItemID(int itemID);
+	boolean hasPrefWithItemID(Integer itemID);
 
 }

@@ -58,7 +58,7 @@ public abstract class AbstractRecommender implements Recommender {
 	 * </p>
 	 */
 	@Override
-	public List<RecommendedItem> recommend(int userID, int howMany) throws TasteException {
+	public List<RecommendedItem> recommend(Integer userID, int howMany) throws TasteException {
 		return recommend(userID, howMany, null);
 	}
 
@@ -71,7 +71,7 @@ public abstract class AbstractRecommender implements Recommender {
 	 *             if userID or itemID is {@code null}, or if value is {@link Double#NaN}
 	 */
 	@Override
-	public void setPreference(int userID, int itemID, float value) throws TasteException {
+	public void setPreference(Integer userID, Integer itemID, Float value) throws TasteException {
 		Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
 		log.debug("Setting preference for user {}, item {}", userID, itemID);
 		dataModel.setPreference(userID, itemID, value);
@@ -86,7 +86,7 @@ public abstract class AbstractRecommender implements Recommender {
 	 *             if userID or itemID is {@code null}
 	 */
 	@Override
-	public void removePreference(int userID, int itemID) throws TasteException {
+	public void removePreference(Integer userID, Integer itemID) throws TasteException {
 		log.debug("Remove preference for user '{}', item '{}'", userID, itemID);
 		dataModel.removePreference(userID, itemID);
 	}
@@ -105,7 +105,7 @@ public abstract class AbstractRecommender implements Recommender {
 	 * @throws TasteException
 	 *             if an error occurs while listing items
 	 */
-	protected FastIDSet getAllOtherItems(int userID, PreferenceArray preferencesFromUser) throws TasteException {
+	protected FastIDSet getAllOtherItems(Integer userID, PreferenceArray preferencesFromUser) throws TasteException {
 		return candidateItemsStrategy.getCandidateItems(userID, preferencesFromUser, dataModel);
 	}
 

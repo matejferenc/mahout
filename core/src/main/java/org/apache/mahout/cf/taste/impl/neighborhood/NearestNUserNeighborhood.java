@@ -19,8 +19,8 @@ package org.apache.mahout.cf.taste.impl.neighborhood;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.IntPrimitiveArrayIterator;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
-import org.apache.mahout.cf.taste.impl.common.SamplingLongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.SamplingLIntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.recommender.TopItems;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.Preference;
@@ -80,38 +80,37 @@ public final class NearestNUserNeighborhood extends AbstractUserNeighborhood {
 	}
 
 	@Override
-	public long[] getUserNeighborhood(long userID) throws TasteException {
-
+	public Integer[] getUserNeighborhood(Integer userID) throws TasteException {
 		DataModel dataModel = getDataModel();
 		UserSimilarity userSimilarityImpl = getUserSimilarity();
 
-		TopItems.Estimator<Long> estimator = new Estimator(userSimilarityImpl, userID, minSimilarity);
+		TopItems.Estimator<Integer> estimator = new Estimator(userSimilarityImpl, userID, minSimilarity);
 
 		// potential neighbors are all users
-		LongPrimitiveIterator userIDs = SamplingLongPrimitiveIterator.maybeWrapIterator(dataModel.getUserIDs(), getSamplingRate());
+		IntPrimitiveIterator userIDs = SamplingLIntPrimitiveIterator.maybeWrapIterator(dataModel.getUserIDs(), getSamplingRate());
 
 		return TopItems.getTopUsers(n, userIDs, null, estimator);
 	}
 
 	@Override
-	public long[] getUserNeighborhood(long userID, long itemID) throws TasteException {
+	public Integer[] getUserNeighborhood(Integer userID, Integer itemID) throws TasteException {
 
 		DataModel dataModel = getDataModel();
 		UserSimilarity userSimilarityImpl = getUserSimilarity();
 
-		TopItems.Estimator<Long> estimator = new Estimator(userSimilarityImpl, userID, minSimilarity);
+		TopItems.Estimator<Integer> estimator = new Estimator(userSimilarityImpl, userID, minSimilarity);
 
 		// potential neighbors are only those users, who rated the given item
 		PreferenceArray preferencesForItem = dataModel.getPreferencesForItem(itemID);
-		long[] potentialNeighbors = new long[preferencesForItem.length()];
+		Integer[] potentialNeighbors = new Integer[preferencesForItem.length()];
 		int i = 0;
 		for (Preference preference : preferencesForItem) {
-			long preferenceUserID = preference.getUserID();
+			Integer preferenceUserID = preference.getUserID();
 			potentialNeighbors[i] = preferenceUserID;
 			i++;
 		}
-		LongPrimitiveIterator delegate = new IntPrimitiveArrayIterator(potentialNeighbors);
-		LongPrimitiveIterator userIDs = SamplingLongPrimitiveIterator.maybeWrapIterator(delegate, getSamplingRate());
+		IntPrimitiveIterator delegate = new IntPrimitiveArrayIterator(potentialNeighbors);
+		IntPrimitiveIterator userIDs = SamplingLIntPrimitiveIterator.maybeWrapIterator(delegate, getSamplingRate());
 
 		return TopItems.getTopUsers(n, userIDs, null, estimator);
 	}
@@ -121,20 +120,20 @@ public final class NearestNUserNeighborhood extends AbstractUserNeighborhood {
 		return "NearestNUserNeighborhood";
 	}
 
-	private static final class Estimator implements TopItems.Estimator<Long> {
+	private static final class Estimator implements TopItems.Estimator<Integer> {
 		private final UserSimilarity userSimilarityImpl;
-		private final long theUserID;
+		private final Integer theUserID;
 		private final double minSim;
 
-		private Estimator(UserSimilarity userSimilarityImpl, long theUserID, double minSim) {
+		private Estimator(UserSimilarity userSimilarityImpl, Integer theUserID, double minSim) {
 			this.userSimilarityImpl = userSimilarityImpl;
 			this.theUserID = theUserID;
 			this.minSim = minSim;
 		}
 
 		@Override
-		public double estimate(Long userID) throws TasteException {
-			if (userID == theUserID) {
+		public double estimate(Integer userID) throws TasteException {
+			if (userID.equals(theUserID)) {
 				return Double.NaN;
 			}
 			double sim = userSimilarityImpl.userSimilarity(theUserID, userID);

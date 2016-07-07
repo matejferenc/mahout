@@ -601,12 +601,12 @@ public class FileDataModel extends AbstractDataModel {
 	}
 
 	@Override
-	public PreferenceArray getPreferencesFromUser(int userID) throws TasteException {
+	public PreferenceArray getPreferencesFromUser(Integer userID) throws TasteException {
 		return delegate.getPreferencesFromUser(userID);
 	}
 
 	@Override
-	public FastIDSet getItemIDsFromUser(int userID) throws TasteException {
+	public FastIDSet getItemIDsFromUser(Integer userID) throws TasteException {
 		return delegate.getItemIDsFromUser(userID);
 	}
 
@@ -616,17 +616,17 @@ public class FileDataModel extends AbstractDataModel {
 	}
 
 	@Override
-	public PreferenceArray getPreferencesForItem(int itemID) throws TasteException {
+	public PreferenceArray getPreferencesForItem(Integer itemID) throws TasteException {
 		return delegate.getPreferencesForItem(itemID);
 	}
 
 	@Override
-	public Float getPreferenceValue(int userID, int itemID) throws TasteException {
+	public Float getPreferenceValue(Integer userID, Integer itemID) throws TasteException {
 		return delegate.getPreferenceValue(userID, itemID);
 	}
 
 	@Override
-	public Long getPreferenceTime(int userID, int itemID) throws TasteException {
+	public Long getPreferenceTime(Integer userID, Integer itemID) throws TasteException {
 		return delegate.getPreferenceTime(userID, itemID);
 	}
 
@@ -641,12 +641,12 @@ public class FileDataModel extends AbstractDataModel {
 	}
 
 	@Override
-	public int getNumUsersWithPreferenceFor(int itemID) throws TasteException {
+	public int getNumUsersWithPreferenceFor(Integer itemID) throws TasteException {
 		return delegate.getNumUsersWithPreferenceFor(itemID);
 	}
 
 	@Override
-	public int getNumUsersWithPreferenceFor(int itemID1, int itemID2) throws TasteException {
+	public int getNumUsersWithPreferenceFor(Integer itemID1, Integer itemID2) throws TasteException {
 		return delegate.getNumUsersWithPreferenceFor(itemID1, itemID2);
 	}
 
@@ -655,13 +655,13 @@ public class FileDataModel extends AbstractDataModel {
 	 * when data is reloaded from a file. This method should also be considered relatively slow.
 	 */
 	@Override
-	public void setPreference(int userID, int itemID, float value) throws TasteException {
+	public void setPreference(Integer userID, Integer itemID, Float value) throws TasteException {
 		delegate.setPreference(userID, itemID, value);
 	}
 
 	/** See the warning at {@link #setPreference(long, long, float)}. */
 	@Override
-	public void removePreference(int userID, int itemID) throws TasteException {
+	public void removePreference(Integer userID, Integer itemID) throws TasteException {
 		delegate.removePreference(userID, itemID);
 	}
 

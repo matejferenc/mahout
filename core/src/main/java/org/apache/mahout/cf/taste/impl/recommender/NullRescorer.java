@@ -19,7 +19,7 @@ package org.apache.mahout.cf.taste.impl.recommender;
 
 import org.apache.mahout.cf.taste.recommender.IDRescorer;
 import org.apache.mahout.cf.taste.recommender.Rescorer;
-import org.apache.mahout.common.LongPair;
+import org.apache.mahout.common.IntPair;
 
 /**
  * <p>
@@ -29,8 +29,8 @@ import org.apache.mahout.common.LongPair;
 public final class NullRescorer<T> implements Rescorer<T>, IDRescorer {
   
   private static final IDRescorer USER_OR_ITEM_INSTANCE = new NullRescorer<Long>();
-  private static final Rescorer<LongPair> ITEM_ITEM_PAIR_INSTANCE = new NullRescorer<LongPair>();
-  private static final Rescorer<LongPair> USER_USER_PAIR_INSTANCE = new NullRescorer<LongPair>();
+  private static final Rescorer<IntPair> ITEM_ITEM_PAIR_INSTANCE = new NullRescorer<IntPair>();
+  private static final Rescorer<IntPair> USER_USER_PAIR_INSTANCE = new NullRescorer<IntPair>();
 
   private NullRescorer() {
   }
@@ -43,11 +43,11 @@ public final class NullRescorer<T> implements Rescorer<T>, IDRescorer {
     return USER_OR_ITEM_INSTANCE;
   }
   
-  public static Rescorer<LongPair> getItemItemPairInstance() {
+  public static Rescorer<IntPair> getItemItemPairInstance() {
     return ITEM_ITEM_PAIR_INSTANCE;
   }
   
-  public static Rescorer<LongPair> getUserUserPairInstance() {
+  public static Rescorer<IntPair> getUserUserPairInstance() {
     return USER_USER_PAIR_INSTANCE;
   }
 

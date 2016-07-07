@@ -20,7 +20,7 @@ package org.apache.mahout.cf.taste.recommender;
 import java.util.List;
 
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.common.LongPair;
+import org.apache.mahout.common.IntPair;
 
 /**
  * <p>
@@ -38,7 +38,7 @@ public interface ItemBasedRecommender extends Recommender {
    * @throws TasteException
    *           if an error occurs while accessing the {@link org.apache.mahout.cf.taste.model.DataModel}
    */
-  List<RecommendedItem> mostSimilarItems(long itemID, int howMany) throws TasteException;
+  List<RecommendedItem> mostSimilarItems(Integer itemID, int howMany) throws TasteException;
   
   /**
    * @param itemID
@@ -52,7 +52,7 @@ public interface ItemBasedRecommender extends Recommender {
    * @throws TasteException
    *           if an error occurs while accessing the {@link org.apache.mahout.cf.taste.model.DataModel}
    */
-  List<RecommendedItem> mostSimilarItems(long itemID, int howMany, Rescorer<LongPair> rescorer) throws TasteException;
+  List<RecommendedItem> mostSimilarItems(Integer itemID, int howMany, Rescorer<IntPair> rescorer) throws TasteException;
   
   /**
    * @param itemIDs
@@ -63,7 +63,7 @@ public interface ItemBasedRecommender extends Recommender {
    * @throws TasteException
    *           if an error occurs while accessing the {@link org.apache.mahout.cf.taste.model.DataModel}
    */
-  List<RecommendedItem> mostSimilarItems(long[] itemIDs, int howMany) throws TasteException;
+  List<RecommendedItem> mostSimilarItems(Integer[] itemIDs, int howMany) throws TasteException;
   
   /**
    * @param itemIDs
@@ -77,9 +77,9 @@ public interface ItemBasedRecommender extends Recommender {
    * @throws TasteException
    *           if an error occurs while accessing the {@link org.apache.mahout.cf.taste.model.DataModel}
    */
-  List<RecommendedItem> mostSimilarItems(long[] itemIDs,
+  List<RecommendedItem> mostSimilarItems(Integer[] itemIDs,
                                          int howMany,
-                                         Rescorer<LongPair> rescorer) throws TasteException;
+                                         Rescorer<IntPair> rescorer) throws TasteException;
 
   /**
    * @param itemIDs
@@ -92,7 +92,7 @@ public interface ItemBasedRecommender extends Recommender {
    * @throws TasteException
    *           if an error occurs while accessing the {@link org.apache.mahout.cf.taste.model.DataModel}
    */
-  List<RecommendedItem> mostSimilarItems(long[] itemIDs,
+  List<RecommendedItem> mostSimilarItems(Integer[] itemIDs,
                                          int howMany,
                                          boolean excludeItemIfNotSimilarToAll) throws TasteException;
 
@@ -110,9 +110,9 @@ public interface ItemBasedRecommender extends Recommender {
    * @throws TasteException
    *           if an error occurs while accessing the {@link org.apache.mahout.cf.taste.model.DataModel}
    */
-  List<RecommendedItem> mostSimilarItems(long[] itemIDs,
+  List<RecommendedItem> mostSimilarItems(Integer[] itemIDs,
                                          int howMany,
-                                         Rescorer<LongPair> rescorer,
+                                         Rescorer<IntPair> rescorer,
                                          boolean excludeItemIfNotSimilarToAll) throws TasteException;
 
   /**
@@ -140,6 +140,6 @@ public interface ItemBasedRecommender extends Recommender {
    * @throws TasteException
    *           if an error occurs while accessing the {@link org.apache.mahout.cf.taste.model.DataModel}
    */
-  List<RecommendedItem> recommendedBecause(long userID, long itemID, int howMany) throws TasteException;
+  List<RecommendedItem> recommendedBecause(Integer userID, Integer itemID, int howMany) throws TasteException;
   
 }

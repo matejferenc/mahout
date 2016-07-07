@@ -24,15 +24,15 @@ public final class SamplingLongPrimitiveIteratorTest extends TasteTestCase {
 
   @Test
   public void testEmptyCase() {
-    assertFalse(new SamplingLongPrimitiveIterator(
+    assertFalse(new SamplingLIntPrimitiveIterator(
         countingIterator(0), 0.9999).hasNext());
-    assertFalse(new SamplingLongPrimitiveIterator(
+    assertFalse(new SamplingLIntPrimitiveIterator(
         countingIterator(0), 1).hasNext());
   }
 
   @Test
   public void testSmallInput() {
-    SamplingLongPrimitiveIterator t = new SamplingLongPrimitiveIterator(
+    SamplingLIntPrimitiveIterator t = new SamplingLIntPrimitiveIterator(
         countingIterator(1), 0.9999);
     assertTrue(t.hasNext());
     assertEquals(0L, t.nextLong());
@@ -41,17 +41,17 @@ public final class SamplingLongPrimitiveIteratorTest extends TasteTestCase {
 
   @Test(expected = IllegalArgumentException.class)
   public void testBadRate1() {
-    new SamplingLongPrimitiveIterator(countingIterator(1), 0.0);
+    new SamplingLIntPrimitiveIterator(countingIterator(1), 0.0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testBadRate2() {
-    new SamplingLongPrimitiveIterator(countingIterator(1), 1.1);
+    new SamplingLIntPrimitiveIterator(countingIterator(1), 1.1);
   }
 
   @Test
   public void testExactSizeMatch() {
-    SamplingLongPrimitiveIterator t = new SamplingLongPrimitiveIterator(
+    SamplingLIntPrimitiveIterator t = new SamplingLIntPrimitiveIterator(
         countingIterator(10), 1);
     for (int i = 0; i < 10; i++) {
       assertTrue(t.hasNext());
@@ -66,7 +66,7 @@ public final class SamplingLongPrimitiveIteratorTest extends TasteTestCase {
     int n = 1000;
     double sd = Math.sqrt(n * p * (1.0 - p));
     for (int i = 0; i < 1000; i++) {
-      SamplingLongPrimitiveIterator t = new SamplingLongPrimitiveIterator(countingIterator(n), p);
+      SamplingLIntPrimitiveIterator t = new SamplingLIntPrimitiveIterator(countingIterator(n), p);
       int k = 0;
       while (t.hasNext()) {
         long v = t.nextLong();

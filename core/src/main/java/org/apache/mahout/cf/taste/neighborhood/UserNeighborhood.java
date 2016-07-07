@@ -22,34 +22,33 @@ import org.apache.mahout.cf.taste.common.TasteException;
 
 /**
  * <p>
- * Implementations of this interface compute a "neighborhood" of users like a given user. This neighborhood
- * can be used to compute recommendations then.
+ * Implementations of this interface compute a "neighborhood" of users like a given user. This neighborhood can be used to compute recommendations then.
  * </p>
  */
 public interface UserNeighborhood extends Refreshable {
-  
-  /**
-   * @param userID
-   *          ID of user for which a neighborhood will be computed
-   * @return IDs of users in the neighborhood
-   * @throws TasteException
-   *           if an error occurs while accessing data
-   */
-  long[] getUserNeighborhood(long userID) throws TasteException;
 
-  /**
-   * @param userID
-   *          ID of user for which a neighborhood will be computed
-   * @param itemID
-   *          ID of item that has to be rated by neighbors
-   * @return IDs of users in the neighborhood
-   * @throws TasteException
-   *           if an error occurs while accessing data
-   */
-  long[] getUserNeighborhood(long userID, long itemID) throws TasteException;
-  
-  String getName();
+	/**
+	 * @param userID
+	 *            ID of user for which a neighborhood will be computed
+	 * @return IDs of users in the neighborhood
+	 * @throws TasteException
+	 *             if an error occurs while accessing data
+	 */
+	Integer[] getUserNeighborhood(Integer userID) throws TasteException;
 
-  String getShortName();
-  
+	/**
+	 * @param userID
+	 *            ID of user for which a neighborhood will be computed
+	 * @param itemID
+	 *            ID of item that has to be rated by neighbors
+	 * @return IDs of users in the neighborhood
+	 * @throws TasteException
+	 *             if an error occurs while accessing data
+	 */
+	Integer[] getUserNeighborhood(Integer userID, Integer itemID) throws TasteException;
+
+	String getName();
+
+	String getShortName();
+
 }

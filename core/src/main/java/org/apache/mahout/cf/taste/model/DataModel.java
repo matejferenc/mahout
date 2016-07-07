@@ -23,7 +23,6 @@ import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
 import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 
 /**
  * <p>
@@ -49,7 +48,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  PreferenceArray getPreferencesFromUser(int userID) throws TasteException;
+  PreferenceArray getPreferencesFromUser(Integer userID) throws TasteException;
   
   /**
    * @param userID
@@ -60,7 +59,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  FastIDSet getItemIDsFromUser(int userID) throws TasteException;
+  FastIDSet getItemIDsFromUser(Integer userID) throws TasteException;
   
   /**
    * @return a {@link LongPrimitiveIterator} of all item IDs in the model, in order
@@ -78,7 +77,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  PreferenceArray getPreferencesForItem(int itemID) throws TasteException;
+  PreferenceArray getPreferencesForItem(Integer itemID) throws TasteException;
   
   /**
    * Retrieves the preference value for a single user and item.
@@ -93,7 +92,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  Float getPreferenceValue(int userID, int itemID) throws TasteException;
+  Float getPreferenceValue(Integer userID, Integer itemID) throws TasteException;
 
   /**
    * Retrieves the time at which a preference value from a user and item was set, if known.
@@ -105,7 +104,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws org.apache.mahout.cf.taste.common.NoSuchUserException if the user does not exist
    * @throws TasteException if an error occurs while accessing the data
    */
-  Long getPreferenceTime(int userID, int itemID) throws TasteException;
+  Long getPreferenceTime(Integer userID, Integer itemID) throws TasteException;
   
   /**
    * @return total number of items known to the model. This is generally the union of all items preferred by
@@ -127,7 +126,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @return the number of users who have expressed a preference for the item
    * @throws TasteException if an error occurs while accessing the data
    */
-  int getNumUsersWithPreferenceFor(int itemID) throws TasteException;
+  int getNumUsersWithPreferenceFor(Integer itemID) throws TasteException;
 
   /**
    * @param itemID1 first item ID to check for
@@ -135,7 +134,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @return the number of users who have expressed a preference for the items
    * @throws TasteException if an error occurs while accessing the data
    */
-  int getNumUsersWithPreferenceFor(int itemID1, int itemID2) throws TasteException;
+  int getNumUsersWithPreferenceFor(Integer itemID1, Integer itemID2) throws TasteException;
   
   /**
    * <p>
@@ -155,7 +154,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  void setPreference(int userID, int itemID, float value) throws TasteException;
+  void setPreference(Integer userID, Integer itemID, Float value) throws TasteException;
   
   /**
    * <p>
@@ -173,7 +172,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  void removePreference(int userID, int itemID) throws TasteException;
+  void removePreference(Integer userID, Integer itemID) throws TasteException;
 
   /**
    * @return true if this implementation actually stores and returns distinct preference values;

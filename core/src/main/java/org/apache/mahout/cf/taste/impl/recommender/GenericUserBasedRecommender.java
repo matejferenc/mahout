@@ -33,7 +33,7 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Rescorer;
 import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
-import org.apache.mahout.common.LongPair;
+import org.apache.mahout.common.IntPair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,12 +76,12 @@ public class GenericUserBasedRecommender extends AbstractRecommender implements 
 	}
 
 	@Override
-	public List<RecommendedItem> recommend(long userID, int howMany, IDRescorer rescorer) throws TasteException {
+	public List<RecommendedItem> recommend(Integer userID, int howMany, IDRescorer rescorer) throws TasteException {
 		Preconditions.checkArgument(howMany >= 1, "howMany must be at least 1");
 
 		log.debug("Recommending items for user ID '{}'", userID);
 
-		long[] theNeighborhood = neighborhood.getUserNeighborhood(userID);
+		Integer[] theNeighborhood = neighborhood.getUserNeighborhood(userID);
 
 		if (theNeighborhood.length == 0) {
 			return Collections.emptyList();
@@ -89,7 +89,7 @@ public class GenericUserBasedRecommender extends AbstractRecommender implements 
 
 		FastIDSet allItemIDs = getAllOtherItems(theNeighborhood, userID);
 
-		TopItems.Estimator<Long> estimator = new Estimator(userID, theNeighborhood);
+		TopItems.Estimator<Integer> estimator = new Estimator(userID, theNeighborhood);
 
 		List<RecommendedItem> topItems = TopItems.getTopItems(howMany, allItemIDs.iterator(), rescorer, estimator);
 
@@ -98,38 +98,38 @@ public class GenericUserBasedRecommender extends AbstractRecommender implements 
 	}
 
 	@Override
-	public float estimatePreference(long userID, long itemID) throws TasteException {
+	public float estimatePreference(Integer userID, Integer itemID) throws TasteException {
 		return estimatePreferenceUsingOnlyRelevantNeighbors(userID, itemID);
 	}
 
-	public float estimatePreferenceUsingOnlyRelevantNeighbors(long userID, long itemID) throws TasteException {
+	public float estimatePreferenceUsingOnlyRelevantNeighbors(Integer userID, Integer itemID) throws TasteException {
 		DataModel model = getDataModel();
 		Float actualPref = model.getPreferenceValue(userID, itemID);
 		if (actualPref != null) {
 			return actualPref;
 		}
 		// we only select those neighbors who rated the given item. Otherwise it is useless to include them into the computation
-		long[] theNeighborhood = neighborhood.getUserNeighborhood(userID, itemID);
+		Integer[] theNeighborhood = neighborhood.getUserNeighborhood(userID, itemID);
 		return doEstimatePreference(userID, theNeighborhood, itemID);
 	}
 
 	@Override
-	public long[] mostSimilarUserIDs(long userID, int howMany) throws TasteException {
+	public Integer[] mostSimilarUserIDs(Integer userID, int howMany) throws TasteException {
 		return mostSimilarUserIDs(userID, howMany, null);
 	}
 
 	@Override
-	public long[] mostSimilarUserIDs(long userID, int howMany, Rescorer<LongPair> rescorer) throws TasteException {
-		TopItems.Estimator<Long> estimator = new MostSimilarEstimator(userID, similarity, rescorer);
+	public Integer[] mostSimilarUserIDs(Integer userID, int howMany, Rescorer<IntPair> rescorer) throws TasteException {
+		TopItems.Estimator<Integer> estimator = new MostSimilarEstimator(userID, similarity, rescorer);
 		return doMostSimilarUsers(howMany, estimator);
 	}
 
-	private long[] doMostSimilarUsers(int howMany, TopItems.Estimator<Long> estimator) throws TasteException {
+	private Integer[] doMostSimilarUsers(int howMany, TopItems.Estimator<Integer> estimator) throws TasteException {
 		DataModel model = getDataModel();
 		return TopItems.getTopUsers(howMany, model.getUserIDs(), null, estimator);
 	}
 
-	protected float doEstimatePreference(long theUserID, long[] theNeighborhood, long itemID) throws TasteException {
+	protected float doEstimatePreference(Integer theUserID, Integer[] theNeighborhood, Integer itemID) throws TasteException {
 		if (theNeighborhood.length == 0) {
 			return Float.NaN;
 		}
@@ -137,7 +137,7 @@ public class GenericUserBasedRecommender extends AbstractRecommender implements 
 		double preference = 0.0;
 		double totalSimilarity = 0.0;
 		int count = 0;
-		for (long userID : theNeighborhood) {
+		for (Integer userID : theNeighborhood) {
 			if (userID != theUserID) {
 				// See GenericItemBasedRecommender.doEstimatePreference() too
 				Float pref = dataModel.getPreferenceValue(userID, itemID);
@@ -166,10 +166,10 @@ public class GenericUserBasedRecommender extends AbstractRecommender implements 
 		return estimate;
 	}
 
-	protected FastIDSet getAllOtherItems(long[] theNeighborhood, long theUserID) throws TasteException {
+	protected FastIDSet getAllOtherItems(Integer[] theNeighborhood, Integer theUserID) throws TasteException {
 		DataModel dataModel = getDataModel();
 		FastIDSet possibleItemIDs = new FastIDSet();
-		for (long userID : theNeighborhood) {
+		for (Integer userID : theNeighborhood) {
 			possibleItemIDs.addAll(dataModel.getItemIDsFromUser(userID));
 		}
 		possibleItemIDs.removeAll(dataModel.getItemIDsFromUser(theUserID));
@@ -195,28 +195,28 @@ public class GenericUserBasedRecommender extends AbstractRecommender implements 
 		}
 	}
 
-	private static final class MostSimilarEstimator implements TopItems.Estimator<Long> {
+	private static final class MostSimilarEstimator implements TopItems.Estimator<Integer> {
 
-		private final long toUserID;
+		private final Integer toUserID;
 		private final UserSimilarity similarity;
-		private final Rescorer<LongPair> rescorer;
+		private final Rescorer<IntPair> rescorer;
 
-		private MostSimilarEstimator(long toUserID, UserSimilarity similarity, Rescorer<LongPair> rescorer) {
+		private MostSimilarEstimator(Integer toUserID, UserSimilarity similarity, Rescorer<IntPair> rescorer) {
 			this.toUserID = toUserID;
 			this.similarity = similarity;
 			this.rescorer = rescorer;
 		}
 
 		@Override
-		public double estimate(Long userID) throws TasteException {
+		public double estimate(Integer userID) throws TasteException {
 			// Don't consider the user itself as a possible most similar user
-			if (userID == toUserID) {
+			if (userID.equals(toUserID)) {
 				return Double.NaN;
 			}
 			if (rescorer == null) {
 				return similarity.userSimilarity(toUserID, userID);
 			} else {
-				LongPair pair = new LongPair(toUserID, userID);
+				IntPair pair = new IntPair(toUserID, userID);
 				if (rescorer.isFiltered(pair)) {
 					return Double.NaN;
 				}
@@ -226,18 +226,18 @@ public class GenericUserBasedRecommender extends AbstractRecommender implements 
 		}
 	}
 
-	private final class Estimator implements TopItems.Estimator<Long> {
+	private final class Estimator implements TopItems.Estimator<Integer> {
 
-		private final long theUserID;
-		private final long[] theNeighborhood;
+		private final Integer theUserID;
+		private final Integer[] theNeighborhood;
 
-		Estimator(long theUserID, long[] theNeighborhood) {
+		Estimator(Integer theUserID, Integer[] theNeighborhood) {
 			this.theUserID = theUserID;
 			this.theNeighborhood = theNeighborhood;
 		}
 
 		@Override
-		public double estimate(Long itemID) throws TasteException {
+		public double estimate(Integer itemID) throws TasteException {
 			return doEstimatePreference(theUserID, theNeighborhood, itemID);
 		}
 	}

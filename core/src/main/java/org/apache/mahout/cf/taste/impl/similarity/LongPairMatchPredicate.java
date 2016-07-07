@@ -18,13 +18,13 @@
 package org.apache.mahout.cf.taste.impl.similarity;
 
 import org.apache.mahout.cf.taste.impl.common.Cache;
-import org.apache.mahout.common.LongPair;
+import org.apache.mahout.common.IntPair;
 
 /**
  * A {@link Cache.MatchPredicate} which will match an ID against either element of a
- * {@link LongPair}.
+ * {@link IntPair}.
  */
-final class LongPairMatchPredicate implements Cache.MatchPredicate<LongPair> {
+final class LongPairMatchPredicate implements Cache.MatchPredicate<IntPair> {
 
   private final long id;
 
@@ -33,7 +33,7 @@ final class LongPairMatchPredicate implements Cache.MatchPredicate<LongPair> {
   }
 
   @Override
-  public boolean matches(LongPair pair) {
+  public boolean matches(IntPair pair) {
     return pair.getFirst() == id || pair.getSecond() == id;
   }
 

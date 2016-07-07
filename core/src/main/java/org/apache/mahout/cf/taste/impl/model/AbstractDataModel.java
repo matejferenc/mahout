@@ -24,30 +24,30 @@ import org.apache.mahout.cf.taste.model.DataModel;
  */
 public abstract class AbstractDataModel implements DataModel {
 
-  private float maxPreference;
-  private float minPreference;
+	private float maxPreference;
+	private float minPreference;
 
-  protected AbstractDataModel() {
-    maxPreference = Float.NaN;
-    minPreference = Float.NaN;
-  }
+	protected AbstractDataModel() {
+		maxPreference = Float.NaN;
+		minPreference = Float.NaN;
+	}
 
-  @Override
-  public float getMaxPreference() {
-    return maxPreference;
-  }
+	@Override
+	public float getMaxPreference() {
+		return maxPreference;
+	}
 
-  protected void setMaxPreference(float maxPreference) {
-    this.maxPreference = maxPreference;
-  }
+	protected void setMaxPreference(float maxPreference) {
+		this.maxPreference = maxPreference;
+	}
 
-  @Override
-  public float getMinPreference() {
-    return minPreference;
-  }
+	@Override
+	public float getMinPreference() {
+		return minPreference;
+	}
 
-  protected void setMinPreference(float minPreference) {
-    this.minPreference = minPreference;
-  }
+	protected void setMinPreference(float minPreference) {
+		this.minPreference = minPreference;
+	}
 
 }

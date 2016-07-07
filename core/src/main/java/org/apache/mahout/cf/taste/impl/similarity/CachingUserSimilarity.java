@@ -28,7 +28,7 @@ import org.apache.mahout.cf.taste.impl.common.Retriever;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.similarity.PreferenceInferrer;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
-import org.apache.mahout.common.LongPair;
+import org.apache.mahout.common.IntPair;
 
 import com.google.common.base.Preconditions;
 
@@ -38,7 +38,7 @@ import com.google.common.base.Preconditions;
 public final class CachingUserSimilarity implements UserSimilarity {
 
 	private final UserSimilarity similarity;
-	private final Cache<LongPair, Double> similarityCache;
+	private final Cache<IntPair, Double> similarityCache;
 	private final RefreshHelper refreshHelper;
 
 	/**
@@ -54,7 +54,7 @@ public final class CachingUserSimilarity implements UserSimilarity {
 	public CachingUserSimilarity(UserSimilarity similarity, int maxCacheSize) {
 		Preconditions.checkArgument(similarity != null, "similarity is null");
 		this.similarity = similarity;
-		this.similarityCache = new Cache<LongPair, Double>(new SimilarityRetriever(similarity), maxCacheSize);
+		this.similarityCache = new Cache<IntPair, Double>(new SimilarityRetriever(similarity), maxCacheSize);
 		this.refreshHelper = new RefreshHelper(new Callable<Void>() {
 			@Override
 			public Void call() {
@@ -66,8 +66,8 @@ public final class CachingUserSimilarity implements UserSimilarity {
 	}
 
 	@Override
-	public double userSimilarity(long userID1, long userID2) throws TasteException {
-		LongPair key = userID1 < userID2 ? new LongPair(userID1, userID2) : new LongPair(userID2, userID1);
+	public double userSimilarity(Integer userID1, Integer userID2) throws TasteException {
+		IntPair key = userID1 < userID2 ? new IntPair(userID1, userID2) : new IntPair(userID2, userID1);
 		return similarityCache.get(key);
 	}
 
@@ -86,7 +86,7 @@ public final class CachingUserSimilarity implements UserSimilarity {
 		refreshHelper.refresh(alreadyRefreshed);
 	}
 
-	private static final class SimilarityRetriever implements Retriever<LongPair, Double> {
+	private static final class SimilarityRetriever implements Retriever<IntPair, Double> {
 		private final UserSimilarity similarity;
 
 		private SimilarityRetriever(UserSimilarity similarity) {
@@ -94,7 +94,7 @@ public final class CachingUserSimilarity implements UserSimilarity {
 		}
 
 		@Override
-		public Double get(LongPair key) throws TasteException {
+		public Double get(IntPair key) throws TasteException {
 			return similarity.userSimilarity(key.getFirst(), key.getSecond());
 		}
 	}

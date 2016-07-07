@@ -20,7 +20,7 @@ package org.apache.mahout.cf.taste.impl.neighborhood;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
-import org.apache.mahout.cf.taste.impl.common.SamplingLongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.SamplingLIntPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
@@ -72,7 +72,7 @@ public final class ThresholdUserNeighborhood extends AbstractUserNeighborhood {
 
 		DataModel dataModel = getDataModel();
 		FastIDSet neighborhood = new FastIDSet();
-		LongPrimitiveIterator usersIterable = SamplingLongPrimitiveIterator.maybeWrapIterator(dataModel.getUserIDs(), getSamplingRate());
+		LongPrimitiveIterator usersIterable = SamplingLIntPrimitiveIterator.maybeWrapIterator(dataModel.getUserIDs(), getSamplingRate());
 		UserSimilarity userSimilarityImpl = getUserSimilarity();
 
 		while (usersIterable.hasNext()) {

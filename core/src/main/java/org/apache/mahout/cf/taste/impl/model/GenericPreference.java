@@ -30,11 +30,11 @@ import com.google.common.base.Preconditions;
  */
 public class GenericPreference implements Preference, Serializable {
 
-	private final int userID;
-	private final int itemID;
-	private float value;
+	private final Integer userID;
+	private final Integer itemID;
+	private Float value;
 
-	public GenericPreference(int userID, int itemID, float value) {
+	public GenericPreference(Integer userID, Integer itemID, Float value) {
 		Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
 		this.userID = userID;
 		this.itemID = itemID;
@@ -42,22 +42,22 @@ public class GenericPreference implements Preference, Serializable {
 	}
 
 	@Override
-	public int getUserID() {
+	public Integer getUserID() {
 		return userID;
 	}
 
 	@Override
-	public int getItemID() {
+	public Integer getItemID() {
 		return itemID;
 	}
 
 	@Override
-	public float getValue() {
+	public Float getValue() {
 		return value;
 	}
 
 	@Override
-	public void setValue(float value) {
+	public void setValue(Float value) {
 		Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
 		this.value = value;
 	}

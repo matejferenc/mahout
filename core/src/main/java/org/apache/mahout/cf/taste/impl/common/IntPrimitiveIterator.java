@@ -28,7 +28,7 @@ public interface IntPrimitiveIterator extends SkippingIterator<Integer> {
 	 * @throws java.util.NoSuchElementException
 	 *             if no more elements exist in the iteration
 	 */
-	int nextInt();
+	Integer nextInt();
 
 	/**
 	 * @return next {@code long} in iteration without advancing iteration

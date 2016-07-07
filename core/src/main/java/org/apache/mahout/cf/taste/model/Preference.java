@@ -25,15 +25,15 @@ package org.apache.mahout.cf.taste.model;
 public interface Preference {
 
 	/** @return ID of user who prefers the item */
-	int getUserID();
+	Integer getUserID();
 
 	/** @return item ID that is preferred */
-	int getItemID();
+	Integer getItemID();
 
 	/**
 	 * @return strength of the preference for that item. Zero should indicate "no preference either way"; positive values indicate preference and negative values indicate dislike
 	 */
-	float getValue();
+	Float getValue();
 
 	/**
 	 * Sets the strength of the preference for this item
@@ -41,6 +41,6 @@ public interface Preference {
 	 * @param value
 	 *            new preference
 	 */
-	void setValue(float value);
+	void setValue(Float value);
 
 }

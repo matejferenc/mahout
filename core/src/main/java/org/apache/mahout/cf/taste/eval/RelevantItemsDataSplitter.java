@@ -39,7 +39,7 @@ public interface RelevantItemsDataSplitter {
    *                           relevant
    * @return IDs of relevant items
    */
-  FastIDSet getRelevantItemsIDs(long userID,
+  FastIDSet getRelevantItemsIDs(Integer userID,
                                 int at,
                                 double relevanceThreshold,
                                 DataModel dataModel) throws TasteException;
@@ -53,10 +53,10 @@ public interface RelevantItemsDataSplitter {
    *                        append the ones for otherUserID.
    * @param otherUserID     for whom we are adding preferences to the training model
    */
-  void processOtherUser(long userID,
+  void processOtherUser(Integer userID,
                         FastIDSet relevantItemIDs,
                         FastByIDMap<PreferenceArray> trainingUsers,
-                        long otherUserID,
+                        Integer otherUserID,
                         DataModel dataModel) throws TasteException;
 
 }

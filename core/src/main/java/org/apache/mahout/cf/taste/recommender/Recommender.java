@@ -39,7 +39,7 @@ public interface Recommender extends Refreshable {
 	 * @throws TasteException
 	 *             if an error occurs while accessing the {@link DataModel}
 	 */
-	List<RecommendedItem> recommend(int userID, int howMany) throws TasteException;
+	List<RecommendedItem> recommend(Integer userID, int howMany) throws TasteException;
 
 	/**
 	 * @param userID
@@ -52,7 +52,7 @@ public interface Recommender extends Refreshable {
 	 * @throws TasteException
 	 *             if an error occurs while accessing the {@link DataModel}
 	 */
-	List<RecommendedItem> recommend(int userID, int howMany, IDRescorer rescorer) throws TasteException;
+	List<RecommendedItem> recommend(Integer userID, int howMany, IDRescorer rescorer) throws TasteException;
 
 	/**
 	 * @param userID
@@ -63,7 +63,7 @@ public interface Recommender extends Refreshable {
 	 * @throws TasteException
 	 *             if an error occurs while accessing the {@link DataModel}
 	 */
-	float estimatePreference(int userID, int itemID) throws TasteException;
+	float estimatePreference(Integer userID, Integer itemID) throws TasteException;
 
 	/**
 	 * @param userID
@@ -75,7 +75,7 @@ public interface Recommender extends Refreshable {
 	 * @throws TasteException
 	 *             if an error occurs while accessing the {@link DataModel}
 	 */
-	void setPreference(int userID, int itemID, float value) throws TasteException;
+	void setPreference(Integer userID, Integer itemID, Float value) throws TasteException;
 
 	/**
 	 * @param userID
@@ -85,7 +85,7 @@ public interface Recommender extends Refreshable {
 	 * @throws TasteException
 	 *             if an error occurs while accessing the {@link DataModel}
 	 */
-	void removePreference(int userID, int itemID) throws TasteException;
+	void removePreference(Integer userID, Integer itemID) throws TasteException;
 
 	/**
 	 * @return underlying {@link DataModel} used by this {@link Recommender} implementation

@@ -26,7 +26,7 @@ import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverageAndStdDev;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RunningAverageAndStdDev;
-import org.apache.mahout.cf.taste.impl.common.SamplingLongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.SamplingLIntPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
@@ -46,7 +46,7 @@ public final class LoadEvaluator {
     int numUsers = dataModel.getNumUsers();
     double sampleRate = 1000.0 / numUsers;
     LongPrimitiveIterator userSampler =
-        SamplingLongPrimitiveIterator.maybeWrapIterator(dataModel.getUserIDs(), sampleRate);
+        SamplingLIntPrimitiveIterator.maybeWrapIterator(dataModel.getUserIDs(), sampleRate);
     recommender.recommend(userSampler.next(), howMany); // Warm up
     Collection<Callable<Void>> callables = Lists.newArrayList();
     while (userSampler.hasNext()) {

@@ -27,5 +27,5 @@ import org.apache.mahout.cf.taste.model.DataModel;
  */
 public interface MostSimilarItemsCandidateItemsStrategy extends Refreshable {
 
-  FastIDSet getCandidateItems(long[] itemIDs, DataModel dataModel) throws TasteException;
+	FastIDSet getCandidateItems(Integer[] itemIDs, DataModel dataModel) throws TasteException;
 }

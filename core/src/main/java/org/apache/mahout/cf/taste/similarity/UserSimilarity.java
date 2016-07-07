@@ -22,41 +22,44 @@ import org.apache.mahout.cf.taste.common.TasteException;
 
 /**
  * <p>
- * Implementations of this interface define a notion of similarity between two users. Implementations should
- * return values in the range -1.0 to 1.0, with 1.0 representing perfect similarity.
+ * Implementations of this interface define a notion of similarity between two users. Implementations should return values in the range -1.0 to 1.0, with 1.0 representing perfect similarity.
  * </p>
  * 
  * @see ItemSimilarity
  */
 public interface UserSimilarity extends Refreshable {
-  
-  /**
-   * <p>
-   * Returns the degree of similarity, of two users, based on the their preferences.
-   * </p>
-   * 
-   * @param userID1 first user ID
-   * @param userID2 second user ID
-   * @return similarity between the users, in [-1,1] or {@link Double#NaN} similarity is unknown
-   * @throws org.apache.mahout.cf.taste.common.NoSuchUserException
-   *  if either user is known to be non-existent in the data
-   * @throws TasteException if an error occurs while accessing the data
-   */
-  double userSimilarity(long userID1, long userID2) throws TasteException;
 
-  // Should we implement userSimilarities() like ItemSimilarity.itemSimilarities()?
-  
-  /**
-   * <p>
-   * Attaches a {@link PreferenceInferrer} to the {@link UserSimilarity} implementation.
-   * </p>
-   * 
-   * @param inferrer {@link PreferenceInferrer}
-   */
-  void setPreferenceInferrer(PreferenceInferrer inferrer);
-  
-  String getName();
+	/**
+	 * <p>
+	 * Returns the degree of similarity, of two users, based on the their preferences.
+	 * </p>
+	 * 
+	 * @param userID1
+	 *            first user ID
+	 * @param userID2
+	 *            second user ID
+	 * @return similarity between the users, in [-1,1] or {@link Double#NaN} similarity is unknown
+	 * @throws org.apache.mahout.cf.taste.common.NoSuchUserException
+	 *             if either user is known to be non-existent in the data
+	 * @throws TasteException
+	 *             if an error occurs while accessing the data
+	 */
+	double userSimilarity(Integer userID1, Integer userID2) throws TasteException;
 
-  String getShortName();
-  
+	// Should we implement userSimilarities() like ItemSimilarity.itemSimilarities()?
+
+	/**
+	 * <p>
+	 * Attaches a {@link PreferenceInferrer} to the {@link UserSimilarity} implementation.
+	 * </p>
+	 * 
+	 * @param inferrer
+	 *            {@link PreferenceInferrer}
+	 */
+	void setPreferenceInferrer(PreferenceInferrer inferrer);
+
+	String getName();
+
+	String getShortName();
+
 }

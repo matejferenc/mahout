@@ -26,7 +26,7 @@ import com.google.common.base.Preconditions;
  */
 public final class IntPrimitiveArrayIterator implements IntPrimitiveIterator {
 
-	private final int[] array;
+	private final Integer[] array;
 	private int position;
 	private final int max;
 
@@ -38,7 +38,7 @@ public final class IntPrimitiveArrayIterator implements IntPrimitiveIterator {
 	 * @param array
 	 *            array to iterate over
 	 */
-	public IntPrimitiveArrayIterator(int[] array) {
+	public IntPrimitiveArrayIterator(Integer[] array) {
 		this.array = Preconditions.checkNotNull(array); // yeah, not going to copy the array here, for performance
 		this.position = 0;
 		this.max = array.length;
@@ -55,7 +55,7 @@ public final class IntPrimitiveArrayIterator implements IntPrimitiveIterator {
 	}
 
 	@Override
-	public int nextInt() {
+	public Integer nextInt() {
 		if (position >= array.length) {
 			throw new NoSuchElementException();
 		}
@@ -87,7 +87,7 @@ public final class IntPrimitiveArrayIterator implements IntPrimitiveIterator {
 
 	@Override
 	public String toString() {
-		return "LongPrimitiveArrayIterator";
+		return "IntPrimitiveArrayIterator";
 	}
 
 }

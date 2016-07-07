@@ -22,47 +22,53 @@ import org.apache.mahout.cf.taste.common.TasteException;
 
 /**
  * <p>
- * Implementations of this interface define a notion of similarity between two items. Implementations should
- * return values in the range -1.0 to 1.0, with 1.0 representing perfect similarity.
+ * Implementations of this interface define a notion of similarity between two items. Implementations should return values in the range -1.0 to 1.0, with 1.0 representing perfect similarity.
  * </p>
  * 
  * @see UserSimilarity
  */
 public interface ItemSimilarity extends Refreshable {
-  
-  /**
-   * <p>
-   * Returns the degree of similarity, of two items, based on the preferences that users have expressed for
-   * the items.
-   * </p>
-   * 
-   * @param itemID1 first item ID
-   * @param itemID2 second item ID
-   * @return similarity between the items, in [-1,1] or {@link Double#NaN} similarity is unknown
-   * @throws org.apache.mahout.cf.taste.common.NoSuchItemException
-   *  if either item is known to be non-existent in the data
-   * @throws TasteException if an error occurs while accessing the data
-   */
-  double itemSimilarity(long itemID1, long itemID2) throws TasteException;
 
-  /**
-   * <p>A bulk-get version of {@link #itemSimilarity(long, long)}.</p>
-   *
-   * @param itemID1 first item ID
-   * @param itemID2s second item IDs to compute similarity with
-   * @return similarity between itemID1 and other items
-   * @throws org.apache.mahout.cf.taste.common.NoSuchItemException
-   *  if any item is known to be non-existent in the data
-   * @throws TasteException if an error occurs while accessing the data
-   */
-  double[] itemSimilarities(long itemID1, long[] itemID2s) throws TasteException;
+	/**
+	 * <p>
+	 * Returns the degree of similarity, of two items, based on the preferences that users have expressed for the items.
+	 * </p>
+	 * 
+	 * @param itemID1
+	 *            first item ID
+	 * @param itemID2
+	 *            second item ID
+	 * @return similarity between the items, in [-1,1] or {@link Double#NaN} similarity is unknown
+	 * @throws org.apache.mahout.cf.taste.common.NoSuchItemException
+	 *             if either item is known to be non-existent in the data
+	 * @throws TasteException
+	 *             if an error occurs while accessing the data
+	 */
+	double itemSimilarity(Integer itemID1, Integer itemID2) throws TasteException;
 
-  /**
-   * @return all IDs of similar items, in no particular order
-   */
-  long[] allSimilarItemIDs(long itemID) throws TasteException;
-  
-  String getName();
+	/**
+	 * <p>
+	 * A bulk-get version of {@link #itemSimilarity(long, long)}.
+	 * </p>
+	 *
+	 * @param itemID1
+	 *            first item ID
+	 * @param itemID2s
+	 *            second item IDs to compute similarity with
+	 * @return similarity between itemID1 and other items
+	 * @throws org.apache.mahout.cf.taste.common.NoSuchItemException
+	 *             if any item is known to be non-existent in the data
+	 * @throws TasteException
+	 *             if an error occurs while accessing the data
+	 */
+	double[] itemSimilarities(Integer itemID1, Integer[] itemID2s) throws TasteException;
 
-  String getShortName();
+	/**
+	 * @return all IDs of similar items, in no particular order
+	 */
+	Integer[] allSimilarItemIDs(Integer itemID) throws TasteException;
+
+	String getName();
+
+	String getShortName();
 }

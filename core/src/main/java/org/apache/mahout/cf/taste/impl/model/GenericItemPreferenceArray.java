@@ -21,11 +21,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterators;
 import org.apache.mahout.cf.taste.model.Preference;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.common.iterator.CountingIterator;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Iterators;
 
 /**
  * <p>
@@ -42,13 +43,13 @@ public final class GenericItemPreferenceArray implements PreferenceArray {
 	private static final int VALUE = 2;
 	private static final int VALUE_REVERSED = 3;
 
-	private final int[] ids;
-	private int id;
-	private final float[] values;
+	private final Integer[] ids;
+	private Integer id;
+	private final Float[] values;
 
 	public GenericItemPreferenceArray(int size) {
-		this.ids = new int[size];
-		values = new float[size];
+		this.ids = new Integer[size];
+		values = new Float[size];
 		this.id = Integer.MIN_VALUE; // as a sort of 'unspecified' value
 	}
 
@@ -74,7 +75,7 @@ public final class GenericItemPreferenceArray implements PreferenceArray {
 	/**
 	 * This is a private copy constructor for clone().
 	 */
-	private GenericItemPreferenceArray(int[] ids, int id, float[] values) {
+	private GenericItemPreferenceArray(Integer[] ids, Integer id, Float[] values) {
 		this.ids = ids;
 		this.id = id;
 		this.values = values;
@@ -98,17 +99,17 @@ public final class GenericItemPreferenceArray implements PreferenceArray {
 	}
 
 	@Override
-	public int getUserID(int i) {
+	public Integer getUserID(int i) {
 		return ids[i];
 	}
 
 	@Override
-	public void setUserID(int i, int userID) {
+	public void setUserID(int i, Integer userID) {
 		ids[i] = userID;
 	}
 
 	@Override
-	public int getItemID(int i) {
+	public Integer getItemID(int i) {
 		return id;
 	}
 
@@ -118,7 +119,7 @@ public final class GenericItemPreferenceArray implements PreferenceArray {
 	 * Note that this method will actually set the item ID for <em>all</em> preferences.
 	 */
 	@Override
-	public void setItemID(int i, int itemID) {
+	public void setItemID(int i, Integer itemID) {
 		id = itemID;
 	}
 
@@ -126,17 +127,17 @@ public final class GenericItemPreferenceArray implements PreferenceArray {
 	 * @return all user IDs
 	 */
 	@Override
-	public int[] getIDs() {
+	public Integer[] getIDs() {
 		return ids;
 	}
 
 	@Override
-	public float getValue(int i) {
+	public Float getValue(int i) {
 		return values[i];
 	}
 
 	@Override
-	public void setValue(int i, float value) {
+	public void setValue(int i, Float value) {
 		values[i] = value;
 	}
 
@@ -160,9 +161,9 @@ public final class GenericItemPreferenceArray implements PreferenceArray {
 	}
 
 	@Override
-	public boolean hasPrefWithUserID(int userID) {
-		for (long id : ids) {
-			if (userID == id) {
+	public boolean hasPrefWithUserID(Integer userID) {
+		for (Integer id : ids) {
+			if (userID.equals(id)) {
 				return true;
 			}
 		}
@@ -170,8 +171,8 @@ public final class GenericItemPreferenceArray implements PreferenceArray {
 	}
 
 	@Override
-	public boolean hasPrefWithItemID(int itemID) {
-		return id == itemID;
+	public boolean hasPrefWithItemID(Integer itemID) {
+		return id.equals(itemID);
 	}
 
 	private void lateralSort(int type) {
@@ -276,22 +277,22 @@ public final class GenericItemPreferenceArray implements PreferenceArray {
 		}
 
 		@Override
-		public int getUserID() {
+		public Integer getUserID() {
 			return GenericItemPreferenceArray.this.getUserID(i);
 		}
 
 		@Override
-		public int getItemID() {
+		public Integer getItemID() {
 			return GenericItemPreferenceArray.this.getItemID(i);
 		}
 
 		@Override
-		public float getValue() {
+		public Float getValue() {
 			return values[i];
 		}
 
 		@Override
-		public void setValue(float value) {
+		public void setValue(Float value) {
 			values[i] = value;
 		}
 
