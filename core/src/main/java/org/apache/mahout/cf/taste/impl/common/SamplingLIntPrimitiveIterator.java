@@ -25,7 +25,7 @@ import org.apache.mahout.common.RandomUtils;
 import org.apache.mahout.common.RandomWrapper;
 
 /**
- * Wraps a {@link LongPrimitiveIterator} and returns only some subset of the elements that it would, as determined by a sampling rate parameter.
+ * Wraps a {@link IntPrimitiveIterator} and returns only some subset of the elements that it would, as determined by a sampling rate parameter.
  */
 public final class SamplingLIntPrimitiveIterator extends AbstractIntPrimitiveIterator {
 

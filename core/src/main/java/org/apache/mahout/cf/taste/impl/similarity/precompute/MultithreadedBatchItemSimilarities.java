@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.ItemBasedRecommender;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
@@ -114,7 +114,7 @@ public class MultithreadedBatchItemSimilarities extends BatchItemSimilarities {
 
   private static BlockingQueue<long[]> queueItemIDsInBatches(DataModel dataModel, int batchSize) throws TasteException {
 
-    LongPrimitiveIterator itemIDs = dataModel.getItemIDs();
+    IntPrimitiveIterator itemIDs = dataModel.getItemIDs();
     int numItems = dataModel.getNumItems();
 
     BlockingQueue<long[]> itemIDBatches = new LinkedBlockingQueue<long[]>((numItems / batchSize) + 1);

@@ -88,18 +88,18 @@ public interface RecommenderEvaluator {
    * @deprecated see {@link DataModel#getMaxPreference()}
    */
   @Deprecated
-  float getMaxPreference();
+  double getMaxPreference();
 
   @Deprecated
-  void setMaxPreference(float maxPreference);
+  void setMaxPreference(double maxPreference);
 
   /**
    * @deprecated see {@link DataModel#getMinPreference()}
    */
   @Deprecated
-  float getMinPreference();
+  double getMinPreference();
 
   @Deprecated
-  void setMinPreference(float minPreference);
+  void setMinPreference(double minPreference);
   
 }

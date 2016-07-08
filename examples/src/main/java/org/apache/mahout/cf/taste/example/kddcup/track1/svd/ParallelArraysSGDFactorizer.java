@@ -21,7 +21,7 @@ import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverage;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RunningAverage;
 import org.apache.mahout.cf.taste.impl.recommender.svd.Factorization;
 import org.apache.mahout.cf.taste.impl.recommender.svd.Factorizer;
@@ -101,7 +101,7 @@ public class ParallelArraysSGDFactorizer implements Factorizer {
 		log.info("Mapping {} users...", numUsers);
 		userIDMapping = new FastByIDMap<Integer>(numUsers);
 		int index = 0;
-		LongPrimitiveIterator userIterator = factorizablePreferences.getUserIDs();
+		IntPrimitiveIterator userIterator = factorizablePreferences.getUserIDs();
 		while (userIterator.hasNext()) {
 			userIDMapping.put(userIterator.nextInt(), index++);
 		}
@@ -109,7 +109,7 @@ public class ParallelArraysSGDFactorizer implements Factorizer {
 		log.info("Mapping {} items", numItems);
 		itemIDMapping = new FastByIDMap<Integer>(numItems);
 		index = 0;
-		LongPrimitiveIterator itemIterator = factorizablePreferences.getItemIDs();
+		IntPrimitiveIterator itemIterator = factorizablePreferences.getItemIDs();
 		while (itemIterator.hasNext()) {
 			itemIDMapping.put(itemIterator.nextInt(), index++);
 		}

@@ -31,7 +31,7 @@ import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverage;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverageAndStdDev;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RefreshHelper;
 import org.apache.mahout.cf.taste.impl.common.RunningAverage;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -299,7 +299,7 @@ public final class MemoryDiffStorage implements DiffStorage {
       buildAverageDiffsLock.writeLock().lock();
       averageDiffs.clear();
       long averageCount = 0L;
-      LongPrimitiveIterator it = dataModel.getUserIDs();
+      IntPrimitiveIterator it = dataModel.getUserIDs();
       while (it.hasNext()) {
         averageCount = processOneUser(averageCount, it.nextInt());
       }
@@ -338,7 +338,7 @@ public final class MemoryDiffStorage implements DiffStorage {
     FastIDSet ids = new FastIDSet(dataModel.getNumItems());
     for (Map.Entry<Long,FastByIDMap<RunningAverage>> entry : averageDiffs.entrySet()) {
       ids.add(entry.getKey());
-      LongPrimitiveIterator it = entry.getValue().keySetIterator();
+      IntPrimitiveIterator it = entry.getValue().keySetIterator();
       while (it.hasNext()) {
         ids.add(it.next());
       }

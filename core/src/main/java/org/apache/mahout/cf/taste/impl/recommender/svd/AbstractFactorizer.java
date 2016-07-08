@@ -23,7 +23,7 @@ import java.util.concurrent.Callable;
 import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RefreshHelper;
 import org.apache.mahout.cf.taste.model.DataModel;
 
@@ -77,7 +77,7 @@ public abstract class AbstractFactorizer implements Factorizer {
     return itemIndex;
   }
 
-  private static FastByIDMap<Integer> createIDMapping(int size, LongPrimitiveIterator idIterator) {
+  private static FastByIDMap<Integer> createIDMapping(int size, IntPrimitiveIterator idIterator) {
     FastByIDMap<Integer> mapping = new FastByIDMap<Integer>(size);
     int index = 0;
     while (idIterator.hasNext()) {

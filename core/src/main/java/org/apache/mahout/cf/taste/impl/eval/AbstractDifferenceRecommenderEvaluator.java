@@ -29,7 +29,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.google.common.collect.Lists;
 import org.apache.mahout.cf.taste.common.NoSuchItemException;
 import org.apache.mahout.cf.taste.common.NoSuchUserException;
 import org.apache.mahout.cf.taste.common.TasteException;
@@ -38,7 +37,7 @@ import org.apache.mahout.cf.taste.eval.RecommenderBuilder;
 import org.apache.mahout.cf.taste.eval.RecommenderEvaluator;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverageAndStdDev;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RunningAverageAndStdDev;
 import org.apache.mahout.cf.taste.impl.model.GenericDataModel;
 import org.apache.mahout.cf.taste.impl.model.GenericPreference;
@@ -52,6 +51,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 
 /**
  * Abstract superclass of a couple implementations, providing shared functionality.
@@ -61,8 +61,8 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 	private static final Logger log = LoggerFactory.getLogger(AbstractDifferenceRecommenderEvaluator.class);
 
 	private final Random random;
-	private float maxPreference;
-	private float minPreference;
+	private double maxPreference;
+	private double minPreference;
 
 	private AtomicInteger noEstimateCounter;
 
@@ -75,22 +75,22 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 	}
 
 	@Override
-	public final float getMaxPreference() {
+	public final double getMaxPreference() {
 		return maxPreference;
 	}
 
 	@Override
-	public final void setMaxPreference(float maxPreference) {
+	public final void setMaxPreference(double maxPreference) {
 		this.maxPreference = maxPreference;
 	}
 
 	@Override
-	public final float getMinPreference() {
+	public final double getMinPreference() {
 		return minPreference;
 	}
 
 	@Override
-	public final void setMinPreference(float minPreference) {
+	public final void setMinPreference(double minPreference) {
 		this.minPreference = minPreference;
 	}
 
@@ -110,9 +110,9 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		FastByIDMap<PreferenceArray> trainingPrefs = new FastByIDMap<PreferenceArray>(1 + (int) (evaluationPercentage * numUsers));
 		FastByIDMap<PreferenceArray> testPrefs = new FastByIDMap<PreferenceArray>(1 + (int) (evaluationPercentage * numUsers));
 
-		LongPrimitiveIterator it = dataModel.getUserIDs();
+		IntPrimitiveIterator it = dataModel.getUserIDs();
 		while (it.hasNext()) {
-			long userID = it.nextInt();
+			Integer userID = it.nextInt();
 			if (random.nextDouble() < evaluationPercentage) {
 				splitOneUsersPrefs(trainingPercentage, trainingPrefs, testPrefs, userID, dataModel);
 			}
@@ -127,7 +127,7 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		return result;
 	}
 
-	private void splitOneUsersPrefs(double trainingPercentage, FastByIDMap<PreferenceArray> trainingPrefs, FastByIDMap<PreferenceArray> testPrefs, long userID,
+	private void splitOneUsersPrefs(double trainingPercentage, FastByIDMap<PreferenceArray> trainingPrefs, FastByIDMap<PreferenceArray> testPrefs, Integer userID,
 			DataModel dataModel) throws TasteException {
 		List<Preference> oneUserTrainingPrefs = null;
 		List<Preference> oneUserTestPrefs = null;
@@ -155,7 +155,7 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		}
 	}
 
-	private float capEstimatedPreference(float estimate) {
+	private double capEstimatedPreference(double estimate) {
 		if (estimate > maxPreference) {
 			return maxPreference;
 		}
@@ -170,7 +170,7 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		Collection<Callable<Void>> estimateCallables = Lists.newArrayList();
 		noEstimateCounter = new AtomicInteger();
 		estimateCounter = new AtomicInteger();
-		for (Map.Entry<Long, PreferenceArray> entry : testPrefs.entrySet()) {
+		for (Map.Entry<Integer, PreferenceArray> entry : testPrefs.entrySet()) {
 			estimateCallables.add(new PreferenceEstimateCallable(recommender, entry.getKey(), entry.getValue(), noEstimateCounter, estimateCounter));
 		}
 		log.info("Beginning evaluation of {} users", estimateCallables.size());
@@ -220,19 +220,19 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 
 	protected abstract void reset();
 
-	protected abstract void processOneEstimate(float estimatedPreference, Preference realPref);
+	protected abstract void processOneEstimate(double estimatedPreference, Preference realPref);
 
 	protected abstract double computeFinalEvaluation();
 
 	public final class PreferenceEstimateCallable implements Callable<Void> {
 
 		private final Recommender recommender;
-		private final long testUserID;
+		private final Integer testUserID;
 		private final PreferenceArray prefs;
 		private final AtomicInteger noEstimateCounter;
 		private AtomicInteger estimateCounter;
 
-		public PreferenceEstimateCallable(Recommender recommender, long testUserID, PreferenceArray prefs, AtomicInteger noEstimateCounter,
+		public PreferenceEstimateCallable(Recommender recommender, Integer testUserID, PreferenceArray prefs, AtomicInteger noEstimateCounter,
 				AtomicInteger estimateCounter) {
 			this.recommender = recommender;
 			this.testUserID = testUserID;
@@ -244,7 +244,7 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 		@Override
 		public Void call() throws TasteException {
 			for (Preference realPref : prefs) {
-				float estimatedPreference = Float.NaN;
+				double estimatedPreference = Float.NaN;
 				try {
 					// estimatedPreference = recommender.estimatePreference(testUserID, realPref.getItemID());
 					// only takes relevant neighbors into account:
@@ -256,7 +256,7 @@ public abstract class AbstractDifferenceRecommenderEvaluator implements Recommen
 				} catch (NoSuchItemException nsie) {
 					log.info("Item exists in test data but not training data: {}", realPref.getItemID());
 				}
-				if (Float.isNaN(estimatedPreference)) {
+				if (Double.isNaN(estimatedPreference)) {
 					noEstimateCounter.incrementAndGet();
 				} else {
 					int counter = estimateCounter.incrementAndGet();

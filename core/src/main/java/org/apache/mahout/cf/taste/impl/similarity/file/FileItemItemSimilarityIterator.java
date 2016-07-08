@@ -29,32 +29,27 @@ import java.util.Iterator;
 import java.util.regex.Pattern;
 
 /**
- * a simple iterator using a {@link FileLineIterator} internally, parsing each
- * line into an {@link GenericItemSimilarity.ItemItemSimilarity}.
+ * a simple iterator using a {@link FileLineIterator} internally, parsing each line into an {@link GenericItemSimilarity.ItemItemSimilarity}.
  */
 final class FileItemItemSimilarityIterator extends ForwardingIterator<GenericItemSimilarity.ItemItemSimilarity> {
 
-  private static final Pattern SEPARATOR = Pattern.compile("[,\t]");
+	private static final Pattern SEPARATOR = Pattern.compile("[,\t]");
 
-  private final Iterator<GenericItemSimilarity.ItemItemSimilarity> delegate;
+	private final Iterator<GenericItemSimilarity.ItemItemSimilarity> delegate;
 
-  FileItemItemSimilarityIterator(File similaritiesFile) throws IOException {
-    delegate = Iterators.transform(
-        new FileLineIterator(similaritiesFile),
-        new Function<String, GenericItemSimilarity.ItemItemSimilarity>() {
-          @Override
-          public GenericItemSimilarity.ItemItemSimilarity apply(String from) {
-            String[] tokens = SEPARATOR.split(from);
-            return new GenericItemSimilarity.ItemItemSimilarity(Long.parseLong(tokens[0]),
-                                                                Long.parseLong(tokens[1]),
-                                                                Double.parseDouble(tokens[2]));
-          }
-        });
-  }
+	FileItemItemSimilarityIterator(File similaritiesFile) throws IOException {
+		delegate = Iterators.transform(new FileLineIterator(similaritiesFile), new Function<String, GenericItemSimilarity.ItemItemSimilarity>() {
+			@Override
+			public GenericItemSimilarity.ItemItemSimilarity apply(String from) {
+				String[] tokens = SEPARATOR.split(from);
+				return new GenericItemSimilarity.ItemItemSimilarity(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]), Double.parseDouble(tokens[2]));
+			}
+		});
+	}
 
-  @Override
-  protected Iterator<GenericItemSimilarity.ItemItemSimilarity> delegate() {
-    return delegate;
-  }
+	@Override
+	protected Iterator<GenericItemSimilarity.ItemItemSimilarity> delegate() {
+		return delegate;
+	}
 
 }

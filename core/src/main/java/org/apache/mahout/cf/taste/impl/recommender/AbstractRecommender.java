@@ -71,8 +71,8 @@ public abstract class AbstractRecommender implements Recommender {
 	 *             if userID or itemID is {@code null}, or if value is {@link Double#NaN}
 	 */
 	@Override
-	public void setPreference(Integer userID, Integer itemID, Float value) throws TasteException {
-		Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
+	public void setPreference(Integer userID, Integer itemID, double value) throws TasteException {
+		Preconditions.checkArgument(!Double.isNaN(value), "NaN value");
 		log.debug("Setting preference for user {}, item {}", userID, itemID);
 		dataModel.setPreference(userID, itemID, value);
 	}

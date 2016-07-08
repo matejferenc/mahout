@@ -21,7 +21,7 @@ import com.google.common.collect.Lists;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverage;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RunningAverage;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.Preference;
@@ -106,7 +106,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
       numFeatures = factorizer.numFeatures;
       Random random = RandomUtils.getRandom();
       M = new double[dataModel.getNumItems()][numFeatures];
-      LongPrimitiveIterator itemIDsIterator = dataModel.getItemIDs();
+      IntPrimitiveIterator itemIDsIterator = dataModel.getItemIDs();
       while (itemIDsIterator.hasNext()) {
         long itemID = itemIDsIterator.nextInt();
         int itemIDIndex = factorizer.itemIndex(itemID);
@@ -177,7 +177,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
 
       /* fix M - compute U */
       ExecutorService queue = createQueue();
-      LongPrimitiveIterator userIDsIterator = dataModel.getUserIDs();
+      IntPrimitiveIterator userIDsIterator = dataModel.getUserIDs();
       try {
 
         final ImplicitFeedbackAlternatingLeastSquaresSolver implicitFeedbackSolver = usesImplicitFeedback
@@ -185,7 +185,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
 
         while (userIDsIterator.hasNext()) {
           final long userID = userIDsIterator.nextInt();
-          final LongPrimitiveIterator itemIDsFromUser = dataModel.getItemIDsFromUser(userID).iterator();
+          final IntPrimitiveIterator itemIDsFromUser = dataModel.getItemIDsFromUser(userID).iterator();
           final PreferenceArray userPrefs = dataModel.getPreferencesFromUser(userID);
           queue.execute(new Runnable() {
             @Override
@@ -215,7 +215,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
 
       /* fix U - compute M */
       queue = createQueue();
-      LongPrimitiveIterator itemIDsIterator = dataModel.getItemIDs();
+      IntPrimitiveIterator itemIDsIterator = dataModel.getItemIDs();
       try {
 
         final ImplicitFeedbackAlternatingLeastSquaresSolver implicitFeedbackSolver = usesImplicitFeedback
@@ -268,7 +268,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
   }
 
   //TODO find a way to get rid of the object overhead here
-  protected OpenIntObjectHashMap<Vector> itemFeaturesMapping(LongPrimitiveIterator itemIDs, int numItems,
+  protected OpenIntObjectHashMap<Vector> itemFeaturesMapping(IntPrimitiveIterator itemIDs, int numItems,
       double[][] featureMatrix) {
     OpenIntObjectHashMap<Vector> mapping = new OpenIntObjectHashMap<Vector>(numItems);
     while (itemIDs.hasNext()) {
@@ -279,7 +279,7 @@ public class ALSWRFactorizer extends AbstractFactorizer {
     return mapping;
   }
 
-  protected OpenIntObjectHashMap<Vector> userFeaturesMapping(LongPrimitiveIterator userIDs, int numUsers,
+  protected OpenIntObjectHashMap<Vector> userFeaturesMapping(IntPrimitiveIterator userIDs, int numUsers,
       double[][] featureMatrix) {
     OpenIntObjectHashMap<Vector> mapping = new OpenIntObjectHashMap<Vector>(numUsers);
 

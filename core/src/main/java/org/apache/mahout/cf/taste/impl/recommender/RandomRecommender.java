@@ -24,7 +24,7 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.IDRescorer;
@@ -45,7 +45,7 @@ public final class RandomRecommender extends AbstractRecommender {
     super(dataModel);
     float maxPref = Float.NEGATIVE_INFINITY;
     float minPref = Float.POSITIVE_INFINITY;
-    LongPrimitiveIterator userIterator = dataModel.getUserIDs();
+    IntPrimitiveIterator userIterator = dataModel.getUserIDs();
     while (userIterator.hasNext()) {
       long userID = userIterator.next();
       PreferenceArray prefs = dataModel.getPreferencesFromUser(userID);
@@ -69,7 +69,7 @@ public final class RandomRecommender extends AbstractRecommender {
     int numItems = dataModel.getNumItems();
     List<RecommendedItem> result = Lists.newArrayListWithCapacity(howMany);
     while (result.size() < howMany) {
-      LongPrimitiveIterator it = dataModel.getItemIDs();
+      IntPrimitiveIterator it = dataModel.getItemIDs();
       it.skip(random.nextInt(numItems));
       long itemID = it.next();
       if (dataModel.getPreferenceValue(userID, itemID) == null) {

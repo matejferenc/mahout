@@ -24,7 +24,7 @@ final class SVDPreference extends GenericPreference {
 
   private double cache;
 
-  SVDPreference(long userID, long itemID, float value, double cache) {
+  SVDPreference(Integer userID, Integer itemID, float value, double cache) {
     super(userID, itemID, value);
     setCache(cache);
   }

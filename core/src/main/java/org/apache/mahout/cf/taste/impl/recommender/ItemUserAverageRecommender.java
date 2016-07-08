@@ -29,7 +29,7 @@ import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverage;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RefreshHelper;
 import org.apache.mahout.cf.taste.impl.common.RunningAverage;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -125,7 +125,7 @@ public final class ItemUserAverageRecommender extends AbstractRecommender {
     try {
       buildAveragesLock.writeLock().lock();
       DataModel dataModel = getDataModel();
-      LongPrimitiveIterator it = dataModel.getUserIDs();
+      IntPrimitiveIterator it = dataModel.getUserIDs();
       while (it.hasNext()) {
         long userID = it.nextInt();
         PreferenceArray prefs = dataModel.getPreferencesFromUser(userID);

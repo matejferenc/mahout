@@ -88,7 +88,7 @@ public interface PreferenceArray extends Cloneable, Serializable, Iterable<Prefe
 	 *            index
 	 * @return preference value from preference at i
 	 */
-	Float getValue(int i);
+	double getValue(int i);
 
 	/**
 	 * Sets preference value for preference at i.
@@ -98,7 +98,7 @@ public interface PreferenceArray extends Cloneable, Serializable, Iterable<Prefe
 	 * @param value
 	 *            new preference value
 	 */
-	void setValue(int i, Float value);
+	void setValue(int i, double value);
 
 	/**
 	 * @return independent copy of this object

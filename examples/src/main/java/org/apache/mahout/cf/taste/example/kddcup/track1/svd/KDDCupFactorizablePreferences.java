@@ -21,7 +21,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import org.apache.mahout.cf.taste.example.kddcup.DataFileIterable;
 import org.apache.mahout.cf.taste.impl.common.AbstractIntPrimitiveIterator;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.Preference;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.common.Pair;
@@ -37,12 +37,12 @@ public class KDDCupFactorizablePreferences implements FactorizablePreferences {
   }
 
   @Override
-  public LongPrimitiveIterator getUserIDs() {
+  public IntPrimitiveIterator getUserIDs() {
     return new FixedSizeLongIterator(numUsers());
   }
 
   @Override
-  public LongPrimitiveIterator getItemIDs() {
+  public IntPrimitiveIterator getItemIDs() {
     return new FixedSizeLongIterator(numItems());
   }
 

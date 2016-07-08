@@ -65,13 +65,13 @@ public final class CachingItemSimilarity implements ItemSimilarity {
 	}
 
 	@Override
-	public double itemSimilarity(long itemID1, long itemID2) throws TasteException {
+	public double itemSimilarity(Integer itemID1, Integer itemID2) throws TasteException {
 		IntPair key = itemID1 < itemID2 ? new IntPair(itemID1, itemID2) : new IntPair(itemID2, itemID1);
 		return similarityCache.get(key);
 	}
 
 	@Override
-	public double[] itemSimilarities(long itemID1, long[] itemID2s) throws TasteException {
+	public double[] itemSimilarities(Integer itemID1, Integer[] itemID2s) throws TasteException {
 		int length = itemID2s.length;
 		double[] result = new double[length];
 		for (int i = 0; i < length; i++) {
@@ -81,7 +81,7 @@ public final class CachingItemSimilarity implements ItemSimilarity {
 	}
 
 	@Override
-	public long[] allSimilarItemIDs(long itemID) throws TasteException {
+	public Integer[] allSimilarItemIDs(Integer itemID) throws TasteException {
 		return similarity.allSimilarItemIDs(itemID);
 	}
 

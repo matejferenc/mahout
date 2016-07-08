@@ -63,7 +63,7 @@ public interface Recommender extends Refreshable {
 	 * @throws TasteException
 	 *             if an error occurs while accessing the {@link DataModel}
 	 */
-	float estimatePreference(Integer userID, Integer itemID) throws TasteException;
+	double estimatePreference(Integer userID, Integer itemID) throws TasteException;
 
 	/**
 	 * @param userID
@@ -75,7 +75,7 @@ public interface Recommender extends Refreshable {
 	 * @throws TasteException
 	 *             if an error occurs while accessing the {@link DataModel}
 	 */
-	void setPreference(Integer userID, Integer itemID, Float value) throws TasteException;
+	void setPreference(Integer userID, Integer itemID, double value) throws TasteException;
 
 	/**
 	 * @param userID

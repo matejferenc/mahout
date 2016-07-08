@@ -33,7 +33,7 @@ public interface Preference {
 	/**
 	 * @return strength of the preference for that item. Zero should indicate "no preference either way"; positive values indicate preference and negative values indicate dislike
 	 */
-	Float getValue();
+	double getValue();
 
 	/**
 	 * Sets the strength of the preference for this item
@@ -41,6 +41,6 @@ public interface Preference {
 	 * @param value
 	 *            new preference
 	 */
-	void setValue(Float value);
+	void setValue(double value);
 
 }

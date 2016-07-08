@@ -31,7 +31,7 @@ import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverage;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverageAndStdDev;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RunningAverage;
 import org.apache.mahout.cf.taste.impl.common.RunningAverageAndStdDev;
 import org.apache.mahout.cf.taste.impl.model.GenericDataModel;
@@ -104,7 +104,7 @@ public final class GenericRecommenderIRStatsEvaluator implements RecommenderIRSt
     int numUsersRecommendedFor = 0;
     int numUsersWithRecommendations = 0;
 
-    LongPrimitiveIterator it = dataModel.getUserIDs();
+    IntPrimitiveIterator it = dataModel.getUserIDs();
     while (it.hasNext()) {
 
       long userID = it.nextInt();
@@ -128,7 +128,7 @@ public final class GenericRecommenderIRStatsEvaluator implements RecommenderIRSt
       }
 
       FastByIDMap<PreferenceArray> trainingUsers = new FastByIDMap<PreferenceArray>(dataModel.getNumUsers());
-      LongPrimitiveIterator it2 = dataModel.getUserIDs();
+      IntPrimitiveIterator it2 = dataModel.getUserIDs();
       while (it2.hasNext()) {
         dataSplitter.processOtherUser(userID, relevantItemIDs, trainingUsers, it2.nextInt(), dataModel);
       }

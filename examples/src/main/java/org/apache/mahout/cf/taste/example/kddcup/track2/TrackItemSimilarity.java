@@ -25,7 +25,7 @@ import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.example.kddcup.KDDCupDataModel;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 import org.apache.mahout.common.iterator.FileLineIterable;
 
@@ -88,7 +88,7 @@ final class TrackItemSimilarity implements ItemSimilarity {
 	@Override
 	public long[] allSimilarItemIDs(long itemID) {
 		FastIDSet allSimilarItemIDs = new FastIDSet();
-		LongPrimitiveIterator allItemIDs = trackData.keySetIterator();
+		IntPrimitiveIterator allItemIDs = trackData.keySetIterator();
 		while (allItemIDs.hasNext()) {
 			long possiblySimilarItemID = allItemIDs.nextInt();
 			if (!Double.isNaN(itemSimilarity(itemID, possiblySimilarItemID))) {

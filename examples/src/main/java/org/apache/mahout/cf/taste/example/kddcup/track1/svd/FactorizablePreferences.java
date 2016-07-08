@@ -17,7 +17,7 @@
 
 package org.apache.mahout.cf.taste.example.kddcup.track1.svd;
 
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.Preference;
 
 /**
@@ -25,9 +25,9 @@ import org.apache.mahout.cf.taste.model.Preference;
  */
 public interface FactorizablePreferences {
 
-  LongPrimitiveIterator getUserIDs();
+  IntPrimitiveIterator getUserIDs();
 
-  LongPrimitiveIterator getItemIDs();
+  IntPrimitiveIterator getItemIDs();
 
   Iterable<Preference> getPreferences();
 

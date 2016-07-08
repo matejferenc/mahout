@@ -20,7 +20,7 @@ package org.apache.mahout.cf.taste.example.kddcup.track1.svd;
 import com.google.common.collect.Lists;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.model.GenericPreference;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.Preference;
@@ -50,7 +50,7 @@ public class DataModelFactorizablePreferences implements FactorizablePreferences
       itemIDs = new FastIDSet(dataModel.getNumItems());
       preferences = Lists.newArrayList();
 
-      LongPrimitiveIterator userIDsIterator = dataModel.getUserIDs();
+      IntPrimitiveIterator userIDsIterator = dataModel.getUserIDs();
       while (userIDsIterator.hasNext()) {
         long userID = userIDsIterator.nextInt();
         userIDs.add(userID);
@@ -65,12 +65,12 @@ public class DataModelFactorizablePreferences implements FactorizablePreferences
   }
 
   @Override
-  public LongPrimitiveIterator getUserIDs() {
+  public IntPrimitiveIterator getUserIDs() {
     return userIDs.iterator();
   }
 
   @Override
-  public LongPrimitiveIterator getItemIDs() {
+  public IntPrimitiveIterator getItemIDs() {
     return itemIDs.iterator();
   }
 

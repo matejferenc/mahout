@@ -32,10 +32,10 @@ public class GenericPreference implements Preference, Serializable {
 
 	private final Integer userID;
 	private final Integer itemID;
-	private Float value;
+	private double value;
 
-	public GenericPreference(Integer userID, Integer itemID, Float value) {
-		Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
+	public GenericPreference(Integer userID, Integer itemID, double value) {
+		Preconditions.checkArgument(!Double.isNaN(value), "NaN value");
 		this.userID = userID;
 		this.itemID = itemID;
 		this.value = value;
@@ -52,13 +52,13 @@ public class GenericPreference implements Preference, Serializable {
 	}
 
 	@Override
-	public Float getValue() {
+	public double getValue() {
 		return value;
 	}
 
 	@Override
-	public void setValue(Float value) {
-		Preconditions.checkArgument(!Float.isNaN(value), "NaN value");
+	public void setValue(double value) {
+		Preconditions.checkArgument(!Double.isNaN(value), "NaN value");
 		this.value = value;
 	}
 

@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.google.common.collect.Lists;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverageAndStdDev;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RunningAverageAndStdDev;
 import org.apache.mahout.cf.taste.impl.common.SamplingLIntPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -45,7 +45,7 @@ public final class LoadEvaluator {
     DataModel dataModel = recommender.getDataModel();
     int numUsers = dataModel.getNumUsers();
     double sampleRate = 1000.0 / numUsers;
-    LongPrimitiveIterator userSampler =
+    IntPrimitiveIterator userSampler =
         SamplingLIntPrimitiveIterator.maybeWrapIterator(dataModel.getUserIDs(), sampleRate);
     recommender.recommend(userSampler.next(), howMany); // Warm up
     Collection<Callable<Void>> callables = Lists.newArrayList();

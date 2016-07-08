@@ -19,7 +19,7 @@ package org.apache.mahout.cf.taste.impl.recommender;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.DataModel;
 
 public final class AllUnknownItemsCandidateItemsStrategy extends AbstractCandidateItemsStrategy {
@@ -30,7 +30,7 @@ public final class AllUnknownItemsCandidateItemsStrategy extends AbstractCandida
   @Override
   protected FastIDSet doGetCandidateItems(long[] preferredItemIDs, DataModel dataModel) throws TasteException {
     FastIDSet possibleItemIDs = new FastIDSet(dataModel.getNumItems());
-    LongPrimitiveIterator allItemIDs = dataModel.getItemIDs();
+    IntPrimitiveIterator allItemIDs = dataModel.getItemIDs();
     while (allItemIDs.hasNext()) {
       possibleItemIDs.add(allItemIDs.nextInt());
     }

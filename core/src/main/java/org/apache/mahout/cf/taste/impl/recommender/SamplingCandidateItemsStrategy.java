@@ -22,7 +22,7 @@ import com.google.common.base.Preconditions;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
 import org.apache.mahout.cf.taste.impl.common.IntPrimitiveArrayIterator;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.SamplingLIntPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.Preference;
@@ -119,7 +119,7 @@ public class SamplingCandidateItemsStrategy extends AbstractCandidateItemsStrate
 
   @Override
   protected FastIDSet doGetCandidateItems(long[] preferredItemIDs, DataModel dataModel) throws TasteException {
-    LongPrimitiveIterator preferredItemIDsIterator = new IntPrimitiveArrayIterator(preferredItemIDs);
+    IntPrimitiveIterator preferredItemIDsIterator = new IntPrimitiveArrayIterator(preferredItemIDs);
     if (preferredItemIDs.length > maxItems) {
       double samplingRate = (double) maxItems / preferredItemIDs.length;
 //      log.info("preferredItemIDs.length {}, samplingRate {}", preferredItemIDs.length, samplingRate);
@@ -149,7 +149,7 @@ public class SamplingCandidateItemsStrategy extends AbstractCandidateItemsStrate
 
   private void addSomeOf(FastIDSet possibleItemIDs, FastIDSet itemIDs) {
     if (itemIDs.size() > maxItemsPerUser) {
-      LongPrimitiveIterator it =
+      IntPrimitiveIterator it =
           new SamplingLIntPrimitiveIterator(itemIDs.iterator(), (double) maxItemsPerUser / itemIDs.size());
       while (it.hasNext()) {
         possibleItemIDs.add(it.nextInt());

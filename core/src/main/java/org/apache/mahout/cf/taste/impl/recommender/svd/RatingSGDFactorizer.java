@@ -19,7 +19,7 @@ package org.apache.mahout.cf.taste.impl.recommender.svd;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverage;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RunningAverage;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.Preference;
@@ -105,7 +105,7 @@ public class RatingSGDFactorizer extends AbstractFactorizer {
 
 	private int countPreferences() throws TasteException {
 		int numPreferences = 0;
-		LongPrimitiveIterator userIDs = dataModel.getUserIDs();
+		IntPrimitiveIterator userIDs = dataModel.getUserIDs();
 		while (userIDs.hasNext()) {
 			PreferenceArray preferencesFromUser = dataModel.getPreferencesFromUser(userIDs.nextInt());
 			numPreferences += preferencesFromUser.length();
@@ -118,7 +118,7 @@ public class RatingSGDFactorizer extends AbstractFactorizer {
 		cachedUserIDs = new long[numPreferences];
 		cachedItemIDs = new long[numPreferences];
 
-		LongPrimitiveIterator userIDs = dataModel.getUserIDs();
+		IntPrimitiveIterator userIDs = dataModel.getUserIDs();
 		int index = 0;
 		while (userIDs.hasNext()) {
 			long userID = userIDs.nextInt();
@@ -170,7 +170,7 @@ public class RatingSGDFactorizer extends AbstractFactorizer {
 
 	double getAveragePreference() throws TasteException {
 		RunningAverage average = new FullRunningAverage();
-		LongPrimitiveIterator it = dataModel.getUserIDs();
+		IntPrimitiveIterator it = dataModel.getUserIDs();
 		while (it.hasNext()) {
 			for (Preference pref : dataModel.getPreferencesFromUser(it.nextInt())) {
 				average.addDatum(pref.getValue());

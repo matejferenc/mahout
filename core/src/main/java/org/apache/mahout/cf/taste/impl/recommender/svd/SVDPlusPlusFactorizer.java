@@ -20,7 +20,7 @@ package org.apache.mahout.cf.taste.impl.recommender.svd;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.mahout.cf.taste.impl.common.FastIDSet;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.common.IntPrimitiveIterator;
 import org.apache.mahout.common.RandomUtils;
 
 import org.apache.mahout.cf.taste.common.TasteException;
@@ -81,7 +81,7 @@ public final class SVDPlusPlusFactorizer extends RatingSGDFactorizer {
 
     /* get internal item IDs which we will need several times */
     itemsByUser = Maps.newHashMap();
-    LongPrimitiveIterator userIDs = dataModel.getUserIDs();
+    IntPrimitiveIterator userIDs = dataModel.getUserIDs();
     while (userIDs.hasNext()) {
       long userId = userIDs.nextInt();
       int userIndex = userIndex(userId);
