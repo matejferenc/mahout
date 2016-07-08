@@ -19,6 +19,7 @@ package org.apache.mahout.common;
 
 import java.io.Serializable;
 
+import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
 
 /** A simple (ordered) pair of longs. */
@@ -50,15 +51,15 @@ public final class IntPair implements Comparable<IntPair>, Serializable {
 			return false;
 		}
 		IntPair otherPair = (IntPair) obj;
-		return first == otherPair.getFirst() && second == otherPair.getSecond();
+		return first.equals(otherPair.first) && second.equals(otherPair.second);
 	}
 
 	@Override
 	public int hashCode() {
-		int firstHash = Longs.hashCode(first);
+		int firstHash = Ints.hashCode(first);
 		// Flip top and bottom 16 bits; this makes the hash function probably different
 		// for (a,b) versus (b,a)
-		return (firstHash >>> 16 | firstHash << 16) ^ Longs.hashCode(second);
+		return (firstHash >>> 16 | firstHash << 16) ^ Ints.hashCode(second);
 	}
 
 	@Override
@@ -68,12 +69,11 @@ public final class IntPair implements Comparable<IntPair>, Serializable {
 
 	@Override
 	public int compareTo(IntPair o) {
-		if (first < o.getFirst()) {
-			return -1;
-		} else if (first > o.getFirst()) {
-			return 1;
+		int firstDifference = first - o.first;
+		if (firstDifference != 0) {
+			return firstDifference;
 		} else {
-			return second < o.getSecond() ? -1 : second > o.getSecond() ? 1 : 0;
+			return second - o.second;
 		}
 	}
 

@@ -77,7 +77,7 @@ public final class CachingUserSimilarity implements UserSimilarity {
 		similarity.setPreferenceInferrer(inferrer);
 	}
 
-	public void clearCacheForUser(long userID) {
+	public void clearCacheForUser(Integer userID) {
 		similarityCache.removeKeysMatching(new LongPairMatchPredicate(userID));
 	}
 
