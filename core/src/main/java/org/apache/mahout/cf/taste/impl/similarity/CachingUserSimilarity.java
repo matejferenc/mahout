@@ -101,12 +101,12 @@ public final class CachingUserSimilarity implements UserSimilarity {
 
 	@Override
 	public String getName() {
-		return "Caching User Similarity";
+		return similarity.getName();
 	}
 
 	@Override
 	public String getShortName() {
-		return null;
+		return similarity.getShortName();
 	}
 
 }
